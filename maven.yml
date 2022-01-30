@@ -1,0 +1,44 @@
+# suppress inspection "UnusedProperty" for whole file
+maven.compiler:
+  showDeprecation: true
+  showWarnings: true
+
+# Default’ная конфигурация (можно точечно переопределять
+# через maven.yml при использовании yaml-properties-maven-plugin’а):
+lombok:
+  # Добавить ли в Maven отметку о том, что ${lombok.outputDirectory}
+  # является ”build path” (должен интерпретироваться как исходный код):
+  # default:
+#  addOutputDirectory: true
+  addOutputDirectory: false
+
+  # Где лежат исходные файлы, которые нужно delombok’нуть?
+  # default:
+#  sourceDirectory: ${project.basedir}/src/main/lombok
+  sourceDirectory: ${project.basedir}/src/main/java
+
+  # Где лежат тестовые файлы, которые нужно delombok’нуть?
+  # default:
+#  testSourceDirectory: ${project.basedir}/src/test/lombok
+  testSourceDirectory: ${project.basedir}/src/test/java
+
+  # Включать ли «говорливый» режим (печать имени каждого delombok’уемого файла)?
+  # default:
+#  verbose: false
+  verbose: true
+
+  # Куда lombok-maven-plugin’у поместить результат delombok’а исходников?
+  # default:
+#  outputDirectory: ${project.build.directory}/generated-sources/delombok
+
+  # Куда lombok-maven-plugin’у поместить результат delombok’а тестов?
+  # default:
+#  testOutputDirectory = ${project.build.directory}/generated-test-sources/delombok
+
+  # Используемая кодировка
+  # default:
+#  encoding: ${project.build.sourceEncoding}
+
+  # Отменяет работу delombok’а
+  # default:
+#  delombok.skip: false

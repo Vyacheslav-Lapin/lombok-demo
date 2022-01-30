@@ -1,0 +1,6 @@
+my-properties.port: 8090
+my-properties2.host: my.site.com
+mail.credentials:
+  authMethod: basic
+  username: user
+  password: qwerty
