@@ -30,6 +30,11 @@ public class ReflectionUtils {
       CheckedFunction1.<String, Class<?>>of(Class::forName)
           .unchecked();
 
+  public <T> Class<T> toClass(String className) {
+    //noinspection unchecked
+    return (Class<T>) CLASS_FOR_NAME_UNCHECKED.apply(className);
+  }
+
   private final Function2<String, String, Stream<Class<?>>> GET_CLASS_FROM_FILE =
       Function2.<String, String, String>of("%s.%s"::formatted)
           .compose2((String name) -> name.substring(0, name.length() - 6))

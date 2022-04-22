@@ -15,11 +15,12 @@ class WithSimpleDemoTests {
   void withAnnotationWorksCorrectlyTest() {
     //Тест (acceptance criteria):
     val foo = new WithSimpleDemo(1, "lorem", true);
-    val bar = foo.withX(2);
+
     assertThat(foo).isNotNull()
         .extracting("x", "s", "b")
         .contains(1, "lorem", true);
-    assertThat(bar).isNotNull()
+
+    assertThat(foo.withX(2)).isNotNull()
         .extracting("x", "s", "b")
         .contains(2, "lorem", true);
 

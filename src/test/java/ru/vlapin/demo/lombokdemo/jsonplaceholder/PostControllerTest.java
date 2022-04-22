@@ -1,24 +1,27 @@
 package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.val;
-import org.assertj.core.api.Condition;
+import org.jetbrains.annotations.Contract;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.vlapin.demo.lombokdemo.model.jsonplaceholder.Post;
 import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.*;
+
 @SpringBootTest
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PostControllerTest {
 
-  long id = 57L;
-  PostService postService;
+  private final long id = 57L;
+  private final PostService postService;
+
+  @Autowired
+  @Contract(pure = true)
+  public PostControllerTest(PostService postService) {
+    this.postService = postService;
+  }
 
   @Test
   @SneakyThrows

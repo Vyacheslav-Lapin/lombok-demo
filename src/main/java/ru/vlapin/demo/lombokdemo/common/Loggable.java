@@ -37,7 +37,11 @@ public @interface Loggable {
 final class LoggableAspect {
 
   @SneakyThrows
-  @Around("@annotation(Loggable) || within(@Loggable *)")
+  @Around(
+      "@annotation(Loggable) || within(@Loggable *)"
+          + "@execution(@(@Loggable * *(..))) || within(@(@Loggable *))"
+          + "@execution(@(@(@Loggable * *(..)))) || within(@(@(@Loggable *)))"
+  )
   Object aroundAdvice(ProceedingJoinPoint pjp) {
     val methodName = pjp.getSignature().getName();
     val args = pjp.getArgs();

@@ -6,15 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
-
-public interface AnnotationBasedSetterPropertiesPlaceholderExample {
-
-  String getHost();
-
-  Integer getPort();
-}
 
 /**
  * Features:
@@ -29,15 +21,13 @@ public interface AnnotationBasedSetterPropertiesPlaceholderExample {
  */
 @Data
 @Validated
-@ConfigurationProperties("my-properties")
-class AnnotationBasedSetterPropertiesPlaceholderExampleImpl
-    implements AnnotationBasedSetterPropertiesPlaceholderExample {
+public class JavaConfigBasedSetterPropertiesPlaceholderExampleImpl
+    implements JavaConfigBasedSetterPropertiesPlaceholderExample {
 
   /**
    * My hostname
    */
-  @NotBlank
-  String host = "localhost";
+  @NotBlank String host = "localhost";
 
   /**
    * My port

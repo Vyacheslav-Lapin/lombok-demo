@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.6.3</version>
+    <version>2.6.7</version>
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -15,33 +15,34 @@
   <properties>
 
     <!--region General-->
-    <java.version>17</java.version>
-    <minimal.maven.version>3.8.4</minimal.maven.version>
-    <spring-boot.version>2.6.3</spring-boot.version>
+    <java.version>18</java.version>
+    <minimal.maven.version>3.8.5</minimal.maven.version>
+    <spring-boot.version>2.6.7</spring-boot.version>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-cloud.version>2021.0.0</spring-cloud.version>
-    <testcontainers.version>1.16.3</testcontainers.version>
+    <spring-cloud.version>2021.0.1</spring-cloud.version>
+    <testcontainers.version>1.17.1</testcontainers.version>
     <!--endregion-->
 
     <!--region Libs-->
     <vavr.version>0.10.4</vavr.version>
-    <checker.version>3.21.1</checker.version>
+    <checker.version>3.21.4</checker.version>
     <annotations.version>23.0.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
-    <spotbugs.version>4.5.3</spotbugs.version>
-    <error_prone_annotations.version>2.11.0</error_prone_annotations.version>
-    <springdoc-openapi.version>1.6.5</springdoc-openapi.version>
+    <spotbugs.version>4.6.0</spotbugs.version>
+    <error_prone_annotations.version>2.13.1</error_prone_annotations.version>
+    <springdoc-openapi.version>1.6.7</springdoc-openapi.version>
     <!--endregion-->
 
     <!--region Test-libs-->
     <!--endregion-->
 
     <!--region Plugins-->
-    <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-    <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
+    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
+    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+    <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>
@@ -161,20 +162,11 @@
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity5</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -189,6 +181,19 @@
       <optional>true</optional>
       <scope>provided</scope>
     </dependency>
+
+    <!--suppress VulnerableLibrariesLocal -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -209,6 +214,7 @@
       <artifactId>postgresql</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>io.vavr</groupId>
       <artifactId>vavr</artifactId>
@@ -216,16 +222,16 @@
 
     <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne)-->
     <dependency>
-      <groupId>org.checkerframework</groupId>
-      <artifactId>checker</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
     </dependency>
     <dependency>
       <groupId>net.jcip</groupId>
       <artifactId>jcip-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.spotbugs</groupId>
@@ -244,11 +250,11 @@
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-data-rest</artifactId>
+      <artifactId>springdoc-openapi-security</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-security</artifactId>
+      <artifactId>springdoc-openapi-data-rest</artifactId>
     </dependency>
     <!--endregion-->
 
@@ -265,7 +271,7 @@
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <compilerArgs>
-              <arg>--enable-preview</arg>
+              <arg>--enable-preview</arg><!--maven.compiler.enablePreview-->
               <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
               <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
               <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
@@ -320,20 +326,6 @@
         </plugin>
 
         <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <configuration>
-            <excludes>
-              <exclude>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-              </exclude>
-            </excludes>
-            <executable>true</executable>
-            <jvmArguments>--enable-preview</jvmArguments>
-          </configuration>
-        </plugin>
-        <plugin>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>${maven-enforcer-plugin.version}</version>
           <executions>
@@ -351,16 +343,6 @@
               </configuration>
             </execution>
           </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>${versions-maven-plugin.version}</version>
-          <configuration>
-            <generateBackupPoms>false</generateBackupPoms>
-            <!--suppress MavenModelInspection, UnresolvedMavenProperty-->
-            <rulesUri>file://${maven.multiModuleProjectDirectory}/ruleset.xml</rulesUri>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
@@ -403,9 +385,33 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>org.sonarsource.scanner.maven</groupId>
-          <artifactId>sonar-maven-plugin</artifactId>
-          <version>${sonar-maven-plugin.version}</version>
+          <groupId>it.ozimov</groupId>
+          <artifactId>yaml-properties-maven-plugin</artifactId>
+          <version>${yaml-properties-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <phase>initialize</phase>
+              <goals>
+                <goal>read-project-properties</goal>
+              </goals>
+              <configuration>
+                <files>
+                  <!--suppress UnresolvedMavenProperty-->
+                  <file>${maven.multiModuleProjectDirectory}/maven.yml</file>
+                </files>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${versions-maven-plugin.version}</version>
+          <configuration>
+            <generateBackupPoms>false</generateBackupPoms>
+            <!--suppress MavenModelInspection, UnresolvedMavenProperty-->
+            <rulesUri>file://${maven.multiModuleProjectDirectory}/ruleset.xml</rulesUri>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>com.github.spotbugs</groupId>
@@ -430,50 +436,35 @@
           </dependencies>
         </plugin>
         <plugin>
-          <groupId>it.ozimov</groupId>
-          <artifactId>yaml-properties-maven-plugin</artifactId>
-          <version>${yaml-properties-maven-plugin.version}</version>
-          <executions>
-            <execution>
-              <phase>initialize</phase>
-              <goals>
-                <goal>read-project-properties</goal>
-              </goals>
-              <configuration>
-                <files>
-                  <!--suppress UnresolvedMavenProperty-->
-                  <file>${maven.multiModuleProjectDirectory}/maven.yml</file>
-                </files>
-              </configuration>
-            </execution>
-          </executions>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+          <configuration>
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+            <executable>true</executable>
+            <jvmArguments>--enable-preview</jvmArguments>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
 
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.projectlombok</groupId>
@@ -482,6 +473,22 @@
       <plugin>
         <groupId>it.ozimov</groupId>
         <artifactId>yaml-properties-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

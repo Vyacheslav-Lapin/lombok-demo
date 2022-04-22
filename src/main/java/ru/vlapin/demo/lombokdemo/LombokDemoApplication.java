@@ -2,6 +2,7 @@ package ru.vlapin.demo.lombokdemo;
 
 import org.aspectj.lang.annotation.Aspect;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
+import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExampleImpl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,26 +24,13 @@ import static org.springframework.hateoas.config.EnableHypermediaSupport.Hyperme
 public class LombokDemoApplication {
 
   public static void main(String[] args) {
+    //noinspection resource
     SpringApplication.run(LombokDemoApplication.class, args);
   }
-
-//  @Bean
-//  ApplicationRunner runner(CatRepository catRepository) {
-//    return __ -> Stream.of("Мурзик, Барсик, Матроскин".split(", "))
-//        .map(Cat::new)
-//        .forEach(catRepository::save);
-//  }
 
   @Bean
   @ConfigurationProperties("my-properties2")
   JavaConfigBasedSetterPropertiesPlaceholderExample mySetterProperties2() {
-
-//    record Abc(int x, String s, boolean b) {
-//    }
-//
-//    val abc = new Abc(786345, "Quick brown fox, jumps over the lazy dog!", true);
-//    val b = abc.b();
-
-    return new JavaConfigBasedSetterPropertiesPlaceholderExample();
+    return new JavaConfigBasedSetterPropertiesPlaceholderExampleImpl();
   }
 }
