@@ -21,18 +21,18 @@
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-cloud.version>2021.0.1</spring-cloud.version>
+    <spring-cloud.version>2021.0.2</spring-cloud.version>
     <testcontainers.version>1.17.1</testcontainers.version>
     <!--endregion-->
 
     <!--region Libs-->
     <vavr.version>0.10.4</vavr.version>
-    <checker.version>3.21.4</checker.version>
+    <checker.version>3.22.0</checker.version>
     <annotations.version>23.0.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
-    <spotbugs.version>4.6.0</spotbugs.version>
+    <spotbugs.version>4.7.0</spotbugs.version>
     <error_prone_annotations.version>2.13.1</error_prone_annotations.version>
-    <springdoc-openapi.version>1.6.7</springdoc-openapi.version>
+    <springdoc-openapi.version>1.6.8</springdoc-openapi.version>
     <!--endregion-->
 
     <!--region Test-libs-->
