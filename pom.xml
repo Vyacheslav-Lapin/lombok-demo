@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.6.7</version>
+    <version>2.7.0</version>
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -16,23 +16,23 @@
 
     <!--region General-->
     <java.version>18</java.version>
-    <minimal.maven.version>3.8.5</minimal.maven.version>
-    <spring-boot.version>2.6.7</spring-boot.version>
+    <minimal.maven.version>3.8.6</minimal.maven.version>
+    <spring-boot.version>2.7.0</spring-boot.version>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-cloud.version>2021.0.2</spring-cloud.version>
-    <testcontainers.version>1.17.1</testcontainers.version>
+    <spring-cloud.version>2021.0.3</spring-cloud.version>
+    <testcontainers.version>1.17.2</testcontainers.version>
     <!--endregion-->
 
     <!--region Libs-->
     <vavr.version>0.10.4</vavr.version>
-    <checker.version>3.22.0</checker.version>
+    <checker.version>3.22.2</checker.version>
     <annotations.version>23.0.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
     <spotbugs.version>4.7.0</spotbugs.version>
-    <error_prone_annotations.version>2.13.1</error_prone_annotations.version>
-    <springdoc-openapi.version>1.6.8</springdoc-openapi.version>
+    <error_prone_annotations.version>2.14.0</error_prone_annotations.version>
+    <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
     <!--endregion-->
 
     <!--region Test-libs-->
@@ -42,7 +42,7 @@
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
     <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
-    <versions-maven-plugin.version>2.10.0</versions-maven-plugin.version>
+    <versions-maven-plugin.version>2.11.0</versions-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.0.2155</sonar-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>

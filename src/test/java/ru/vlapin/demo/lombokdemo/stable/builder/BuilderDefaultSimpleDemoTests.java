@@ -1,5 +1,6 @@
 package ru.vlapin.demo.lombokdemo.stable.builder;
 
+import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +12,14 @@ class BuilderDefaultSimpleDemoTests {
   @DisplayName("@Builder.Default works correctly")
   void builderDefaultWorksCorrectlyTest() {
 
-    assertThat(BuilderDefaultSimpleDemo.builder().build()).isNotNull()
+    val builderDefaultSimpleDemo = BuilderDefaultSimpleDemo.builder().build();
+    assertThat(builderDefaultSimpleDemo).isNotNull()
         .extracting("x")
         .isEqualTo(7);
 
-    assertThat(BuilderDefaultSimpleDemo.builder().x(5).build()).isNotNull()
-        .extracting("x")
-        .isEqualTo(5);
+    for (int x : new int[] {1, 2, 3})
+      assertThat(BuilderDefaultSimpleDemo.builder().x(x).build()).isNotNull()
+          .extracting("x")
+          .isEqualTo(x);
   }
 }
