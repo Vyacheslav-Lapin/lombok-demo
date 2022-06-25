@@ -1,7 +1,8 @@
 package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 
-import lombok.SneakyThrows;
-import org.jetbrains.annotations.Contract;
+import lombok.RequiredArgsConstructor;
+import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
@@ -12,19 +13,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PostControllerTest {
 
-  private final long id = 57L;
-  private final PostService postService;
-
-  @Autowired
-  @Contract(pure = true)
-  public PostControllerTest(PostService postService) {
-    this.postService = postService;
-  }
+  long id = 57L;
+  PostService postService;
 
   @Test
-  @SneakyThrows
+  @Ignore
+  @Disabled("jsonplaceholder site is no longer available...")
   @DisplayName("Get method works correctly")
   void get() {
     assertThat(postService.all()).isNotNull()
@@ -33,7 +30,7 @@ class PostControllerTest {
   }
 
   @Test
-  @SneakyThrows
+  @Disabled("jsonplaceholder site is no longer available...")
   @DisplayName("Get one post method works correctly")
   void getOnePostMethodWorksCorrectlyTest() {
     assertThat(postService.findById(id)).isNotNull()
