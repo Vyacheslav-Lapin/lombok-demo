@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.1</version>
+    <version>2.7.2</version>
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -17,23 +20,27 @@
     <!--region General-->
     <java.version>18</java.version>
     <minimal.maven.version>3.8.6</minimal.maven.version>
-    <spring-boot.version>2.7.0</spring-boot.version>
+    <spring-boot.version>2.7.1</spring-boot.version>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
     <spring-cloud.version>2021.0.3</spring-cloud.version>
-    <testcontainers.version>1.17.2</testcontainers.version>
+    <testcontainers.version>1.17.3</testcontainers.version>
     <!--endregion-->
 
     <!--region Libs-->
     <vavr.version>0.10.4</vavr.version>
-    <checker.version>3.22.2</checker.version>
+    <checker.version>3.23.0</checker.version>
     <annotations.version>23.0.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
-    <spotbugs.version>4.7.0</spotbugs.version>
+    <spotbugs.version>4.7.1</spotbugs.version>
     <error_prone_annotations.version>2.14.0</error_prone_annotations.version>
     <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
     <!--endregion-->
+
+    <origSourceDir>${project.basedir}/src/main/java</origSourceDir>
+    <sourceDir>${origSourceDir}</sourceDir>
+    <delombokedSourceDir>${project.build.directory}/delombok</delombokedSourceDir>
 
     <!--region Test-libs-->
     <!--endregion-->
@@ -48,9 +55,19 @@
     <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <yaml-properties-maven-plugin.version>1.1.3</yaml-properties-maven-plugin.version>
+    <maven-source-plugin.version>3.2.0</maven-source-plugin.version>
     <!--endregion-->
 
   </properties>
+
+  <profiles>
+    <profile>
+      <id>build</id>
+      <properties>
+        <sourceDir>${delombokedSourceDir}</sourceDir>
+      </properties>
+    </profile>
+  </profiles>
 
   <dependencyManagement>
     <dependencies>
@@ -325,6 +342,19 @@
           </configuration>
         </plugin>
 
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>${maven-enforcer-plugin.version}</version>

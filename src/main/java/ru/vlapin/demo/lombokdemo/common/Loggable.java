@@ -11,6 +11,7 @@ import lombok.val;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
@@ -36,12 +37,19 @@ public @interface Loggable {
 @ExtensionMethod(AspectUtils.class)
 final class LoggableAspect {
 
+  @Pointcut("@annotation(Loggable) || within(@Loggable *)"
+                + " || execution(@(@Loggable *) * *(..)) || within (@(@Loggable *) *)"
+                + " || execution(@(@(@Loggable *) *) * *(..)) || within (@(@(@Loggable *) *) *)"
+                + " || execution(@(@(@(@Loggable *) *) *) * *(..)) || within (@(@(@(@Loggable *) *) *) *)"
+                + " || execution(@(@(@(@(@Loggable *) *) *) *) * *(..)) || within (@(@(@(@(@Loggable *) *) *) *) *)"
+                + " || execution(@(@(@(@(@(@Loggable *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@Loggable *) *) *) *) *) *)"
+                + " || execution(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *)"
+                + " || execution(@(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *) *)")
+  void pointcut() {
+  }
+
   @SneakyThrows
-  @Around(
-      "@annotation(Loggable) || within(@Loggable *)"
-          + "@execution(@(@Loggable * *(..))) || within(@(@Loggable *))"
-          + "@execution(@(@(@Loggable * *(..)))) || within(@(@(@Loggable *)))"
-  )
+  @Around("pointcut()")
   Object aroundAdvice(ProceedingJoinPoint pjp) {
     val methodName = pjp.getSignature().getName();
     val args = pjp.getArgs();

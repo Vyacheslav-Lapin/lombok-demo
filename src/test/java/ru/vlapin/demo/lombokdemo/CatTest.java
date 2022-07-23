@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.hateoas.MediaTypes.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,10 +26,10 @@ class CatTest {
   @SneakyThrows
   @DisplayName("Cats is accessible via REST")
   void catsIsAccessibleViaRestTest() {
-    mockMvc.perform(get("/cats"))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(HAL_JSON_VALUE))
-        .andExpect(jsonPath("$.page.totalElements").isNumber())
-        .andExpect(jsonPath("$.page.totalElements").value(3));
+    mockMvc.perform(MockMvcRequestBuilders.get("/cats"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.page.totalElements").isNumber())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.page.totalElements").value(3));
   }
 }
