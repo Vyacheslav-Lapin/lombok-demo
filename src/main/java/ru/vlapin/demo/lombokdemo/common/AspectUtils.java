@@ -9,13 +9,17 @@ import io.vavr.CheckedFunction2;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jetbrains.annotations.NotNull;
 
+import org.springframework.core.annotation.AnnotatedElementUtils;
+
 @UtilityClass
+@ExtensionMethod(AnnotatedElementUtils.class)
 public class AspectUtils {
 
   @SneakyThrows
@@ -35,15 +39,15 @@ public class AspectUtils {
                                                 Class<A> annotationClass) {
     return getMethod(pjp)
         .flatMap(method -> Optional.ofNullable(
-            Optional.ofNullable(method.getAnnotation(annotationClass))
-                .orElseGet(() -> method.getDeclaringClass().getAnnotation(annotationClass))))
+            Optional.ofNullable(method.findMergedAnnotation(annotationClass))
+                .orElseGet(() -> method.getDeclaringClass().findMergedAnnotation(annotationClass))))
         .orElseThrow();
   }
 
   public <A extends Annotation> Tuple2<A, Method> getAnnotationAndMethod(ProceedingJoinPoint pjp,
                                                                          Class<A> annotationClass) {
     return getMethod(pjp)
-        .map(method -> Tuple.of(method.getAnnotation(annotationClass), method))
+        .map(method -> Tuple.of(method.findMergedAnnotation(annotationClass), method))
         .orElseThrow();
   }
 
@@ -62,7 +66,7 @@ public class AspectUtils {
 
   public <A extends Annotation> A getAnnotation(@NotNull Method method,
                                                 Class<A> aClass) {
-    return Optional.ofNullable(method.getAnnotation(aClass))
+    return Optional.ofNullable(method.findMergedAnnotation(aClass))
         .orElseThrow();
   }
 }
