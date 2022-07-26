@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
@@ -21,7 +20,7 @@ class PostControllerTest {
 
   @Test
   @Ignore
-  @Disabled("jsonplaceholder site is no longer available...")
+//  @Disabled("jsonplaceholder site is no longer available...")
   @DisplayName("Get method works correctly")
   void get() {
     assertThat(postService.all()).isNotNull()
@@ -30,7 +29,7 @@ class PostControllerTest {
   }
 
   @Test
-  @Disabled("jsonplaceholder site is no longer available...")
+//  @Disabled("jsonplaceholder site is no longer available...")
   @DisplayName("Get one post method works correctly")
   void getOnePostMethodWorksCorrectlyTest() {
     assertThat(postService.findById(id)).isNotNull()
