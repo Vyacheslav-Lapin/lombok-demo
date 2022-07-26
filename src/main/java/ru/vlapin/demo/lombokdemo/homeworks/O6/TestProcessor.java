@@ -1,39 +1,52 @@
 package ru.vlapin.demo.lombokdemo.homeworks.O6;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import io.vavr.CheckedConsumer;
+import io.vavr.CheckedFunction0;
+import io.vavr.Function1;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
+import io.vavr.control.Try;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
+import lombok.val;
+import ru.vlapin.demo.lombokdemo.common.StreamUtils;
+
+import static java.lang.reflect.Modifier.*;
 
 @UtilityClass
-@ExtensionMethod(Arrays.class)
+@ExtensionMethod({Arrays.class, StreamUtils.class})
 public class TestProcessor {
+  public <T> Map<Method, Try<Void>> runTests(Class<T> testExampleClass) {
 
-//  private <T> Function<Class<T>, Consumer<T>> GET_BEFORE =
-//  private Function<Class<?>, Consumer<?>> GET_BEFORE = aClass ->
-//      aClass.getDeclaredMethods()
-//          .stream()
+    val getNewInstance = CheckedFunction0.of(testExampleClass::getConstructor)
+                             .andThen(Constructor::newInstance)
+                             .unchecked();
 
-//  private Method[] GET_AFTER
-//
-//  public Stream<Try<Boolean>> main(String... classNames) {
-//    return classNames.stream()
-//        .map(ReflectionUtils::toClass)
-//        .map(Class::getDeclaredMethods)
-//        .flatMap(Arrays::stream)
-//        .filter(method -> method.isAnnotationPresent(Test.class))
-//        .map(TestProcessor::callTest);
-//  }
-//
-//  private Try<Boolean> callTest(Method testMethod) {
-//    val declaringClass = testMethod.getDeclaringClass();
-//    try {
-//      val object = declaringClass.getConstructor().newInstance();
-//
-//    }
-//    catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-//      e.printStackTrace();
-//      return Try.failure(e);
-//    }
-//  }
+    Function1<Class<? extends Annotation>, Stream<Tuple2<Method, CheckedConsumer<T>>>> getAnnotatedMethods =
+        annotationClass -> testExampleClass.getDeclaredMethods().stream()
+                               .filter(method -> !method.isSynthetic())
+                               .filter(method -> !isStatic(method.getModifiers()))
+                               .filter(method -> method.isAnnotationPresent(annotationClass))
+                               .peek(method -> method.setAccessible(true))
+                               .map(method -> Tuple.of(method, CheckedConsumer.of(method::invoke)));
+
+    return getAnnotatedMethods.apply(Test.class)
+               .map(test -> test.map2(testMethod -> getAnnotatedMethods.apply(Before.class)
+                                                        .map(Tuple2::_2)
+                                                        .reverse()
+                                                        .reduce(testMethod, (method, beforeMethod) -> beforeMethod.andThen(method))))
+               .map(test -> test.map2(testMethod -> getAnnotatedMethods.apply(After.class)
+                                                        .map(Tuple2::_2)
+                                                        .reduce(testMethod, CheckedConsumer::andThen)))
+               .map(test -> test.map2(testMethod -> Try.run(() -> testMethod.accept(getNewInstance.apply()))))
+               .collect(Collectors.toUnmodifiableMap(Tuple2::_1, Tuple2::_2));
+  }
 }
