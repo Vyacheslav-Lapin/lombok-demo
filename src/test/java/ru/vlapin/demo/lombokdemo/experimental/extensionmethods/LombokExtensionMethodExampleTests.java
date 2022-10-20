@@ -23,4 +23,12 @@ class LombokExtensionMethodExampleTests {
                    .getSortedArray()).isNotNull()
         .containsExactly(2, 3, 5, 8);
   }
+
+  @Test
+  @SneakyThrows
+  @DisplayName("format String method works correctly as a extention method")
+  void formatStringMethodWorksCorrectlyAsAExtentionMethodTest() {
+    assertThat(new LombokExtensionMethodExample().hw(5)).isNotNull()
+        .isEqualTo("Hello, 5 World!");
+  }
 }

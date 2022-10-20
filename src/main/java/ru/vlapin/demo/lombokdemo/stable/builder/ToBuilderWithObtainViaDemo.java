@@ -5,11 +5,11 @@ import lombok.Builder;
 @Builder(toBuilder = true)
 @SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class ToBuilderWithObtainViaDemo {
-  @Builder.ObtainVia(method = "s")
+  @Builder.ObtainVia(method = "newS")
   String s;
 
   @SuppressWarnings("unused")
-  private String s() {
+  private String newS() {
     return "%s copy".formatted(s);
   }
 

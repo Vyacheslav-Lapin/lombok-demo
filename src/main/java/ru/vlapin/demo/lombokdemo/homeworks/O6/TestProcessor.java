@@ -5,12 +5,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.vavr.CheckedConsumer;
 import io.vavr.CheckedFunction0;
-import io.vavr.Function1;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.control.Try;
@@ -22,7 +22,10 @@ import ru.vlapin.demo.lombokdemo.common.StreamUtils;
 import static java.lang.reflect.Modifier.*;
 
 @UtilityClass
-@ExtensionMethod({Arrays.class, StreamUtils.class})
+@ExtensionMethod({
+    Arrays.class,
+    StreamUtils.class,
+})
 public class TestProcessor {
   public <T> Map<Method, Try<Void>> runTests(Class<T> testExampleClass) {
 
@@ -30,7 +33,7 @@ public class TestProcessor {
                              .andThen(Constructor::newInstance)
                              .unchecked();
 
-    Function1<Class<? extends Annotation>, Stream<Tuple2<Method, CheckedConsumer<T>>>> getAnnotatedMethods =
+    Function<Class<? extends Annotation>, Stream<Tuple2<Method, CheckedConsumer<T>>>> getAnnotatedMethods =
         annotationClass -> testExampleClass.getDeclaredMethods().stream()
                                .filter(method -> !method.isSynthetic())
                                .filter(method -> !isStatic(method.getModifiers()))

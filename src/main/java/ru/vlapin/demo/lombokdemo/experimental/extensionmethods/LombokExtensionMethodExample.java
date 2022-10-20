@@ -4,22 +4,30 @@ import java.util.Arrays;
 
 import lombok.experimental.ExtensionMethod;
 
-@ExtensionMethod({Arrays.class, Extensions.class})
+@ExtensionMethod({
+    Arrays.class,
+    String.class,
+    Extensions.class,
+})
 public class LombokExtensionMethodExample {
 
   String useExtensionMethods() {
     String iAmNull = null;
 
     return iAmNull.or("hELlO, WORlD!".toTitleCase());
-    // return Extensions.or(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
+//     return Extensions.or(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
   }
 
-  public final int[] getSortedArray() {
+  public int[] getSortedArray() {
     int[] intarray = {5, 3, 8, 2};
 
     intarray.sort();
     // Arrays.sort(intarray);
 
     return intarray;
+  }
+
+  public String hw(int count) {
+    return "Hello, %d World!".format(count);
   }
 }

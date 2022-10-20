@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 // Решение:
 @EqualsAndHashCode
 @AllArgsConstructor
+@SuppressWarnings("java:S125")
 public class EqualsAndHashCodeSimpleExample {
   private int x;
   private String s;

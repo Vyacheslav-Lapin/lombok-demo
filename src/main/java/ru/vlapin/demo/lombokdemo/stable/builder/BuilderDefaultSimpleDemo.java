@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(makeFinal = true)
 //@AllArgsConstructor(access = PACKAGE)
+@SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class BuilderDefaultSimpleDemo {
 
   @Builder.Default int x = 7; // int x;

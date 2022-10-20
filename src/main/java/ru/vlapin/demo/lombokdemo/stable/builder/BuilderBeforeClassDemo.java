@@ -6,6 +6,7 @@ import lombok.Builder;
 //@AllArgsConstructor(access = PACKAGE,
 //                    onConstructor_ = @Builder)
 @Builder
+@SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class BuilderBeforeClassDemo {
   int x;
   String s;

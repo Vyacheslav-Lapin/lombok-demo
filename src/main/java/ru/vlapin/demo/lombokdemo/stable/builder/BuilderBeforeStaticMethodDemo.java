@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
+@SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class BuilderBeforeStaticMethodDemo {
 
   @Builder

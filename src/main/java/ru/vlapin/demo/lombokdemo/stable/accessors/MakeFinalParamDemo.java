@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 @With
 @Value
 @Accessors(makeFinal = true)
+@SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class MakeFinalParamDemo {
   int x;
 

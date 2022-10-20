@@ -3,6 +3,7 @@ package ru.vlapin.demo.lombokdemo.stable.equalshashcode;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class EqualsAndHashCodeInheritanceExample extends EqualsAndHashCodeSimpleExample {
 
   private boolean b;
