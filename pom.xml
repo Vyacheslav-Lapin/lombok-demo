@@ -18,7 +18,7 @@
   <properties>
 
     <!--region General-->
-    <java.version>18</java.version>
+    <java.version>19</java.version>
     <minimal.maven.version>3.8.6</minimal.maven.version>
     <spring-boot.version>2.7.5</spring-boot.version>
     <!--endregion-->
@@ -29,7 +29,9 @@
     <!--endregion-->
 
     <!--region Libs-->
+    <lombok.version>20221010</lombok.version>
     <vavr.version>0.10.4</vavr.version>
+    <snakeyaml.version>1.33</snakeyaml.version>
     <checker.version>3.26.0</checker.version>
     <annotations.version>23.0.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
@@ -49,7 +51,7 @@
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
     <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
-    <versions-maven-plugin.version>2.12.0</versions-maven-plugin.version>
+    <versions-maven-plugin.version>2.13.0</versions-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>
@@ -59,6 +61,13 @@
     <!--endregion-->
 
   </properties>
+
+  <repositories>
+    <repository>
+      <id>my-local-repo</id>
+      <url>file://${basedir}/libs</url>
+    </repository>
+  </repositories>
 
   <profiles>
     <profile>
@@ -94,10 +103,10 @@
 
       <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne)-->
       <dependency>
-        <groupId>org.checkerframework</groupId>
-        <artifactId>checker</artifactId>
-        <version>${checker.version}</version>
-        <scope>provided</scope>
+        <groupId>net.jcip</groupId>
+        <artifactId>jcip-annotations</artifactId>
+        <version>${jcip-annotations.version}</version>
+        <optional>true</optional>
       </dependency>
       <dependency>
         <groupId>org.jetbrains</groupId>
@@ -106,10 +115,10 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>net.jcip</groupId>
-        <artifactId>jcip-annotations</artifactId>
-        <version>${jcip-annotations.version}</version>
-        <optional>true</optional>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker</artifactId>
+        <version>${checker.version}</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>com.github.spotbugs</groupId>
@@ -133,12 +142,12 @@
       </dependency>
       <dependency>
         <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-data-rest</artifactId>
+        <artifactId>springdoc-openapi-security</artifactId>
         <version>${springdoc-openapi.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-security</artifactId>
+        <artifactId>springdoc-openapi-data-rest</artifactId>
         <version>${springdoc-openapi.version}</version>
       </dependency>
       <!--endregion-->

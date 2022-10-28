@@ -9,7 +9,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-public interface AnnotationBasedSetterPropertiesPlaceholderExample {
+public sealed interface AnnotationBasedSetterPropertiesPlaceholderExample {
 
   String getHost();
 
@@ -30,7 +30,7 @@ public interface AnnotationBasedSetterPropertiesPlaceholderExample {
 @Data
 @Validated
 @ConfigurationProperties("my-properties")
-class AnnotationBasedSetterPropertiesPlaceholderExampleImpl
+final class AnnotationBasedSetterPropertiesPlaceholderExampleImpl
     implements AnnotationBasedSetterPropertiesPlaceholderExample {
 
   /**

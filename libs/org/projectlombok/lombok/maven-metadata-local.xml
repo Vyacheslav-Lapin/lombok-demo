@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.projectlombok</groupId>
+  <artifactId>lombok</artifactId>
+  <versioning>
+    <release>20221010</release>
+    <versions>
+      <version>20221010</version>
+    </versions>
+    <lastUpdated>20221028195841</lastUpdated>
+  </versioning>
+</metadata>

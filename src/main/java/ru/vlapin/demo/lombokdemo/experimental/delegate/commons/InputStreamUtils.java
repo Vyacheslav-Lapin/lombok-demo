@@ -19,50 +19,55 @@ import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
-@ExtensionMethod(InputStreamUtils.class)
+@ExtensionMethod({
+    Files.class,
+})
 public class InputStreamUtils {
 
   @SneakyThrows
   public <T> T mapFileInputStream(@NotNull String fileName,
                                   @NotNull CheckedFunction1<InputStream, T> fisMapper) {
-    @Cleanup var inputStream =
-        InputStreamUtils.class
-            .getResourceAsStream("/%s".formatted(fileName));
+
+    @Cleanup val inputStream = InputStreamUtils.class
+                                   .getResourceAsStream(fileName.startsWith("/") ? fileName :"/" + fileName);
+
     return fisMapper.apply(inputStream);
   }
 
   @SneakyThrows
   public void withFileInputStream(@NotNull String fileName,
-                                  @NotNull CheckedConsumer<InputStream> fisConsumer) {
-    if (!fileName.startsWith("/"))
-      fileName = "/%s".formatted(fileName);
-    @Cleanup val inputStream = InputStreamUtils.class.getResourceAsStream(fileName);
+                                  @NotNull CheckedConsumer<? super InputStream> fisConsumer) {
+
+    @Cleanup val inputStream =
+        InputStreamUtils.class.getResourceAsStream(
+            fileName.startsWith("/") ? fileName : "/" + fileName); //todo 29.10.2022: fix for windows addresses ("C:/...")
+
     fisConsumer.accept(inputStream);
   }
 
   @SneakyThrows
   public String getFileAsString(@NotNull Path file) {
-    @Cleanup Stream<String> stringStream = Files.lines(file);
+    @Cleanup Stream<String> stringStream = file.lines();
     return stringStream.collect(Collectors.joining());
   }
 
   public Optional<Path> getPath(@NotNull String fileName) {
-    if (!fileName.startsWith("/"))
-      fileName = "/%s".formatted(fileName);
-    return Optional.ofNullable(InputStreamUtils.class.getResource(fileName))
+    return Optional.ofNullable(
+            InputStreamUtils.class.getResource(
+                fileName.startsWith("/") ? fileName : "/" + fileName)) //todo 29.10.2022: fix for windows addresses ("C:/...")
                .map(URL::getFile)
                .map(Paths::get);
   }
 
   @SneakyThrows
   public Optional<String> getFileAsString(String folder, String fileName) {
-    return getPath("%s/%s".formatted(folder, fileName))
+    return getPath("%s/%s".formatted(folder, fileName)) //todo 29.10.2022: fix for windows addresses ("C:/...")
                .map(InputStreamUtils::getFileAsString);
   }
 
   @SneakyThrows
   public Optional<String> getFileAsString(String fileName) {
-    return getPath("/%s".formatted(fileName))
+    return getPath(fileName.startsWith("/") ? fileName : "/" + fileName) //todo 29.10.2022: fix for windows addresses ("C:/...")
                .map(InputStreamUtils::getFileAsString);
   }
 }
