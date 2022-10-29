@@ -15,16 +15,19 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.experimental.ExtensionMethod;
+import lombok.val;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.commons.Function3Util;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.commons.InputStreamUtils;
+import ru.vlapin.demo.lombokdemo.common.FileUtils;
+import ru.vlapin.demo.lombokdemo.common.Function3Utils;
 
 import static lombok.AccessLevel.*;
 
 @Value
 @Getter(NONE)
-@ExtensionMethod(Function3Util.class)
+@ExtensionMethod({
+    Function3Utils.class,
+})
 public class ConnectionFactory implements Supplier<Stream<Connection>> {
 
   String url;
@@ -39,7 +42,7 @@ public class ConnectionFactory implements Supplier<Stream<Connection>> {
   @SneakyThrows
   public Stream<Connection> get() {
 
-    Supplier<Connection> connectionSupplier =
+    val connectionSupplier =
         CheckedFunction3.<String, String, String, Connection>of(DriverManager::getConnection)
             .unchecked()
             .supply(url, user, password);
@@ -58,7 +61,7 @@ public class ConnectionFactory implements Supplier<Stream<Connection>> {
     return IntStream.iterate(1, operand -> operand + 1)
         .mapToObj(String::valueOf)
         .map(fileName -> String.format("/%s/%s.sql", initScriptsPath, fileName))
-        .map(InputStreamUtils::getPath)
+        .map(FileUtils::getPathFromFileName)
         .takeWhile(Optional::isPresent)
         .flatMap(Optional::stream);
   }

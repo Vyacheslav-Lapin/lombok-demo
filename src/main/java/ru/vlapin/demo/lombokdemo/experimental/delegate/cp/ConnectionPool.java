@@ -13,9 +13,9 @@ import io.vavr.Function2;
 import lombok.SneakyThrows;
 import lombok.experimental.NonFinal;
 import lombok.val;
+import ru.vlapin.demo.lombokdemo.common.FileUtils;
 import ru.vlapin.demo.lombokdemo.experimental.delegate.PooledConnection;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.commons.InputStreamUtils;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.properties.PropsBinder;
+import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
 
 public class ConnectionPool implements Closeable, Supplier<Connection> {
 
@@ -28,7 +28,7 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
   @SneakyThrows
   private ConnectionPool(String fileName) {
 
-    val connectionFactory = PropsBinder.from(fileName, ConnectionFactory.class);
+    val connectionFactory = PropertiesUtils.from(fileName, ConnectionFactory.class);
 
     Function<Connection, PooledConnection> pooledConnectionFactory =
         Function2.of(PooledConnection::new)
@@ -40,7 +40,7 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
 
     //init
     val sql = connectionFactory.getSqlInitFiles()
-        .map(InputStreamUtils::getFileAsString)
+        .map(FileUtils::getFileAsString)
         .collect(Collectors.joining());
 
     try (val connection = get();

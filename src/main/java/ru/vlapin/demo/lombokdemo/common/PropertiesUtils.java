@@ -1,4 +1,4 @@
-package ru.vlapin.demo.lombokdemo.experimental.delegate.properties;
+package ru.vlapin.demo.lombokdemo.common;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -12,17 +12,17 @@ import io.vavr.CheckedFunction1;
 import io.vavr.Function1;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
+import lombok.experimental.StandardException;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.commons.InputStreamUtils;
 
 @UtilityClass
 @ExtensionMethod({
     Arrays.class,
     InputStreamUtils.class,
 })
-public class PropsBinder {
+public class PropertiesUtils {
 
   @NotNull
   public <T> T from(Class<T> tClass) {
@@ -70,7 +70,7 @@ public class PropsBinder {
   @NotNull
   @SuppressWarnings("unchecked")
   public <T> Constructor<T> getMaxArgsCountConstructor(@NotNull Class<T> tClass) {
-    return (Constructor<T>) Arrays.stream(tClass.getConstructors())
+    return (Constructor<T>) tClass.getConstructors().stream()
                                 .max(Comparator.comparingInt(Constructor::getParameterCount))
                                 .orElseThrow(() -> new PropsBinderException("Нет ни одного конструктора!"));
   }
@@ -113,4 +113,8 @@ public class PropsBinder {
       throw new PropsBinderException("Type must not be an interface or abstract class!");
     return from(s -> getProperty.apply(String.format("%s.%s", prefix, s)), type);
   }
+}
+
+@StandardException
+class PropsBinderException extends RuntimeException {
 }

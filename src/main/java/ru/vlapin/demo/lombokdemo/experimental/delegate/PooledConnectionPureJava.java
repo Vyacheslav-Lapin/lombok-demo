@@ -30,7 +30,8 @@ public class PooledConnectionPureJava implements Connection {
 //  @Delegate(excludes = Closeable.class)
   Connection connection;
 
-  public PooledConnectionPureJava(Consumer<PooledConnectionPureJava> closer, Connection connection) {
+  public PooledConnectionPureJava(Consumer<PooledConnectionPureJava> closer,
+                                  Connection connection) {
     this.closer = closer;
     this.connection = connection;
   }

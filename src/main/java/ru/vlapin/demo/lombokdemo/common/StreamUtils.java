@@ -14,6 +14,7 @@ public class StreamUtils {
   public <T> Stream<T> reverse(@NotNull Stream<T> input) {
     val temp = input.toArray();
     return (Stream<T>) IntStream.range(0, temp.length)
-                           .mapToObj(i -> temp[temp.length - i - 1]);
+                           .map(i -> temp.length - i - 1)
+                           .mapToObj(i -> temp[i]);
   }
 }
