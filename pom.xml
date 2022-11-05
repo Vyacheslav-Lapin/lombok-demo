@@ -9,6 +9,9 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.7.5</version>
+<!--    <groupId>org.springframework.cloud</groupId>-->
+<!--    <artifactId>spring-cloud-starter-parent</artifactId>-->
+<!--    <version>2021.0.5</version>-->
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -24,7 +27,7 @@
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-cloud.version>2021.0.4</spring-cloud.version>
+    <spring-cloud.version>2021.0.5</spring-cloud.version>
     <testcontainers.version>1.17.5</testcontainers.version>
     <!--endregion-->
 
@@ -32,7 +35,7 @@
     <lombok.version>20221010</lombok.version>
     <vavr.version>0.10.4</vavr.version>
     <snakeyaml.version>1.33</snakeyaml.version>
-    <checker.version>3.26.0</checker.version>
+    <checker.version>3.27.0</checker.version>
     <annotations.version>23.0.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
     <spotbugs.version>4.7.3</spotbugs.version>
@@ -168,6 +171,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-rest</artifactId>
     </dependency>
+    <!--suppress VulnerableLibrariesLocal -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>

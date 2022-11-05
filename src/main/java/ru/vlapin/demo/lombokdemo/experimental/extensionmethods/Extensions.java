@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class Extensions {
 
   @Contract(value = "null, _ -> param2; !null, _ -> param1", pure = true)
-  public <T> T or(T that, T ifNull) {
+  public <T> T or(T that, @NotNull T ifNull) {
     return that == null ? ifNull : that;
   }
 
