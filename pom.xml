@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="
+          http://maven.apache.org/POM/4.0.0
+          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.5</version>
-<!--    <groupId>org.springframework.cloud</groupId>-->
-<!--    <artifactId>spring-cloud-starter-parent</artifactId>-->
-<!--    <version>2021.0.5</version>-->
+    <version>3.0.1</version>
+    <!--    <groupId>org.springframework.cloud</groupId>-->
+    <!--    <artifactId>spring-cloud-starter-parent</artifactId>-->
+    <!--    <version>2021.0.5</version>-->
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -22,30 +22,26 @@
 
     <!--region General-->
     <java.version>19</java.version>
-    <minimal.maven.version>3.8.6</minimal.maven.version>
-    <spring-boot.version>2.7.5</spring-boot.version>
+    <minimal.maven.version>3.8.7</minimal.maven.version>
+    <spring-boot.version>3.0.1</spring-boot.version>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-cloud.version>2021.0.5</spring-cloud.version>
-    <testcontainers.version>1.17.5</testcontainers.version>
+    <spring-cloud.version>2022.0.0</spring-cloud.version>
+    <testcontainers.version>1.17.6</testcontainers.version>
     <!--endregion-->
 
     <!--region Libs-->
     <lombok.version>20221010</lombok.version>
     <vavr.version>0.10.4</vavr.version>
     <snakeyaml.version>1.33</snakeyaml.version>
-    <checker.version>3.27.0</checker.version>
-    <annotations.version>23.0.0</annotations.version>
+    <checker.version>3.28.0</checker.version>
+    <annotations.version>23.1.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
     <spotbugs.version>4.7.3</spotbugs.version>
-    <error_prone_annotations.version>2.16</error_prone_annotations.version>
-    <springdoc-openapi.version>1.6.12</springdoc-openapi.version>
+    <error_prone_annotations.version>2.17.0</error_prone_annotations.version>
+    <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
     <!--endregion-->
-
-    <origSourceDir>${project.basedir}/src/main/java</origSourceDir>
-    <sourceDir>${origSourceDir}</sourceDir>
-    <delombokedSourceDir>${project.build.directory}/delombok</delombokedSourceDir>
 
     <!--region Test-libs-->
     <!--endregion-->
@@ -53,11 +49,11 @@
     <!--region Plugins-->
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
-    <versions-maven-plugin.version>2.13.0</versions-maven-plugin.version>
-    <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+    <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
+    <versions-maven-plugin.version>2.14.2</versions-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.0.0</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.7.3.0</spotbugs-maven-plugin.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <yaml-properties-maven-plugin.version>1.1.3</yaml-properties-maven-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
@@ -75,9 +71,12 @@
   <profiles>
     <profile>
       <id>build</id>
+
       <properties>
+        <!--suppress UnresolvedMavenProperty -->
         <sourceDir>${delombokedSourceDir}</sourceDir>
       </properties>
+
     </profile>
   </profiles>
 
@@ -140,17 +139,12 @@
       <!--region OpenAPI-->
       <dependency>
         <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-ui</artifactId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         <version>${springdoc-openapi.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-security</artifactId>
-        <version>${springdoc-openapi.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-data-rest</artifactId>
+        <artifactId>springdoc-openapi-starter-common</artifactId>
         <version>${springdoc-openapi.version}</version>
       </dependency>
       <!--endregion-->
@@ -159,6 +153,7 @@
   </dependencyManagement>
 
   <dependencies>
+    <!--suppress VulnerableLibrariesLocal -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -190,7 +185,7 @@
     </dependency>
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+      <artifactId>thymeleaf-extras-springsecurity6</artifactId>
     </dependency>
 
     <dependency>
@@ -276,15 +271,11 @@
     <!--region OpenAPI-->
     <dependency>
       <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-data-rest</artifactId>
+      <artifactId>springdoc-openapi-starter-common</artifactId>
     </dependency>
     <!--endregion-->
 
@@ -457,16 +448,6 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>com.github.spotbugs</groupId>
-          <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>${spotbugs-maven-plugin.version}</version>
-          <configuration>
-            <effort>Max</effort>
-            <threshold>Low</threshold>
-            <xmlOutput>true</xmlOutput>
-          </configuration>
-        </plugin>
-        <plugin>
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok-maven-plugin</artifactId>
           <version>${lombok-maven-plugin.version}</version>
@@ -477,6 +458,16 @@
               <version>${lombok.version}</version>
             </dependency>
           </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>${spotbugs-maven-plugin.version}</version>
+          <configuration>
+            <effort>Max</effort>
+            <threshold>Low</threshold>
+            <xmlOutput>true</xmlOutput>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.springframework.boot</groupId>
@@ -533,6 +524,17 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>19</source>
+          <target>19</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
+  <modelVersion>4.0.0</modelVersion>
+
 </project>

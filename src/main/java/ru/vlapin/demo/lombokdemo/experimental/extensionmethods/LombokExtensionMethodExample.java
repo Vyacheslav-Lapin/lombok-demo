@@ -14,8 +14,8 @@ public class LombokExtensionMethodExample {
   String useExtensionMethods() {
     String iAmNull = null;
 
-    return iAmNull.or("hELlO, WORlD!".toTitleCase());
-//     return Extensions.or(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
+    return iAmNull.getIfNull("hELlO, WORlD!".toTitleCase());
+//     return Extensions.getIfNull(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
   }
 
   public int[] getSortedArray() {

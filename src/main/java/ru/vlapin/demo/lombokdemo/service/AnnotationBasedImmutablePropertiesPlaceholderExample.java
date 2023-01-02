@@ -2,9 +2,8 @@ package ru.vlapin.demo.lombokdemo.service;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 public interface AnnotationBasedImmutablePropertiesPlaceholderExample {
 
@@ -20,9 +19,8 @@ public interface AnnotationBasedImmutablePropertiesPlaceholderExample {
  * - no defaults (!!!)
  */
 @Getter
-@ConstructorBinding
-@RequiredArgsConstructor
 @ConfigurationProperties("mail.credentials")
+@RequiredArgsConstructor(onConstructor_ = @ConstructorBinding)
 class AnnotationBasedImmutablePropertiesPlaceholderExampleImpl
     implements AnnotationBasedImmutablePropertiesPlaceholderExample {
 
