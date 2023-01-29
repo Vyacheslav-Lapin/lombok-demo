@@ -4,6 +4,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok</artifactId>
-  <version>20221010</version>
+  <version>edge-SNAPSHOT</version>
   <description>POM was created from install:install-file</description>
 </project>

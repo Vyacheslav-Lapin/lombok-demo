@@ -3,10 +3,9 @@
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok</artifactId>
   <versioning>
-    <release>20221010</release>
     <versions>
-      <version>20221010</version>
+      <version>edge-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20221028195841</lastUpdated>
+    <lastUpdated>20230129150555</lastUpdated>
   </versioning>
 </metadata>

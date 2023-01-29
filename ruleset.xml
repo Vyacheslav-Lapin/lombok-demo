@@ -15,6 +15,17 @@
       </ignoreVersions>
     </rule>
 
+    <rule groupId="org.projectlombok"
+        artifactId="lombok" comparisonMethod="maven">
+      <ignoreVersions>
+        <ignoreVersion type="regex">1\.18\.2[0-4]</ignoreVersion>
+        <ignoreVersion type="regex">1\.18\.1\d</ignoreVersion>
+        <ignoreVersion type="regex">1\.18\.\d</ignoreVersion>
+        <ignoreVersion type="regex">1\.1[0-7]\.\d+</ignoreVersion>
+        <ignoreVersion type="regex">0\.\d+\.\d+(-RC\d)?</ignoreVersion>
+      </ignoreVersions>
+    </rule>
+
     <rule groupId="org.openapitools"
         artifactId="openapi-generator-maven-plugin" comparisonMethod="maven">
       <ignoreVersions>

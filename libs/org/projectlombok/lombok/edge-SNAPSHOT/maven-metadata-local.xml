@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>org.projectlombok</groupId>
+  <artifactId>lombok</artifactId>
+  <versioning>
+    <lastUpdated>20230129150555</lastUpdated>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>edge-SNAPSHOT</value>
+        <updated>20230129150555</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>edge-SNAPSHOT</value>
+        <updated>20230129150555</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>edge-SNAPSHOT</version>
+</metadata>

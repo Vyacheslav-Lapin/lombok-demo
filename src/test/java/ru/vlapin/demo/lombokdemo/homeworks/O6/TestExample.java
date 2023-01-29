@@ -1,7 +1,7 @@
 package ru.vlapin.demo.lombokdemo.homeworks.O6;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static ru.vlapin.demo.lombokdemo.common.TestUtils.fromSystemOutPrintln;
+import static org.assertj.core.api.Assertions.*;
+import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 
 import io.vavr.control.Try;
 import java.lang.reflect.InvocationTargetException;
@@ -10,7 +10,9 @@ import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
 
-@ExtensionMethod(TestProcessor.class)
+@ExtensionMethod({
+    TestProcessor.class,
+})
 class TestProcessorTests {
 
   @SneakyThrows
@@ -63,11 +65,13 @@ class TestProcessorTests {
 
 public class TestExample {
 
+  @SuppressWarnings("unused")
   @Before
   void before1() {
     System.out.println("before1");
   }
 
+  @SuppressWarnings("unused")
   @Before
   void before2() {
     System.out.println("before2");
@@ -88,11 +92,13 @@ public class TestExample {
     throw new RuntimeException("Boom!");
   }
 
+  @SuppressWarnings("unused")
   @After
   void after1() {
     System.out.println("after1");
   }
 
+  @SuppressWarnings("unused")
   @After
   void after2() {
     System.out.println("after2");
