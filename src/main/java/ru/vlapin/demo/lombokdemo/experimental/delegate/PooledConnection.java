@@ -3,7 +3,6 @@ package ru.vlapin.demo.lombokdemo.experimental.delegate;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.util.function.Consumer;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Delegate;

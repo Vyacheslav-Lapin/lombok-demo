@@ -1,13 +1,11 @@
 package ru.vlapin.demo.lombokdemo.stable.constructors;
 
 import java.beans.ConstructorProperties;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(
     // Как сгенерировать над конструктором:
-    onConstructor_ = @ConstructorProperties(
-        {"x", "s", "z"}))
+    onConstructor_ = @ConstructorProperties({"x", "s", "z"}))
 @SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class ConstructorPropertiesDemo {
   private int x;

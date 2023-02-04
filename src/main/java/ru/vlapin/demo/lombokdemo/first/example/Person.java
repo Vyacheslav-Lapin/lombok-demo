@@ -1,7 +1,6 @@
 package ru.vlapin.demo.lombokdemo.first.example;
 
 import java.time.LocalDate;
-
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;

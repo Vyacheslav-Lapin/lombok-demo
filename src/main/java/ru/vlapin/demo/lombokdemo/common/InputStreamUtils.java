@@ -1,9 +1,8 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import java.io.InputStream;
-
 import io.vavr.CheckedConsumer;
 import io.vavr.CheckedFunction1;
+import java.io.InputStream;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
@@ -18,11 +17,11 @@ import org.jetbrains.annotations.NotNull;
 public class InputStreamUtils {
 
   @SneakyThrows
+  @SuppressWarnings("unused")
   public <T> T mapFileInputStream(@NotNull String fileName,
                                   @NotNull CheckedFunction1<InputStream, T> fisMapper) {
 
-    @Cleanup
-    val inputStream = InputStreamUtils.class.getResourceAsStream(fileName.adoptFileName());
+    @Cleanup val inputStream = InputStreamUtils.class.getResourceAsStream(fileName.adoptFileName());
     return fisMapper.apply(inputStream);
   }
 
@@ -33,5 +32,4 @@ public class InputStreamUtils {
     val inputStream = InputStreamUtils.class.getResourceAsStream(fileName.adoptFileName());
     fisConsumer.accept(inputStream);
   }
-
 }

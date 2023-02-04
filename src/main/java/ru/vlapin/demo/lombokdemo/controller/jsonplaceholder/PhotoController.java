@@ -14,6 +14,7 @@ import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PhotoService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/photo")
+@SuppressWarnings("java:S125")
 public class PhotoController {
 
   PhotoService photoService;
@@ -32,11 +33,10 @@ public class PhotoController {
     return photoService.findById(id);
   }
 
-//  @NotNull
-//  @GetMapping
-//  @Contract(pure = true)
-//  public List<AlbumImpl> getByPostId(@RequestParam @NotNull Long postId) {
-//    return client.albumsByPostId(postId);
-//  }
-
+  //  @NotNull
+  //  @GetMapping
+  //  @Contract(pure = true)
+  //  public List<AlbumImpl> getByPostId(@RequestParam @NotNull Long postId) {
+  //    return client.albumsByPostId(postId);
+  //  }
 }

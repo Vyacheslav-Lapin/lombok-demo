@@ -13,6 +13,7 @@ import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.CommentService;
 
 @RestController
 @RequiredArgsConstructor
+@SuppressWarnings("java:S125")
 @RequestMapping("api/comments")
 public class CommentController {
 
@@ -28,15 +29,15 @@ public class CommentController {
   @NotNull
   @GetMapping("{id}")
   @Contract(pure = true)
+  @SuppressWarnings("java:S125")
   public Comment comment(@PathVariable @NotNull Long id) {
     return commentService.findById(id);
   }
 
-//  @NotNull
-//  @GetMapping
-//  @Contract(pure = true)
-//  public List<Comment> commentsByPostId(@RequestParam @NotNull Long postId) {
-//    return client.commentsByPostId(postId);
-//  }
-
+  //  @NotNull
+  //  @GetMapping
+  //  @Contract(pure = true)
+  //  public List<Comment> commentsByPostId(@RequestParam @NotNull Long postId) {
+  //    return client.commentsByPostId(postId);
+  //  }
 }

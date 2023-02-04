@@ -1,7 +1,6 @@
 package ru.vlapin.demo.lombokdemo.model;
 
 import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

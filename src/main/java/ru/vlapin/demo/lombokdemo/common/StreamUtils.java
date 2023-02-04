@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;

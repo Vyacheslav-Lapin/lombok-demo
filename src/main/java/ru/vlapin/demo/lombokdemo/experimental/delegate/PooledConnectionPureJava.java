@@ -1,33 +1,19 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate;
 
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.NClob;
-import java.sql.PreparedStatement;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Savepoint;
-import java.sql.Statement;
-import java.sql.Struct;
+import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
-
 import lombok.SneakyThrows;
 
 //@AllArgsConstructor
+@SuppressWarnings("unused")
 public class PooledConnectionPureJava implements Connection {
 
   Consumer<PooledConnectionPureJava> closer;
 
-//  @Delegate(excludes = Closeable.class)
+  // @Delegate(excludes = Closeable.class)
   Connection connection;
 
   public PooledConnectionPureJava(Consumer<PooledConnectionPureJava> closer,
@@ -70,13 +56,13 @@ public class PooledConnectionPureJava implements Connection {
   }
 
   @Override
-  public void setAutoCommit(boolean autoCommit) throws SQLException {
-    connection.setAutoCommit(autoCommit);
+  public boolean getAutoCommit() throws SQLException {
+    return connection.getAutoCommit();
   }
 
   @Override
-  public boolean getAutoCommit() throws SQLException {
-    return connection.getAutoCommit();
+  public void setAutoCommit(boolean autoCommit) throws SQLException {
+    connection.setAutoCommit(autoCommit);
   }
 
   @Override
@@ -100,18 +86,13 @@ public class PooledConnectionPureJava implements Connection {
   }
 
   @Override
-  public void setReadOnly(boolean readOnly) throws SQLException {
-    connection.setReadOnly(readOnly);
-  }
-
-  @Override
   public boolean isReadOnly() throws SQLException {
     return connection.isReadOnly();
   }
 
   @Override
-  public void setCatalog(String catalog) throws SQLException {
-    connection.setCatalog(catalog);
+  public void setReadOnly(boolean readOnly) throws SQLException {
+    connection.setReadOnly(readOnly);
   }
 
   @Override
@@ -120,13 +101,18 @@ public class PooledConnectionPureJava implements Connection {
   }
 
   @Override
-  public void setTransactionIsolation(int level) throws SQLException {
-    connection.setTransactionIsolation(level);
+  public void setCatalog(String catalog) throws SQLException {
+    connection.setCatalog(catalog);
   }
 
   @Override
   public int getTransactionIsolation() throws SQLException {
     return connection.getTransactionIsolation();
+  }
+
+  @Override
+  public void setTransactionIsolation(int level) throws SQLException {
+    connection.setTransactionIsolation(level);
   }
 
   @Override
@@ -165,13 +151,13 @@ public class PooledConnectionPureJava implements Connection {
   }
 
   @Override
-  public void setHoldability(int holdability) throws SQLException {
-    connection.setHoldability(holdability);
+  public int getHoldability() throws SQLException {
+    return connection.getHoldability();
   }
 
   @Override
-  public int getHoldability() throws SQLException {
-    return connection.getHoldability();
+  public void setHoldability(int holdability) throws SQLException {
+    connection.setHoldability(holdability);
   }
 
   @Override
@@ -255,11 +241,6 @@ public class PooledConnectionPureJava implements Connection {
   }
 
   @Override
-  public void setClientInfo(Properties properties) throws SQLClientInfoException {
-    connection.setClientInfo(properties);
-  }
-
-  @Override
   public String getClientInfo(String name) throws SQLException {
     return connection.getClientInfo(name);
   }
@@ -267,6 +248,11 @@ public class PooledConnectionPureJava implements Connection {
   @Override
   public Properties getClientInfo() throws SQLException {
     return connection.getClientInfo();
+  }
+
+  @Override
+  public void setClientInfo(Properties properties) throws SQLClientInfoException {
+    connection.setClientInfo(properties);
   }
 
   @Override
@@ -280,13 +266,13 @@ public class PooledConnectionPureJava implements Connection {
   }
 
   @Override
-  public void setSchema(String schema) throws SQLException {
-    connection.setSchema(schema);
+  public String getSchema() throws SQLException {
+    return connection.getSchema();
   }
 
   @Override
-  public String getSchema() throws SQLException {
-    return connection.getSchema();
+  public void setSchema(String schema) throws SQLException {
+    connection.setSchema(schema);
   }
 
   @Override

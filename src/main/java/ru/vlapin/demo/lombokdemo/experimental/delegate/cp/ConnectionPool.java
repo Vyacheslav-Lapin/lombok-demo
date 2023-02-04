@@ -1,5 +1,6 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
+import io.vavr.Function2;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,14 +9,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import io.vavr.Function2;
 import lombok.SneakyThrows;
 import lombok.experimental.NonFinal;
 import lombok.val;
 import ru.vlapin.demo.lombokdemo.common.FileUtils;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.PooledConnection;
 import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
+import ru.vlapin.demo.lombokdemo.experimental.delegate.PooledConnection;
 
 public class ConnectionPool implements Closeable, Supplier<Connection> {
 
@@ -35,13 +34,13 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
             .apply(this::closePolledConnection);
 
     connectionQueue = connectionFactory.get()
-        .map(pooledConnectionFactory)
-        .collect(Collectors.toCollection(connectionFactory::getSizedBlockingQueue));
+                          .map(pooledConnectionFactory)
+                          .collect(Collectors.toCollection(connectionFactory::getSizedBlockingQueue));
 
     //init
     val sql = connectionFactory.getSqlInitFiles()
-        .map(FileUtils::getFileAsString)
-        .collect(Collectors.joining());
+                  .map(FileUtils::getFileAsString)
+                  .collect(Collectors.joining());
 
     try (val connection = get();
          val statement = connection.createStatement()) {
@@ -87,11 +86,11 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
   }
 
   @Override
+  @SuppressWarnings("java:S2142")
   public Connection get() {
     try {
       return connectionQueue.take();
-    }
-    catch (InterruptedException e) {
+    } catch (InterruptedException e) {
       throw new ConnectionPoolException(
           "Error connecting to the data source.", e);
     }

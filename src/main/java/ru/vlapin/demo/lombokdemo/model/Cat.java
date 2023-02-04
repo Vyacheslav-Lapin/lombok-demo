@@ -1,7 +1,5 @@
 package ru.vlapin.demo.lombokdemo.model;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+
+import static lombok.AccessLevel.*;
 
 @Entity
 @Getter

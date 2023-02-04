@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.vlapin.demo.lombokdemo.model.jsonplaceholder.Post;
 
-@FeignClient(
-    name = "PostJsonPlaceHolder",
-    url = "https://jsonplaceholder.typicode.com",
-    path = "posts")
+@FeignClient(name = "PostJsonPlaceHolder",
+             url = "https://jsonplaceholder.typicode.com",
+             path = "posts")
 public interface PostService {
 
   @GetMapping

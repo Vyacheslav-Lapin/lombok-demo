@@ -1,12 +1,12 @@
 package ru.vlapin.demo.lombokdemo.stable.equalshashcode.exclude;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.time.LocalDate;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * EqualsAndHashCodeIncludeAnnotationExampleTest.

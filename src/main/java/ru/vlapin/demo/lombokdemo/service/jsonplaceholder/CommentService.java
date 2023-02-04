@@ -5,13 +5,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.vlapin.demo.lombokdemo.model.jsonplaceholder.Comment;
 
-@FeignClient(
-    name = "CommentJsonPlaceHolder",
-    url = "https://jsonplaceholder.typicode.com",
-    path = "comments")
+@FeignClient(name = "CommentJsonPlaceHolder",
+             url = "https://jsonplaceholder.typicode.com",
+             path = "comments")
 public interface CommentService {
 
   @GetMapping

@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.vlapin.demo.lombokdemo.model.jsonplaceholder.Album;
 
-@FeignClient(
-    name = "AlbumJsonPlaceHolder",
-    url = "https://jsonplaceholder.typicode.com",
-    path = "albums")
+@FeignClient(name = "AlbumJsonPlaceHolder",
+             url = "https://jsonplaceholder.typicode.com",
+             path = "albums")
 public interface AlbumService {
 
   @GetMapping

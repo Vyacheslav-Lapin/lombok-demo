@@ -1,7 +1,6 @@
 package ru.vlapin.demo.lombokdemo.stable.builder;
 
 import java.time.LocalDate;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

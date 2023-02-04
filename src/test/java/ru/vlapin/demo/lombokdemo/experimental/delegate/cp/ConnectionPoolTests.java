@@ -7,13 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ConnectionPoolTests {
 
   static String SQL = """
-    select id, first_name, last_name, permission, dob, email, password, address, telephone
-    from Person""";
+      -- noinspection SqlNoDataSourceInspection
+      select id, first_name, last_name, permission, dob, email, password, address, telephone
+      from Person""";
 
   @Test
   @SneakyThrows

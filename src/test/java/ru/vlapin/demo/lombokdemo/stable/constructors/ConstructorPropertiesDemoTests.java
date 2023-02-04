@@ -1,7 +1,6 @@
 package ru.vlapin.demo.lombokdemo.stable.constructors;
 
 import java.beans.ConstructorProperties;
-
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;

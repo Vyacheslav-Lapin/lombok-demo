@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static java.awt.Color.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ColoredPoint3Tests {
 

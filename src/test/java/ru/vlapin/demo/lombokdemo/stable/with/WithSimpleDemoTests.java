@@ -23,6 +23,5 @@ class WithSimpleDemoTests {
     assertThat(foo.withX(2)).isNotNull()
         .extracting("x", "s", "b")
         .contains(2, "lorem", true);
-
   }
 }

@@ -13,6 +13,7 @@ import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
 
 @RestController
 @RequiredArgsConstructor
+@SuppressWarnings("java:S125")
 @RequestMapping("api/posts")
 public class PostController {
 
@@ -31,17 +32,17 @@ public class PostController {
     return postService.findById(id);
   }
 
-//  @NotNull
-//  @GetMapping
-//  @Contract(pure = true)
-//  public List<Post> postsByUser(@RequestParam @NotNull Long userId) {
-//    return client.postsByUserId(userId);
-//  }
+  //  @NotNull
+  //  @GetMapping
+  //  @Contract(pure = true)
+  //  public List<Post> postsByUser(@RequestParam @NotNull Long userId) {
+  //    return client.postsByUserId(userId);
+  //  }
 
-//  @NotNull
-//  @Contract(pure = true)
-//  @GetMapping("{id}/comments")
-//  public List<Comment> commentsByPostId(@PathVariable @NotNull Long id) {
-//    return postService.commentsByPostId(id);
-//  }
+  //  @NotNull
+  //  @Contract(pure = true)
+  //  @GetMapping("{id}/comments")
+  //  public List<Comment> commentsByPostId(@PathVariable @NotNull Long id) {
+  //    return postService.commentsByPostId(id);
+  //  }
 }

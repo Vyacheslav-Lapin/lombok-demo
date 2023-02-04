@@ -1,7 +1,5 @@
 package ru.vlapin.demo.lombokdemo;
 
-import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.*;
-
 import java.util.stream.Stream;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.boot.ApplicationRunner;
@@ -18,6 +16,8 @@ import ru.vlapin.demo.lombokdemo.dao.CatRepository;
 import ru.vlapin.demo.lombokdemo.model.Cat;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExampleImpl;
+
+import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.*;
 
 @EnableFeignClients
 @SpringBootApplication

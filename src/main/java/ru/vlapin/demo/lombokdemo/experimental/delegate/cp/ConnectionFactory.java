@@ -1,5 +1,6 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
+import io.vavr.CheckedFunction3;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +10,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import io.vavr.CheckedFunction3;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.Value;
@@ -48,7 +47,7 @@ public class ConnectionFactory implements Supplier<Stream<Connection>> {
             .supply(url, user, password);
 
     return Stream.generate(connectionSupplier)
-        .limit(poolSize);
+               .limit(poolSize);
   }
 
   @NotNull
@@ -59,11 +58,10 @@ public class ConnectionFactory implements Supplier<Stream<Connection>> {
 
   public Stream<Path> getSqlInitFiles() {
     return IntStream.iterate(1, operand -> operand + 1)
-        .mapToObj(String::valueOf)
-        .map(fileName -> String.format("/%s/%s.sql", initScriptsPath, fileName))
-        .map(FileUtils::getPathFromFileName)
-        .takeWhile(Optional::isPresent)
-        .flatMap(Optional::stream);
+               .mapToObj(String::valueOf)
+               .map(fileName -> String.format("/%s/%s.sql", initScriptsPath, fileName))
+               .map(FileUtils::getPathFromFileName)
+               .takeWhile(Optional::isPresent)
+               .flatMap(Optional::stream);
   }
-
 }

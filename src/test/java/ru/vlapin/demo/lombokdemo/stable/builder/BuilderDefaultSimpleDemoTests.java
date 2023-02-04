@@ -17,7 +17,7 @@ class BuilderDefaultSimpleDemoTests {
         .extracting("x")
         .isEqualTo(7);
 
-    for (int x : new int[] {1, 2, 3})
+    for (int x : new int[]{1, 2, 3})
       assertThat(BuilderDefaultSimpleDemo.builder().x(x).build()).isNotNull()
           .extracting("x")
           .isEqualTo(x);

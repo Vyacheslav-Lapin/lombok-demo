@@ -9,18 +9,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class MyExceptionHandlerExampleController {
 
   @RequestMapping("makeNPE")
+  @SuppressWarnings({"java:S2259", "java:S2201"})
   public ModelAndView generateNpe() {
     String oops = null;
+    //noinspection DataFlowIssue,ResultOfMethodCallIgnored
     oops.indexOf("oops!");
+    //noinspection SpringMVCViewInspection
     return new ModelAndView("hello");
   }
 
   @ExceptionHandler(NullPointerException.class)
-  public ModelAndView handleNpe(NullPointerException e) {
+  public ModelAndView handleNpe(NullPointerException ignored) {
+    //noinspection SpringMVCViewInspection
     return new ModelAndView("oops")
-        .addObject(
-            "message",
-            "NullPointerException at %s"
-                .formatted(System.currentTimeMillis()));
+               .addObject("message",
+                          "NullPointerException at %s".formatted(System.currentTimeMillis()));
   }
 }

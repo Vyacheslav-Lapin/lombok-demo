@@ -1,7 +1,6 @@
 package ru.vlapin.demo.lombokdemo.experimental.extensionmethods;
 
 import java.util.Arrays;
-
 import lombok.experimental.ExtensionMethod;
 
 @ExtensionMethod({
@@ -11,13 +10,15 @@ import lombok.experimental.ExtensionMethod;
 })
 public class LombokExtensionMethodExample {
 
+  @SuppressWarnings({"java:S2259", "java:S125"})
   String useExtensionMethods() {
     String iAmNull = null;
 
     return iAmNull.getIfNull("hELlO, WORlD!".toTitleCase());
-//     return Extensions.getIfNull(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
+    // return Extensions.getIfNull(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
   }
 
+  @SuppressWarnings("java:S125")
   public int[] getSortedArray() {
     int[] intarray = {5, 3, 8, 2};
 

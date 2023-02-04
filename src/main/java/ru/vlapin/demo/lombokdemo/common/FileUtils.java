@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
@@ -30,7 +29,8 @@ public class FileUtils {
     return Optional.ofNullable(
             FileUtils.class.getResource(adoptFileName(fileName)))
                .map(URL::getFile)
-               .map(s -> s.charAt(2) == ':' ? s.substring(1) : s) // for windows usage only - there we have addresses like "/c:/asdf/sdf" and need to cut first char for correct work
+               .map(s -> s.charAt(2) == ':' ? s.substring(1)
+                             : s) // for windows usage only - there we have addresses like "/c:/asdf/sdf" and need to cut first char for correct work
                .map(Paths::get);
   }
 

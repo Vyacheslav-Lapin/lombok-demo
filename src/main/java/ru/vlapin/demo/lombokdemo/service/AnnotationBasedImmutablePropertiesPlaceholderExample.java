@@ -27,7 +27,7 @@ class AnnotationBasedImmutablePropertiesPlaceholderExampleImpl
   /**
    * Auth method
    */
-//  @DefaultValue("Lorem ipsum dolor sit amet")
+  //  @DefaultValue("Lorem ipsum dolor sit amet")
   String authMethod;
 
   /**

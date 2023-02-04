@@ -3,10 +3,9 @@ package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -31,9 +30,9 @@ class PostControllerTest {
     assertThat(postService.findById(id)).isNotNull()
         .matches(post -> post.getId() == id, "id is equals")
         .matches(post -> post.getBody().equals("""
-            at pariatur consequuntur earum quidem
-            quo est laudantium soluta voluptatem
-            qui ullam et est
-            et cum voluptas voluptatum repellat est"""), "body is equals");
+                                                   at pariatur consequuntur earum quidem
+                                                   quo est laudantium soluta voluptatem
+                                                   qui ullam et est
+                                                   et cum voluptas voluptatum repellat est"""), "body is equals");
   }
 }
