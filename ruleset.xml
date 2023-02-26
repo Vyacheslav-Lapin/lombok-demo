@@ -48,8 +48,8 @@
     <ignoreVersion type="regex">(?i).*Beta(?:-?\d+)?</ignoreVersion>
     <ignoreVersion type="regex">(?i).*-B(?:-?\d+)?</ignoreVersion>
     <!--<ignoreVersion type="regex">(?i).*RC(?:-?\d+)?</ignoreVersion>-->
-    <ignoreVersion type="regex">(?i).*CR(?:-?\d+)?</ignoreVersion>
-    <ignoreVersion type="regex">(?i).*M(?:-?\d+)?</ignoreVersion>
+    <!--<ignoreVersion type="regex">(?i).*CR(?:-?\d+)?</ignoreVersion>-->
+    <!--<ignoreVersion type="regex">(?i).*M(?:-?\d+)?</ignoreVersion>-->
 
     <ignoreVersion type="regex">(?i).*(java[6,7]|jre[6,7])</ignoreVersion>
   </ignoreVersions>

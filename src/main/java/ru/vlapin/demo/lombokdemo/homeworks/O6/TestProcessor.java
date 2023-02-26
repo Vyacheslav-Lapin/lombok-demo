@@ -27,6 +27,7 @@ import static java.lang.reflect.Modifier.*;
     TupleUtils.class,
 })
 public class TestProcessor {
+
   public <T> Map<Method, Try<Void>> runTests(Class<T> testExampleClass) {
 
     val getNewInstance = CheckedFunction0.of(testExampleClass::getConstructor)
