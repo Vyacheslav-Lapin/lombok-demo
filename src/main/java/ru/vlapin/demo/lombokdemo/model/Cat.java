@@ -1,20 +1,12 @@
 package ru.vlapin.demo.lombokdemo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode.Include;
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import java.util.Objects;
 import java.util.UUID;
-import lombok.EqualsAndHashCode.Include;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import static lombok.AccessLevel.*;
 

@@ -1,44 +1,76 @@
-# suppress inspection "UnusedProperty" for whole file
-maven.compiler:
-  showDeprecation: true
-  showWarnings: true
+default.package: ru.vlapin.demo.lombokdemo
+client.package: ${default.package}.jsonplaceholder.client
 
-# Default’ная конфигурация (можно точечно переопределять
-# через maven.yml при использовании yaml-properties-maven-plugin’а):
+generateBackupPoms: false
+
+maven:
+  version.rules: file://${maven.multiModuleProjectDirectory}/ruleset.xml
+  compiler:
+    showDeprecation: true
+    showWarnings: true
+
 lombok:
-  # Добавить ли в Maven отметку о том, что ${lombok.outputDirectory}
-  # является ”build path” (должен интерпретироваться как исходный код):
-  # default:
-#  addOutputDirectory: true
-  addOutputDirectory: false
-
   # Где лежат исходные файлы, которые нужно delombok’нуть?
-  # default:
-#  sourceDirectory: ${project.basedir}/src/main/lombok
-  sourceDirectory: ${project.basedir}/src/main/java
+  # default: ${project.basedir}/src/main/lombok
+  sourceDirectory: src/main/java
 
   # Где лежат тестовые файлы, которые нужно delombok’нуть?
-  # default:
-#  testSourceDirectory: ${project.basedir}/src/test/lombok
-  testSourceDirectory: ${project.basedir}/src/test/java
+  # default: ${project.basedir}/src/test/lombok
+  testSourceDirectory: src/test/java
+
+  # Куда lombok-maven-plugin’у поместить результат delombok’а исходников?
+  # default: ${project.build.directory}/generated-sources/delombok
+  outputDirectory: target/generated-sources/delomboked
+
+  # Куда lombok-maven-plugin’у поместить результат delombok’а тестов?
+  # default: ${project.build.directory}/generated-test-sources/delombok
+  testOutputDirectory: target/generated-test-sources/delomboked
 
   # Включать ли «говорливый» режим (печать имени каждого delombok’уемого файла)?
   # default:
-#  verbose: false
-  verbose: true
-
-  # Куда lombok-maven-plugin’у поместить результат delombok’а исходников?
-  # default:
-#  outputDirectory: ${project.build.directory}/generated-sources/delombok
-
-  # Куда lombok-maven-plugin’у поместить результат delombok’а тестов?
-  # default:
-#  testOutputDirectory = ${project.build.directory}/generated-test-sources/delombok
+  # verbose: false
 
   # Используемая кодировка
   # default:
-#  encoding: ${project.build.sourceEncoding}
+  # encoding: ${project.build.sourceEncoding}
 
   # Отменяет работу delombok’а
   # default:
-#  delombok.skip: false
+  # delombok.skip: false
+
+# https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-maven-plugin/README.md#L82
+# https://openapi-generator.tech/docs/plugins/#maven
+# https://openapi-generator.tech/docs/generators/spring
+openapi.generator.maven.plugin:
+  generatorName: spring
+  library: spring-cloud
+
+  invokerPackage: ${client.package}
+  modelPackage: ${client.package}.model
+  apiPackage: ${client.package}.api
+
+  inputSpec: jsonplaceholder.openapi.yaml
+  # inputSpec: https://petstore.swagger.io/v2/swagger.json
+  templateDirectory: src/main/openapi-templates
+  output: target/generated-sources/openapi
+#  output: ${project.build.directory}/generated-sources/openapi
+  # strictSpec: true
+  # generateApiTests: false
+  # generateModelTests: false
+  # typeMappings: OffsetDateTime=LocalDateTime
+  # importMappings: java.time.OffsetDateTime=java.time.LocalDateTime
+
+  generateApiDocumentation: false
+  generateApiTests: true
+  generateModelTests: true
+  addCompileSourceRoot: false
+
+  configurationFile: ${project.basedir}/openapi-config.json
+
+
+# https://github.com/assertj/assertj-assertions-generator-maven-plugin
+assertj:
+  generate.JUnitSoftAssertions: false
+  targetDir: target/generated-test-sources/assertj-assertions
+  packages:
+    - ${openapi.generator.maven.plugin.modelPackage}

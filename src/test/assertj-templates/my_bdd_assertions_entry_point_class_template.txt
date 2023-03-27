@@ -1,0 +1,15 @@
+package ${package};
+
+/**
+ * Entry point for BDD assertions of different data types.
+ */
+@jakarta.annotation.Generated(value="assertj-assertions-generator")
+public class BddAssertions {
+${all_assertions_entry_points}
+  /**
+   * Creates a new <code>{@link BddAssertions}</code>.
+   */
+  protected BddAssertions() {
+    // empty
+  }
+}

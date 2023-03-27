@@ -1,0 +1,937 @@
+openapi: 3.0.3
+info:
+  title: JSON Placeholder
+  description: JSONPlaceholder is a free online REST API that you can use whenever you need some fake data. It can be in a README on GitHub, for a demo on CodeSandbox, in code examples on Stack Overflow, ...or simply to test things locally
+  version: 0.0.1
+servers:
+  - url: 'https://jsonplaceholder.typicode.com/'
+
+paths:
+  /posts:
+    get:
+      tags: [ post ]
+      operationId: posts
+      summary: Listing all resources
+      parameters:
+        - in: query
+          name: userId
+          description: Filter - this will return all the posts that belong to the user with specified id
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: A JSON array of posts
+          content: { application/json: { schema: { $ref: '#/components/schemas/Posts' } } }
+    post:
+      tags: [ post ]
+      operationId: addPost
+      summary: Create a post
+      description: Important - resource will not be really updated on the server but it will be faked as if
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Post' }
+            example:
+              title: 'foo'
+              body: 'bar'
+              userId: 1
+      responses:
+        201:
+          description: Post will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Post' } } }
+  /posts/{id}:
+    get:
+      tags: [ post ]
+      operationId: pickPost
+      summary: Get Post by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of post in a post list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: JSON of Post entity, specified by it's id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Post' } } }
+        404: { $ref: '#/components/responses/404' }
+    put:
+      tags: [ post ]
+      operationId: updatePost
+      summary: Updating a resource
+      description: Important - resource will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of post in a post list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Post' }
+            example:
+              id: 1
+              title: 'foo'
+              body: 'bar'
+              userId: 1
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+    patch:
+      tags: [ post ]
+      operationId: mergePost
+      summary: Patching a resource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of post in a post list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: The server successfully processed the request, but is not returning any content
+          content: { application/javascript: { schema: { $ref: '#/components/schemas/Post' } } }
+    delete:
+      tags: [ post ]
+      operationId: removePost
+      summary: Deleting a resource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of post in a post list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: resource will not be really updated on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+  /posts/{id}/comments:
+    get:
+      tags: [ post, comment ]
+      operationId: postComments
+      summary: Listing all the comments of post
+      description: One level of nested route is available
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of post in a post list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: A JSON array of comments
+          content: { application/json: { schema: { $ref: '#/components/schemas/Comments' } } }
+        404: { $ref: '#/components/responses/404' }
+    post:
+      tags: [ post, comment ]
+      operationId: addCommentToPost
+      summary: Create a comment
+      description: Important - resource will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of post in a post list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Comment' }
+            example:
+              postId: 1
+              name: 'foo'
+              email: 'baz'
+              body: 'bar'
+      responses:
+        201:
+          description: Post will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Comment' } } }
+
+  /comments:
+    get:
+      tags: [ comment ]
+      operationId: comments
+      summary: Listing all comments
+      description: All the comments for all entities presented in this API. Can be filtered by optional query params
+      parameters:
+        - in: query
+          name: postId
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+          description: Filter - this will return all the comments that belong to the post with specified id
+      responses:
+        200:
+          description: A JSON array of comments
+          content: { application/json: { schema: { $ref: '#/components/schemas/Comments' } } }
+    post:
+      tags: [ comment ]
+      operationId: addComment
+      summary: Create a comment
+      description: Important - resource will not be really updated on the server but it will be faked as if
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Comment' }
+            example:
+              postId: 1
+              name: 'foo'
+              email: 'baz'
+              body: 'bar'
+      responses:
+        201:
+          description: Comment will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Comment' } } }
+  /comments/{id}:
+    get:
+      tags: [ comment ]
+      operationId: pickComment
+      summary: Get comment by it's id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Comment, specified by id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Comment' } } }
+        404: { $ref: '#/components/responses/404' }
+    put:
+      tags: [ comment ]
+      operationId: updateCommennt
+      summary: Updating a comment
+      description: Important - resource will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of comment in a comments list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Comment' }
+            example:
+              id: 1
+              postId: 1
+              name: 'foo'
+              email: 'baz'
+              body: 'bar'
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+    patch:
+      tags: [ comment ]
+      operationId: mergeComment
+      summary: Patching a comment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of comment in a comments list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Comment will not be really patched on the server but it will be faked as if
+          content: { application/javascript: { schema: { $ref: '#/components/schemas/Comment' } } }
+    delete:
+      tags: [ comment ]
+      operationId: removeComment
+      summary: Deleting a comment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of comment in a comments list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Comment will not be really deleted on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+
+  /albums:
+    get:
+      tags: [ album ]
+      operationId: albums
+      summary: Albums of users
+      parameters:
+        - in: query
+          name: postId
+          description: Post id for filtering
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: All albums of all the users
+          content: { application/json: { schema: { $ref: '#/components/schemas/Albums' } } }
+    post:
+      tags: [ album ]
+      operationId: addAlbum
+      summary: Create a album
+      description: Important - album will not be really created on the server but it will be faked as if
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Album' }
+            example:
+              userId: 1
+              title: 'foo'
+      responses:
+        201:
+          description: Album will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Album' } } }
+  /albums/{id}:
+    get:
+      tags: [ album ]
+      operationId: pickAlbum
+      summary: Album by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Album, specified by id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Album' } } }
+        404: { $ref: '#/components/responses/404' }
+    put:
+      tags: [ album ]
+      operationId: updateAlbum
+      summary: Updating a album
+      description: Important - album will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of album in a albums list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Album' }
+            example:
+              id: 1
+              userId: 1
+              title: 'foo'
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+    patch:
+      tags: [ album ]
+      operationId: mergeAlbum
+      summary: Patching an album
+      description: Important! - album will not be really patched on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of album in a albums list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Album will not be really patched on the server but it will be faked as if
+          content: { application/javascript: { schema: { $ref: '#/components/schemas/Album' } } }
+    delete:
+      tags: [ album ]
+      operationId: removeAlbum
+      summary: Deleting a album
+      description: Album will not be really deleted on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of album in a albums list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Album will not be really deleted on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+  /albums/{id}/photos:
+    get:
+      tags: [ album, photo ]
+      operationId: albumPhotos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: photos, belongs to album specified by id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Photos' } } }
+        404: { $ref: '#/components/responses/404' }
+    post:
+      tags: [ album, photo ]
+      operationId: addPhotoToAlbum
+      summary: Create a photo
+      description: Important - photo will not be really created on the server but it will be faked as if
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Photo' }
+            example:
+              title: 'foo'
+              url: 'http://localhost:8080/img/1.jpg'
+              thumbnailUrl: 'http://localhost:8080/img/1.min.jpg'
+      responses:
+        201:
+          description: Photo will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Photo' } } }
+
+  /photos:
+    get:
+      tags: [ photo ]
+      operationId: photos
+      summary: Photos of user albums
+      parameters:
+        - in: query
+          name: albumId
+          description: Album id for filtering
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Photos of user albums
+          content: { application/json: { schema: { $ref: '#/components/schemas/Photos' } } }
+    post:
+      tags: [ photo ]
+      operationId: addPhoto
+      summary: Create a photo
+      description: Important - photo will not be really created on the server but it will be faked as if
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Photo' }
+            example:
+              albumId: 1
+              title: 'foo'
+              url: 'http://localhost:8080/img/1.jpg'
+              thumbnailUrl: 'http://localhost:8080/img/1.min.jpg'
+      responses:
+        201:
+          description: Photo will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Photo' } } }
+  /photos/{id}:
+    get:
+      tags: [ photo ]
+      operationId: pickPhoto
+      summary: Photo by it's id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: id of photo
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Photo specified by given id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Photo' } } }
+        404: { $ref: '#/components/responses/404' }
+    put:
+      tags: [ photo ]
+      operationId: updatePhoto
+      summary: Updating a photo
+      description: Important - photo will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of photo in a photos list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Photo' }
+            example:
+              albumId: 1
+              title: 'foo'
+              url: 'http://localhost:8080/img/1.jpg'
+              thumbnailUrl: 'http://localhost:8080/img/1.min.jpg'
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+    patch:
+      tags: [ photo ]
+      operationId: mergePhoto
+      summary: Patching an album
+      description: Important! - photo will not be really patched on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of photo in a photos list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Photo will not be really patched on the server but it will be faked as if
+          content: { application/javascript: { schema: { $ref: '#/components/schemas/Photo' } } }
+    delete:
+      tags: [ photo ]
+      operationId: removePhoto
+      summary: Deleting a photo
+      description: Photo will not be really deleted on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of photo in a photos list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Photo will not be really deleted on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+
+  /todos:
+    get:
+      tags: [ todo ]
+      operationId: todos
+      summary: Tasks to do of all the users or of concrete user if using filter parameter
+      parameters:
+        - in: query
+          name: userId
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: JSON array of todo entities
+          content: { application/json: { schema: { $ref: '#/components/schemas/Todos' } } }
+    post:
+      tags: [ todo ]
+      operationId: addTodo
+      summary: Create a task to do
+      description: Important - task to do will not be really created on the server but it will be faked as if
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Todo' }
+            example:
+              userId: 1
+              title: 'foo'
+              completed: false
+      responses:
+        201:
+          description: Task to do will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Todo' } } }
+  /todos/{id}:
+    get:
+      tags: [ todo ]
+      operationId: pickTodo
+      summary: Task to do, specified by it's id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: OK. Task to do
+          content: { application/json: { schema: { $ref: '#/components/schemas/Todo' } } }
+        404:
+          $ref: '#/components/responses/404'
+    put:
+      tags: [ todo ]
+      operationId: updateTodo
+      summary: Updating a task to do
+      description: Important - task to do will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of task to do in a photos list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Todo' }
+            example:
+              id: 1
+              userId: 1
+              title: 'foo'
+              completed: false
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+    patch:
+      tags: [ todo ]
+      operationId: mergeTodo
+      summary: Patching an task to do
+      description: Important! - task to do will not be really patched on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of task to do in a tasks list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Task to do will not be really patched on the server but it will be faked as if
+          content: { application/javascript: { schema: { $ref: '#/components/schemas/Todo' } } }
+    delete:
+      tags: [ todo ]
+      operationId: removeTodo
+      summary: Deleting a task to do
+      description: Task to do will not be really deleted on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of task to do in a tasks list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Task to do will not be really deleted on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+
+  /users:
+    get:
+      tags: [ user ]
+      operationId: users
+      summary: All users
+      responses:
+        200:
+          description: All users
+          content: { application/json: { schema: { $ref: '#/components/schemas/Users' } } }
+    post:
+      tags: [ user ]
+      operationId: addUser
+      summary: Create a user
+      description: Important - user will not be really created on the server but it will be faked as if
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/User' }
+            example:
+              name: 'Vasya Pupkin'
+              username: 'VPupkin'
+              email: 'Vasya.Pupkin@gmail.com'
+              address:
+                street: 'Lenina'
+                suite: '12-5B'
+                city: 'Moscow'
+                zipcode: '12345-6789'
+                geo:
+                  lat: 12.3456
+                  lng: 56.7890
+              phone: '+7 (909) 222-3322'
+              website: 'http://vpupkin.ru'
+              company:
+                name: 'Roga & Copita'
+                catchPhrase: 'Lorem ipsum dolor sit amet'
+                bs: 'it'
+      responses:
+        201:
+          description: User will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/User' } } }
+  /users/{id}:
+    get:
+      tags: [ user ]
+      operationId: pickUser
+      summary: User specified by it's id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: User specified by it's id
+          content: { application/json: { schema: { $ref: '#/components/schemas/User' } } }
+        404: { $ref: '#/components/responses/404' }
+    put:
+      tags: [ user ]
+      operationId: updateUser
+      summary: Updating a user
+      description: Important - user will not be really updated on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of user in a users list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/User' }
+            example:
+              id: 1
+              name: 'Vasya Pupkin'
+              username: 'VPupkin'
+              email: 'Vasya.Pupkin@gmail.com'
+              address:
+                street: 'Lenina'
+                suite: '12-5B'
+                city: 'Moscow'
+                zipcode: '12345-6789'
+                geo:
+                  lat: 12.3456
+                  lng: 56.7890
+              phone: '+7 (909) 222-3322'
+              website: 'http://vpupkin.ru'
+              company:
+                name: 'Roga & Copita'
+                catchPhrase: 'Lorem ipsum dolor sit amet'
+                bs: 'it'
+      responses:
+        204:
+          description: The server successfully processed the request, but is not returning any content
+    patch:
+      tags: [ user ]
+      operationId: mergeUser
+      summary: Patching an task to do
+      description: Important! - task to do will not be really patched on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of task to do in a tasks list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/User' }
+            example:
+              name: 'Vasya Pupkin'
+      responses:
+        200:
+          description: User will not be really patched on the server but it will be faked as if
+          content: { application/javascript: { schema: { $ref: '#/components/schemas/User' } } }
+    delete:
+      tags: [ user ]
+      operationId: removeUser
+      summary: Deleting a user
+      description: User will not be really deleted on the server but it will be faked as if
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of user in a tasks list
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: User will not be really deleted on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+  /users/{id}/albums:
+    get:
+      tags: [ user, album ]
+      operationId: userAlbums
+      summary: Albums by owner user id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Albums by owner user id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Albums' } } }
+    post:
+      tags: [ user, album ]
+      operationId: addAlbumToUser
+      summary: Create a album
+      description: Important - album will not be really created on the server but it will be faked as if
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Album' }
+            example: { title: 'foo' }
+      responses:
+        201:
+          description: Album will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Album' } } }
+  /users/{id}/todos:
+    get:
+      tags: [ user, todo ]
+      operationId: userTodos
+      summary: Tasks to do for user specified by it's id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Tasks to do for user specified by it's id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Todos' } } }
+        404: { $ref: '#/components/responses/404' }
+    post:
+      tags: [ user, todo ]
+      operationId: addTodoToUser
+      summary: Create a task to do
+      description: Important - task to do will not be really created on the server but it will be faked as if
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Todo' }
+            example:
+              title: 'foo'
+              completed: false
+      responses:
+        201:
+          description: Task to do will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Todo' } } }
+  /users/{id}/posts:
+    get:
+      tags: [user, post]
+      operationId: userPosts
+      summary: Posts of user, specified by it's id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      responses:
+        200:
+          description: Posts of user, specified by it's id
+          content: { application/json: { schema: { $ref: '#/components/schemas/Posts' } } }
+        404: { $ref: '#/components/responses/404' }
+    post:
+      tags: [ user, post ]
+      operationId: addPostToUser
+      summary: Create a post
+      description: Important - resource will not be really updated on the server but it will be faked as if
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { $ref: '#/components/schemas/PositiveInt' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Post' }
+            example:
+              title: 'foo'
+              body: 'bar'
+      responses:
+        201:
+          description: Post will not be really created on the server but it will be faked as if
+          content: { application/json: { schema: { $ref: '#/components/schemas/Post' } } }
+
+components:
+  responses:
+    404:
+      description: No Content - empty json array
+      content: { application/json: { schema: { $ref: '#/components/schemas/EmptyObject' } } }
+  schemas:
+    PositiveInt:
+      type: integer
+      format: int32
+      minimum: 1
+    EmptyObject:
+      type: object
+    Post:
+      type: object
+      properties:
+        id: { $ref: '#/components/schemas/PositiveInt' }
+        userId: { $ref: '#/components/schemas/PositiveInt' }
+        title: { type: string }
+        body: { type: string }
+    Posts:
+      type: array
+      items: { $ref: '#/components/schemas/Post' }
+    Comment:
+      description: Comment for post
+      type: object
+      properties:
+        id: { $ref: '#/components/schemas/PositiveInt' }
+        postId: { $ref: '#/components/schemas/PositiveInt' }
+        name: { type: string }
+        email: { type: string }
+        body: { type: string }
+    Comments:
+      type: array
+      items: { $ref: '#/components/schemas/Comment' }
+    Album:
+      description: Album of photos
+      type: object
+      properties:
+        id: { $ref: '#/components/schemas/PositiveInt' }
+        userId: { $ref: '#/components/schemas/PositiveInt' }
+        title: { type: string }
+    Albums:
+      type: array
+      items: { $ref: '#/components/schemas/Album' }
+    Photo:
+      description: Album of photos
+      type: object
+      properties:
+        id: { $ref: '#/components/schemas/PositiveInt' }
+        albumId: { $ref: '#/components/schemas/PositiveInt' }
+        title: { type: string }
+        url: { type: string, format: url }
+        thumbnailUrl: { type: string, format: url }
+    Photos:
+      type: array
+      items: { $ref: '#/components/schemas/Photo' }
+    Todo:
+      description: Task to do for some user
+      type: object
+      properties:
+        id: { $ref: '#/components/schemas/PositiveInt' }
+        userId: { $ref: '#/components/schemas/PositiveInt' }
+        title: { type: string }
+        completed: { type: boolean }
+    Todos:
+      type: array
+      items: { $ref: '#/components/schemas/Todo' }
+    Geo:
+      type: object
+      properties:
+        lat: { type: number, format: double } # latitude;
+        lng: { type: number, format: double } # longitude;
+    Address:
+      type: object
+      properties:
+        street: { type: string }
+        suite: { type: string }
+        city: { type: string }
+        zipcode: { type: string, format: zip } # zipCode;
+        geo: { $ref: '#/components/schemas/Geo' }
+    Company:
+      type: object
+      properties:
+        name: { type: string }
+        catchPhrase: { type: string }
+        bs: { type: string } # business;
+    User:
+      type: object
+      properties:
+        id: { $ref: '#/components/schemas/PositiveInt' }
+        name: { type: string }
+        username: { type: string } # userName
+        email: { type: string, format: email }
+        address: { $ref: '#/components/schemas/Address' }
+        phone: { type: string, format: phone }
+        website: { type: string, format: url } # webSite
+        company: { $ref: '#/components/schemas/Company' }
+    Users:
+      type: array
+      items: { $ref: '#/components/schemas/User' }

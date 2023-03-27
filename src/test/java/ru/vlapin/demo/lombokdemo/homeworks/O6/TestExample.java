@@ -1,12 +1,12 @@
 package ru.vlapin.demo.lombokdemo.homeworks.O6;
 
 import io.vavr.control.Try;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.assertj.core.api.Assertions.*;
 import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
@@ -16,7 +16,6 @@ import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 })
 class TestProcessorTests {
 
-  @Disabled
   @SneakyThrows
   @org.junit.jupiter.api.Test
   @DisplayName("Test framework works in right order")

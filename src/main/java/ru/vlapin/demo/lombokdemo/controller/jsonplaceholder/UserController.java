@@ -1,33 +1,41 @@
 package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.ExtensionMethod;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vlapin.demo.lombokdemo.model.jsonplaceholder.User;
-import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.UserService;
+import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.UserApiClient;
+import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 
+import java.util.List;
+import java.util.Objects;
+
+@ExtensionMethod({
+        Objects.class,
+})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/users")
 public class UserController {
 
-  UserService userService;
+  UserApiClient client;
 
   @NotNull
   @GetMapping
-  //  @Contract(pure = true)
   public List<User> all() {
-    return userService.all();
+    return client.users()
+            .getBody()
+            .requireNonNull();
   }
 
   //  @NotNull
   @GetMapping("{id}")
-  //  @Contract(pure = true)
-  public User byId(@PathVariable @NotNull Long id) {
-    return userService.findById(id);
+  public User byId(@PathVariable @NotNull Integer id) {
+    return client.pickUser(id)
+            .getBody()
+            .requireNonNull();
   }
 }

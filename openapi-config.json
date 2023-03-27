@@ -1,0 +1,12 @@
+{
+  "configPackage": "ru.vlapin.demo.lombokdemo.jsonplaceholder.client.config",
+  "useSpringBoot3": true,
+  "sourceFolder": ".",
+  "openApiNullable": false,
+  "skipDefaultInterface": true,
+  "useTags": true,
+  "hideGenerationTimestamp": true,
+  "bigDecimalAsString": true,
+  "interfaceOnly": false,
+  "delegatePattern": true
+}

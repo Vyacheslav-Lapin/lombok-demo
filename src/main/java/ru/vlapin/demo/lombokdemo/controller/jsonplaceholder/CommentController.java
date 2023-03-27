@@ -1,37 +1,47 @@
 package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.ExtensionMethod;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vlapin.demo.lombokdemo.model.jsonplaceholder.Comment;
-import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.CommentService;
+import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.CommentApiClient;
+import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Comment;
 
+import java.util.List;
+import java.util.Objects;
+
+@ExtensionMethod({
+        Objects.class,
+})
 @RestController
 @RequiredArgsConstructor
 @SuppressWarnings("java:S125")
 @RequestMapping("api/comments")
 public class CommentController {
 
-  CommentService commentService;
+  CommentApiClient client;
 
   @NotNull
   @GetMapping
   @Contract(pure = true)
   public List<Comment> comments() {
-    return commentService.all();
+    return client.comments(null)
+            .getBody()
+            .requireNonNull();
   }
 
   @NotNull
   @GetMapping("{id}")
   @Contract(pure = true)
   @SuppressWarnings("java:S125")
-  public Comment comment(@PathVariable @NotNull Long id) {
-    return commentService.findById(id);
+  public Comment comment(@PathVariable @NotNull Integer id) {
+    return client.pickComment(id)
+            .getBody()
+            .requireNonNull();
   }
 
   //  @NotNull

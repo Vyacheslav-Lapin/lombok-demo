@@ -1,0 +1,24 @@
+package ${package};
+
+/**
+ * Like {@link BDDSoftAssertions} but as a junit rule that takes care of calling
+ * {@link SoftAssertions#assertAll() assertAll()} at the end of each test.
+ * <p>
+ * Example:
+ * <pre><code class='java'> public class SoftlyTest {
+ *
+ *     &#064;Rule
+ *     public final JUnitBDDSoftAssertions softly = new JUnitBDDSoftAssertions();
+ *
+ *     &#064;Test
+ *     public void soft_bdd_assertions() throws Exception {
+ *       softly.then(1).isEqualTo(2);
+ *       softly.then(Lists.newArrayList(1, 2)).containsOnly(1, 2);
+ *       // no need to call assertAll(), this is done automatically.
+ *     }
+ *  }</code></pre>
+ */
+@jakarta.annotation.Generated(value="assertj-assertions-generator")
+public class JUnitBDDSoftAssertions extends org.assertj.core.api.JUnitBDDSoftAssertions {
+${all_assertions_entry_points}
+}

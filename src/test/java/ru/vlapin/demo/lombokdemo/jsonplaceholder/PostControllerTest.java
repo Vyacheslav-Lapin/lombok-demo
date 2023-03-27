@@ -1,38 +1,47 @@
 package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.vlapin.demo.lombokdemo.service.jsonplaceholder.PostService;
+import org.springframework.http.HttpEntity;
+import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.PostApiClient;
 
-import static org.assertj.core.api.Assertions.*;
+import static ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.PostAssert.*;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PostControllerTest {
 
-  long id = 57L;
-  PostService postService;
+  private static final int ID = 57;
+  private static final int USER_ID = 6;
+  private static final String TITLE = "sed ab est est";
+  private static final String BODY = """
+          at pariatur consequuntur earum quidem
+          quo est laudantium soluta voluptatem
+          qui ullam et est
+          et cum voluptas voluptatum repellat est""";
+
+  PostApiClient postsApiClient;
 
   @Test
   @DisplayName("Get method works correctly")
   void get() {
-    assertThat(postService.all()).isNotNull()
-        .isNotEmpty()
-        .hasSize(100);
+    Assertions.assertThat(postsApiClient.posts(null)).isNotNull()
+            .extracting(HttpEntity::getBody).asList()
+            .isNotEmpty()
+            .hasSize(100);
   }
 
   @Test
   @DisplayName("Get one post method works correctly")
   void getOnePostMethodWorksCorrectlyTest() {
-    assertThat(postService.findById(id)).isNotNull()
-        .matches(post -> post.getId() == id, "id is equals")
-        .matches(post -> post.getBody().equals("""
-                                                   at pariatur consequuntur earum quidem
-                                                   quo est laudantium soluta voluptatem
-                                                   qui ullam et est
-                                                   et cum voluptas voluptatum repellat est"""), "body is equals");
+    assertThat(postsApiClient.pickPost(ID).getBody()).isNotNull()
+            .hasId(ID)
+            .hasTitle(TITLE)
+            .hasUserId(USER_ID)
+            .hasBody(BODY);
   }
 }
