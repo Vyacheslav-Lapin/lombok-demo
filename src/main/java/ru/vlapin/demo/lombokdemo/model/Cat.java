@@ -14,8 +14,8 @@ import static lombok.AccessLevel.*;
 @Getter
 @ToString
 @Setter(PRIVATE)
-@NoArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 public class Cat {
 
   @Id
