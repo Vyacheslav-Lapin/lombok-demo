@@ -1,8 +1,8 @@
 package ru.vlapin.demo.lombokdemo.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode.Include;
-import lombok.*;
+import lombok.Data;
+import lombok.NonNull;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -17,7 +17,6 @@ import java.util.UUID;
 public class Cat {
 
   @Id
-  @Include
   @GeneratedValue
   @Column(updatable = false, nullable = false)
   UUID id;
