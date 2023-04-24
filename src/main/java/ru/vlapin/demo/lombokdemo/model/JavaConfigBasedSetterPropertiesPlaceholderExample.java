@@ -1,6 +1,8 @@
 package ru.vlapin.demo.lombokdemo.model;
 
-public interface JavaConfigBasedSetterPropertiesPlaceholderExample {
+public sealed interface JavaConfigBasedSetterPropertiesPlaceholderExample
+        permits JavaConfigBasedSetterPropertiesPlaceholderExampleImpl {
+
   String getHost();
 
   Integer getPort();

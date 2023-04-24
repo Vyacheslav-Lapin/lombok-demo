@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Data
 @Validated
-public class JavaConfigBasedSetterPropertiesPlaceholderExampleImpl
+public non-sealed class JavaConfigBasedSetterPropertiesPlaceholderExampleImpl
     implements JavaConfigBasedSetterPropertiesPlaceholderExample {
 
   /**

@@ -8,14 +8,12 @@ import org.hibernate.Hibernate;
 import java.util.Objects;
 import java.util.UUID;
 
-import static lombok.AccessLevel.*;
-
+@Data
 @Entity
-@Getter
-@ToString
-@Setter(PRIVATE)
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@SuppressWarnings({
+        "JpaObjectClassSignatureInspection",
+        "com.haulmont.jpb.LombokDataInspection",
+})
 public class Cat {
 
   @Id
@@ -30,10 +28,11 @@ public class Cat {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-    Cat cat = (Cat) o;
-    return id != null && Objects.equals(id, cat.id);
+    return this == o || o != null &&
+            Hibernate.getClass(this) == Hibernate.getClass(o)
+            && id != null
+            && o instanceof Cat cat
+            && Objects.equals(id, cat.id);
   }
 
   @Override

@@ -712,6 +712,7 @@
         <artifactId>openapi-generator-maven-plugin</artifactId>
       </plugin>
       <plugin>
+        <!--suppress MavenModelInspection -->
         <artifactId>maven-antrun-plugin</artifactId>
       </plugin>
       <plugin>
@@ -735,6 +736,7 @@
         <artifactId>build-helper-maven-plugin</artifactId>
       </plugin>
       <plugin>
+        <!--suppress MavenModelInspection -->
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
 
