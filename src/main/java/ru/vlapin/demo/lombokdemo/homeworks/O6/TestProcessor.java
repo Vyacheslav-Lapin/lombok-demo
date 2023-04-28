@@ -2,55 +2,86 @@ package ru.vlapin.demo.lombokdemo.homeworks.O6;
 
 import io.vavr.CheckedConsumer;
 import io.vavr.CheckedFunction0;
-import io.vavr.Tuple2;
 import io.vavr.control.Try;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import lombok.With;
+import lombok.experimental.Accessors;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
+import lombok.val;
+import ru.vlapin.demo.lombokdemo.common.CheckedConsumerUtils;
+import ru.vlapin.demo.lombokdemo.common.StreamUtils;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-import lombok.val;
-import ru.vlapin.demo.lombokdemo.common.StreamUtils;
-import ru.vlapin.demo.lombokdemo.common.TupleUtils;
 
-import static java.lang.reflect.Modifier.*;
+import static java.lang.reflect.Modifier.isStatic;
+import static lombok.AccessLevel.PRIVATE;
 
 @UtilityClass
 @ExtensionMethod({
-    Arrays.class,
-    StreamUtils.class,
-    TupleUtils.class,
+        Arrays.class,
+        StreamUtils.class,
 })
 public class TestProcessor {
 
+  private static <T> Function<Class<? extends Annotation>, Stream<TestMethod<T>>> annotatedMethods(Class<? extends T> testExampleClass) {
+    return annotationClass -> testExampleClass.getDeclaredMethods().stream()
+            .filter(method -> !method.isSynthetic())
+            .filter(method -> !isStatic(method.getModifiers()))
+            .filter(method -> method.isAnnotationPresent(annotationClass))
+            .peek(method -> method.setAccessible(true))
+            .map(TestMethod::new);
+  }
+
+  private static <T> Supplier<? extends T> getNewInstance(Class<? extends T> testExampleClass) {
+    return CheckedFunction0.of(testExampleClass::getConstructor)
+            .andThen(Constructor::newInstance)
+            .unchecked();
+  }
+
+  private static <T> Function<TestMethod<? super T>, Try<Void>> toTry(Class<? extends T> testExampleClass) {
+    return testMethod -> Try.run(() ->
+            testMethod.consumer().accept(
+                    getNewInstance(testExampleClass)
+                            .get()));
+  }
+
   public <T> Map<Method, Try<Void>> runTests(Class<T> testExampleClass) {
-
-    val getNewInstance = CheckedFunction0.of(testExampleClass::getConstructor)
-                             .andThen(Constructor::newInstance)
-                             .unchecked();
-
-    Function<Class<? extends Annotation>, Stream<Tuple2<Method, CheckedConsumer<T>>>> getAnnotatedMethods =
-        annotationClass -> testExampleClass.getDeclaredMethods().stream()
-                               .filter(method -> !method.isSynthetic())
-                               .filter(method -> !isStatic(method.getModifiers()))
-                               .filter(method -> method.isAnnotationPresent(annotationClass))
-                               .peek(method -> method.setAccessible(true))
-                               .map(method -> method.tupleWith(CheckedConsumer.<T>of(method::invoke)));
-
+    val toTry = toTry(testExampleClass);
+    val getAnnotatedMethods = annotatedMethods(testExampleClass);
     return getAnnotatedMethods.apply(Test.class)
-               .map(test -> test.map2(testMethod -> getAnnotatedMethods.apply(Before.class)
-                                                        .map(Tuple2::_2)
-                                                        .reverse()
-                                                        .reduce(testMethod, (method, beforeMethod) -> beforeMethod.andThen(method))))
-               .map(test -> test.map2(testMethod -> getAnnotatedMethods.apply(After.class)
-                                                        .map(Tuple2::_2)
-                                                        .reduce(testMethod, CheckedConsumer::andThen))) //todo 30.10.2022: create extension method, that will execute CheckedFunction and finally execute another method
-               .map(test -> test.map2(testMethod -> Try.run(() -> testMethod.accept(getNewInstance.apply()))))
-               .collect(Collectors.toUnmodifiableMap(Tuple2::_1, Tuple2::_2));
+            .map(test -> test.withConsumer(
+                    getAnnotatedMethods.apply(Before.class)
+                            .map(TestMethod::consumer)
+                            .reverse()
+                            .reduce(test.consumer(), CheckedConsumerUtils::compose)))
+            .map(test -> test.withConsumer(getAnnotatedMethods.apply(After.class)
+                    .map(TestMethod::consumer)
+                    .reduce(test.consumer(), CheckedConsumer::andThen)))
+            .collect(Collectors.toUnmodifiableMap(TestMethod::method, toTry));
+  }
+
+  @Value
+  @Accessors(fluent = true)
+  @RequiredArgsConstructor(access = PRIVATE)
+  private static class TestMethod<T> {
+
+    Method method;
+
+    @With
+    CheckedConsumer<T> consumer;
+
+    public TestMethod(Method method) {
+      this(method, CheckedConsumer.of(method::invoke));
+    }
   }
 }
