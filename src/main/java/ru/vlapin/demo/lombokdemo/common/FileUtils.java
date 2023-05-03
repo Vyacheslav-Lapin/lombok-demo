@@ -1,5 +1,12 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import lombok.Cleanup;
+import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -8,12 +15,6 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import lombok.Cleanup;
-import lombok.SneakyThrows;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import static java.nio.file.StandardOpenOption.*;
 
@@ -59,6 +60,12 @@ public class FileUtils {
   public String getFileAsString(@NotNull Path file) {
     @Cleanup Stream<String> stringStream = file.lines();
     return stringStream.collect(Collectors.joining());
+  }
+
+  @SneakyThrows
+  public String getFileAsString(@NotNull Path file, String delimeter) {
+    @Cleanup Stream<String> stringStream = file.lines();
+    return stringStream.collect(Collectors.joining(delimeter));
   }
 
   @SneakyThrows

@@ -1,6 +1,13 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
 import io.vavr.Function2;
+import lombok.SneakyThrows;
+import lombok.experimental.NonFinal;
+import lombok.val;
+import ru.vlapin.demo.lombokdemo.common.FileUtils;
+import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
+import ru.vlapin.demo.lombokdemo.experimental.delegate.PooledConnection;
+
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,12 +16,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import lombok.SneakyThrows;
-import lombok.experimental.NonFinal;
-import lombok.val;
-import ru.vlapin.demo.lombokdemo.common.FileUtils;
-import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.PooledConnection;
 
 public class ConnectionPool implements Closeable, Supplier<Connection> {
 
@@ -39,12 +40,15 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
 
     //init
     val sql = connectionFactory.getSqlInitFiles()
-                  .map(FileUtils::getFileAsString)
-                  .collect(Collectors.joining());
+                  .map(file -> FileUtils.getFileAsString(file, "\n"))
+                  .collect(Collectors.joining("\n\n"));
 
     try (val connection = get();
          val statement = connection.createStatement()) {
       statement.executeUpdate(sql);
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 

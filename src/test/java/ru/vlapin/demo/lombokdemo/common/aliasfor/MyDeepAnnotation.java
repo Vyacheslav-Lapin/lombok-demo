@@ -1,6 +1,5 @@
 package ru.vlapin.demo.lombokdemo.common.aliasfor;
 
-import java.lang.annotation.Retention;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+
+import java.lang.annotation.Retention;
 
 import static java.lang.annotation.RetentionPolicy.*;
 import static org.assertj.core.api.Assertions.*;
@@ -32,7 +33,6 @@ public @interface MyDeepAnnotation {
   String value();
 }
 
-//@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SpringBootTest
 @ExtensionMethod({
     AnnotatedElementUtils.class,

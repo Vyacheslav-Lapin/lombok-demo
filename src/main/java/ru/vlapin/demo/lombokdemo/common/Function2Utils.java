@@ -10,13 +10,13 @@ import java.util.function.Function;
 @UtilityClass
 public class Function2Utils {
 
-    public <V1, V2, R, T> Function2<T, V2, R> compose1(@NotNull BiFunction<V1, V2, R> self,
-                                                       @NotNull Function<T, V1> before) {
+    public <V1, V2, R, T> Function2<T, V2, R> compose1(@NotNull BiFunction<? super V1, ? super V2, ? extends R> self,
+                                                       @NotNull Function<? super T, ? extends V1> before) {
         return (t, v2) -> self.apply(before.apply(t), v2);
     }
 
-    public <V1, V2, R, T> Function2<V1, T, R> compose2(@NotNull BiFunction<V1, V2, R> self,
-                                                       @NotNull Function<T, V2> before) {
+    public <V1, V2, R, T> Function2<V1, T, R> compose2(@NotNull BiFunction<? super V1, ? super V2, ? extends R> self,
+                                                       @NotNull Function<? super T, ? extends V2> before) {
         return (v1, t) -> self.apply(v1, before.apply(t));
     }
 }

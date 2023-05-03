@@ -25,13 +25,13 @@ import java.util.function.UnaryOperator;
 public class PropertiesUtils {
 
   @NotNull
-  public <T> T from(@NotNull Class<T> tClass) {
+  public <T> T from(@NotNull Class<? extends T> tClass) {
     return from(tClass.getSimpleName(), tClass);
   }
 
   @NotNull
   public <T> T from(@NotNull String propertiesFileName,
-                    @NotNull Class<T> tClass) {
+                    @NotNull Class<? extends T> tClass) {
     return from(
         parseProperties(propertiesFileName),
         getMaxArgsCountConstructor(tClass));
@@ -39,21 +39,21 @@ public class PropertiesUtils {
 
   @NotNull
   public <T> T from(@NotNull String propertiesFileName,
-                    @NotNull Constructor<T> constructor) {
+                    @NotNull Constructor<? extends T> constructor) {
     return from(parseProperties(propertiesFileName), constructor);
   }
 
   @NotNull
   @SneakyThrows
   public <T> T from(@NotNull Function1<@NotNull String, @NotNull String> getProperty,
-                    @NotNull Class<T> tClass) {
+                    @NotNull Class<? extends T> tClass) {
     return from(getProperty, getMaxArgsCountConstructor(tClass));
   }
 
   @NotNull
   @SneakyThrows
   public <T> T from(@NotNull Function1<@NotNull String, @NotNull String> getProperty,
-                    @NotNull Constructor<@NotNull T> constructor) {
+                    @NotNull Constructor<? extends T> constructor) {
     return CheckedFunction1.<Object[], T>of(constructor::newInstance).unchecked().apply(
         constructor.getParameters().stream()
             .map(parameter -> resolveParameter(getProperty, parameter))
@@ -71,10 +71,11 @@ public class PropertiesUtils {
 
   @NotNull
   @SuppressWarnings("unchecked")
-  public <T> Constructor<T> getMaxArgsCountConstructor(@NotNull Class<T> tClass) {
+  public <T> Constructor<T> getMaxArgsCountConstructor(@NotNull Class<? extends T> tClass) {
     return (Constructor<T>) tClass.getConstructors().stream()
-                                .max(Comparator.comparingInt(Constructor::getParameterCount))
-                                .orElseThrow(() -> new PropsBinderException("Нет ни одного конструктора!"));
+        // Выбираем конструктор с максимальным кол-вом параметров
+        .max(Comparator.comparingInt(Constructor::getParameterCount))
+        .orElseThrow(() -> new PropsBinderException("Нет ни одного конструктора!"));
   }
 
   public Object resolveParameter(@NotNull Function1<String, String> getValue,
@@ -84,19 +85,19 @@ public class PropertiesUtils {
 
   public <T> T resolveParameter(@NotNull Function1<String, String> getValue,
                                 String name,
-                                Class<T> type) {
+                                Class<? extends T> type) {
     //noinspection unchecked
     return (T) switch (type) {
-      case Class<T> t when t == String.class -> getValue.apply(name);
-      case Class<T> t when t.isEnum() -> toEnumValue(getValue.apply(name), t);
-      case Class<T> t when t == int.class || t == Integer.class -> Integer.valueOf(getValue.apply(name));
-      case Class<T> t when t == boolean.class || t == Boolean.class -> Boolean.valueOf(getValue.apply(name));
-      case Class<T> t when t == double.class || t == Double.class -> Double.valueOf(getValue.apply(name));
-      case Class<T> t when t == long.class || t == Long.class -> Long.valueOf(getValue.apply(name));
-      case Class<T> t when t == char.class || t == Character.class -> getValue.apply(name).charAt(0);
-      case Class<T> t when t == float.class || t == Float.class -> Float.valueOf(getValue.apply(name));
-      case Class<T> t when t == short.class || t == Short.class -> Short.valueOf(getValue.apply(name));
-      case Class<T> t when t == byte.class || t == Byte.class -> Byte.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == String.class -> getValue.apply(name);
+      case Class<? extends T> t when t.isEnum() -> toEnumValue(getValue.apply(name), t);
+      case Class<? extends T> t when t == int.class || t == Integer.class -> Integer.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == boolean.class || t == Boolean.class -> Boolean.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == double.class || t == Double.class -> Double.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == long.class || t == Long.class -> Long.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == char.class || t == Character.class -> getValue.apply(name).charAt(0);
+      case Class<? extends T> t when t == float.class || t == Float.class -> Float.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == short.class || t == Short.class -> Short.valueOf(getValue.apply(name));
+      case Class<? extends T> t when t == byte.class || t == Byte.class -> Byte.valueOf(getValue.apply(name));
       default -> resolveObjectParameter(getValue::apply, type, name);
     };
   }
@@ -108,7 +109,7 @@ public class PropertiesUtils {
 
   @NotNull
   private <T> T resolveObjectParameter(UnaryOperator<String> getProperty,
-                                       @NotNull Class<T> type,
+                                       @NotNull Class<? extends T> type,
                                        String prefix) {
 
     if (type.isInterface() || Modifier.isAbstract(type.getModifiers()))

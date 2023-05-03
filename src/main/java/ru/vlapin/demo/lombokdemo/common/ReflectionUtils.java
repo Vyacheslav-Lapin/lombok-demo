@@ -1,9 +1,6 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import io.vavr.CheckedFunction1;
-import io.vavr.CheckedFunction2;
-import io.vavr.Function2;
-import io.vavr.Function3;
+import io.vavr.*;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
@@ -26,6 +23,7 @@ import static java.util.stream.StreamSupport.*;
 @SuppressWarnings("unused")
 @ExtensionMethod({
     Function2Utils.class,
+    CheckedFunction1Utils.class,
 })
 public class ReflectionUtils {
 
@@ -36,11 +34,19 @@ public class ReflectionUtils {
               .unchecked())
           .andThen(Stream::of);
 
-  public <T> T getNewInstanceFromNoArgsConstructor(Class<T> tClass) {
+  public <T> CheckedFunction1<Class<T>, T> noArgsConstructor() {
     return CheckedFunction1.<Class<T>, Constructor<T>>of(Class::getConstructor)
-        .andThen(Constructor::newInstance)
+        .andThen(Constructor::newInstance);
+  }
+
+  public <T> CheckedFunction0<T> noArgsConstructor(Class<T> tClass) {
+    return noArgsConstructor().supply(tClass);
+  }
+
+  public <T> T newObject(Class<? extends T> tClass) {
+    return noArgsConstructor(tClass)
         .unchecked()
-        .apply(tClass);
+        .get();
   }
 
   public <T> Class<T> toClass(String className) {

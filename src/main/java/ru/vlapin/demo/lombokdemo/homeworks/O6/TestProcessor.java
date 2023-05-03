@@ -2,11 +2,13 @@ package ru.vlapin.demo.lombokdemo.homeworks.O6;
 
 import io.vavr.CheckedConsumer;
 import io.vavr.control.Try;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import lombok.With;
 import lombok.experimental.Accessors;
 import lombok.experimental.ExtensionMethod;
-import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
+import lombok.val;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import ru.vlapin.demo.lombokdemo.common.CheckedConsumerUtils;
 import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
@@ -30,7 +32,6 @@ import static lombok.AccessLevel.PRIVATE;
     AnnotatedElementUtils.class,
     ReflectionUtils.class,
 })
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TestProcessor {
 
   private static <T> Function<Class<? extends Annotation>, Stream<TestMethod<T>>> annotatedMethods(Class<? extends T> testExampleClass) {
@@ -46,7 +47,7 @@ public class TestProcessor {
   private static <T> Function<TestMethod<? super T>, Try<Void>> toTry(Class<T> testExampleClass) {
     return testMethod -> Try.run(() ->
         testMethod.consumer().accept(
-            testExampleClass.getNewInstanceFromNoArgsConstructor()));
+            testExampleClass.newObject()));
   }
 
   public <T> Map<Method, Try<Void>> runTests(Class<T> testExampleClass) {
@@ -74,7 +75,7 @@ public class TestProcessor {
     CheckedConsumer<T> consumer;
 
     public TestMethod(Method method) {
-      this(method, CheckedConsumer.of(method::invoke));
+      this(method, method::invoke);
     }
   }
 }
