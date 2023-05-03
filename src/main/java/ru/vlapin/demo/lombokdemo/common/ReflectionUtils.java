@@ -4,18 +4,19 @@ import io.vavr.CheckedFunction1;
 import io.vavr.CheckedFunction2;
 import io.vavr.Function2;
 import io.vavr.Function3;
-import java.io.File;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.util.Spliterator.*;
 import static java.util.Spliterators.*;
@@ -24,28 +25,34 @@ import static java.util.stream.StreamSupport.*;
 @UtilityClass
 @SuppressWarnings("unused")
 @ExtensionMethod({
-    FunctionUtils.class,
+    Function2Utils.class,
 })
 public class ReflectionUtils {
-
-  public final Function<String, Class<?>> CLASS_FOR_NAME_UNCHECKED =
-      CheckedFunction1.<String, Class<?>>of(Class::forName)
-          .unchecked();
-
-  public <T> Class<T> toClass(String className) {
-    //noinspection unchecked
-    return (Class<T>) CLASS_FOR_NAME_UNCHECKED.apply(className);
-  }
 
   private final Function2<String, String, Stream<Class<?>>> GET_CLASS_FROM_FILE =
       Function2.<String, String, String>of("%s.%s"::formatted)
           .compose2((String name) -> name.substring(0, name.length() - 6))
-          .andThen(CLASS_FOR_NAME_UNCHECKED)
+          .andThen(CheckedFunction1.<String, Class<?>>of(Class::forName)
+              .unchecked())
           .andThen(Stream::of);
+
+  public <T> T getNewInstanceFromNoArgsConstructor(Class<T> tClass) {
+    return CheckedFunction1.<Class<T>, Constructor<T>>of(Class::getConstructor)
+        .andThen(Constructor::newInstance)
+        .unchecked()
+        .apply(tClass);
+  }
+
+  public <T> Class<T> toClass(String className) {
+    //noinspection unchecked
+    return (Class<T>) CheckedFunction1.<String, Class<?>>of(Class::forName)
+        .unchecked()
+        .apply(className);
+  }
 
   private final Function3<File, String, String, Stream<Class<?>>> GET_CLASS_FROM_DIR =
       Function3.of((file, packageName, fileName) ->
-                       findClasses(file, "%s.%s".formatted(packageName, fileName)));
+          findClasses(file, "%s.%s".formatted(packageName, fileName)));
 
   /**
    * Scans all classes accessible from the context class loader which belong to the given package

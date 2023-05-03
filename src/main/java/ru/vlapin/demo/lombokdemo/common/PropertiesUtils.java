@@ -2,6 +2,13 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import io.vavr.CheckedFunction1;
 import io.vavr.Function1;
+import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.StandardException;
+import lombok.experimental.UtilityClass;
+import lombok.val;
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
@@ -9,12 +16,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Properties;
 import java.util.function.UnaryOperator;
-import lombok.SneakyThrows;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.StandardException;
-import lombok.experimental.UtilityClass;
-import lombok.val;
-import org.jetbrains.annotations.NotNull;
 
 @UtilityClass
 @ExtensionMethod({
@@ -24,12 +25,13 @@ import org.jetbrains.annotations.NotNull;
 public class PropertiesUtils {
 
   @NotNull
-  public <T> T from(Class<T> tClass) {
+  public <T> T from(@NotNull Class<T> tClass) {
     return from(tClass.getSimpleName(), tClass);
   }
 
   @NotNull
-  public <T> T from(String propertiesFileName, Class<T> tClass) {
+  public <T> T from(@NotNull String propertiesFileName,
+                    @NotNull Class<T> tClass) {
     return from(
         parseProperties(propertiesFileName),
         getMaxArgsCountConstructor(tClass));
@@ -43,14 +45,15 @@ public class PropertiesUtils {
 
   @NotNull
   @SneakyThrows
-  public <T> T from(Function1<String, String> getProperty, Class<T> tClass) {
+  public <T> T from(@NotNull Function1<@NotNull String, @NotNull String> getProperty,
+                    @NotNull Class<T> tClass) {
     return from(getProperty, getMaxArgsCountConstructor(tClass));
   }
 
   @NotNull
   @SneakyThrows
-  public <T> T from(@NotNull Function1<String, String> getProperty,
-                    @NotNull Constructor<T> constructor) {
+  public <T> T from(@NotNull Function1<@NotNull String, @NotNull String> getProperty,
+                    @NotNull Constructor<@NotNull T> constructor) {
     return CheckedFunction1.<Object[], T>of(constructor::newInstance).unchecked().apply(
         constructor.getParameters().stream()
             .map(parameter -> resolveParameter(getProperty, parameter))
@@ -58,7 +61,7 @@ public class PropertiesUtils {
   }
 
   @NotNull
-  public Function1<String, String> parseProperties(String propertiesFileName) {
+  public Function1<@NotNull String, @NotNull String> parseProperties(@NotNull String propertiesFileName) {
     val properties = new Properties();
     "%s.properties"
         .formatted(propertiesFileName)

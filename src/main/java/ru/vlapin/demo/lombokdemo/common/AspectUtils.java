@@ -4,9 +4,6 @@ import io.vavr.CheckedFunction1;
 import io.vavr.CheckedFunction2;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Optional;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
@@ -16,24 +13,33 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Optional;
+
 @UtilityClass
 @ExtensionMethod({
     AnnotatedElementUtils.class,
 })
 public class AspectUtils {
 
+  /**
+   * Get method from {@link ProceedingJoinPoint} object.
+   *
+   * @param pjp
+   * @return
+   */
   @SneakyThrows
   public Optional<Method> getMethod(@NotNull ProceedingJoinPoint pjp) {
     if (pjp.getSignature() instanceof MethodSignature signature) {
       val method = signature.getMethod();
       return Optional.of(method.getDeclaringClass().isInterface() ?
-                             pjp.getTarget()
-                                 .getClass()
-                                 .getDeclaredMethod(signature.getName(), method.getParameterTypes())
-                             : method);
-    } else {
+          pjp.getTarget()
+              .getClass()
+              .getDeclaredMethod(signature.getName(), method.getParameterTypes())
+          : method);
+    } else
       return Optional.empty();
-    }
   }
 
   public <A extends Annotation> A getAnnotation(ProceedingJoinPoint pjp,

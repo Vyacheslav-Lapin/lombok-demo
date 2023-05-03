@@ -64,44 +64,15 @@ class TestProcessorTests {
   }
 }
 
+// @formatter:off
+@SuppressWarnings("unused")
 public class TestExample {
-
-  @SuppressWarnings("unused")
-  @Before
-  void before1() {
-    System.out.println("before1");
-  }
-
-  @SuppressWarnings("unused")
-  @Before
-  void before2() {
-    System.out.println("before2");
-  }
-
-  @Test
-  void test1() {
-    System.out.println("test1");
-  }
-
-  @Test
-  void test2() {
-    System.out.println("test2");
-  }
-
-  @Test
-  void test3() {
-    throw new RuntimeException("Boom!");
-  }
-
-  @SuppressWarnings("unused")
-  @After
-  void after1() {
-    System.out.println("after1");
-  }
-
-  @SuppressWarnings("unused")
-  @After
-  void after2() {
-    System.out.println("after2");
-  }
+  @Before void before1() { System.out.println("before1"); }
+  @Before void before2() { System.out.println("before2"); }
+  @Test void test1() { System.out.println("test1"); }
+  @Test void test2() { System.out.println("test2"); }
+  @Test void test3() { throw new RuntimeException("Boom!"); }
+  @After void after1() { System.out.println("after1"); }
+  @After void after2() { System.out.println("after2"); }
 }
+// @formatter:on
