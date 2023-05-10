@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +18,14 @@ import java.util.Objects;
 })
 @RestController
 @RequiredArgsConstructor
-@SuppressWarnings("java:S125")
 @RequestMapping("api/posts")
+@SuppressWarnings("java:S2259")
 public class PostController {
 
   PostApiClient client;
 
   @NotNull
   @GetMapping
-  @Contract(pure = true)
   public List<Post> get() {
     return client.posts(null)
             .getBody()

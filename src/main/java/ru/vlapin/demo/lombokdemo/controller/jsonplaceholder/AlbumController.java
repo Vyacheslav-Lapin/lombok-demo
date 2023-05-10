@@ -3,7 +3,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,35 +20,25 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@SuppressWarnings("java:S125")
+@SuppressWarnings("java:S2259")
 @RequestMapping("api/albums")
 public class AlbumController {
 
   AlbumApiClient client;
 
-  @NotNull
-  @GetMapping
-  @Contract(pure = true)
+    @NotNull
+    @GetMapping(produces = "application/json")
   public List<Album> get() {
     return client.albums(null)
             .getBody()
             .requireNonNull();
   }
 
-  @NotNull
-  @Contract(pure = true)
-  @GetMapping(path = "{id}",
-          produces = "application/json")
+    @NotNull
+    @GetMapping(path = "{id}", produces = "application/json")
   public Album get(@PathVariable @NotNull Integer id) {
     return client.pickAlbum(id)
             .getBody()
             .requireNonNull();
   }
-
-  //  @NotNull
-  //  @GetMapping
-  //  @Contract(pure = true)
-  //  public List<AlbumImpl> getByPostId(@RequestParam @NotNull Long postId) {
-  //    return client.albumsByPostId(postId);
-  //  }
 }

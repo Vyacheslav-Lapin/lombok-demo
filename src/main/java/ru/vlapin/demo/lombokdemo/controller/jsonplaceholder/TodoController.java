@@ -19,6 +19,7 @@ import java.util.Objects;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/todos")
+@SuppressWarnings("java:S2259")
 public class TodoController {
 
   TodoApiClient todoService;

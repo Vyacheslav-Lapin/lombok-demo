@@ -26,17 +26,17 @@ public class AspectUtils {
   /**
    * Get method from {@link ProceedingJoinPoint} object.
    *
-   * @param pjp
+   * @param pjp argument of advice-method
    * @return
    */
   @SneakyThrows
   public Optional<Method> getMethod(@NotNull ProceedingJoinPoint pjp) {
-    if (pjp.getSignature() instanceof MethodSignature signature) {
-      val method = signature.getMethod();
+    if (pjp.getSignature() instanceof MethodSignature methodSignature) {
+      val method = methodSignature.getMethod();
       return Optional.of(method.getDeclaringClass().isInterface() ?
           pjp.getTarget()
               .getClass()
-              .getDeclaredMethod(signature.getName(), method.getParameterTypes())
+              .getDeclaredMethod(methodSignature.getName(), method.getParameterTypes())
           : method);
     } else
       return Optional.empty();

@@ -19,6 +19,7 @@ import java.util.Objects;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/users")
+@SuppressWarnings("java:S2259")
 public class UserController {
 
   UserApiClient client;
@@ -31,7 +32,6 @@ public class UserController {
             .requireNonNull();
   }
 
-  //  @NotNull
   @GetMapping("{id}")
   public User byId(@PathVariable @NotNull Integer id) {
     return client.pickUser(id)

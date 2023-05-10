@@ -1,7 +1,7 @@
 # Demo project of Lombok usage
 ____
 
-Lombok features demo project, created as practical part of Lombok training.
+Lombok features demo one-module project, created as practical part of Lombok training.
 
 ## How to run
 ```shell
@@ -18,13 +18,13 @@ Sources delombok action attached via Maven to `process-sources` life-cycle phase
 ```shell
 ./mvnw clean generate-sources
 ```
-Then you can view delombok result in `target/generated-sources/delomboked` folder.
+Then you can view delombok result in `target/generated-sources/delomboked` folder (if you use IntelliJ IDEA, you should unmark this directory if it automatically marked as "generated source root", to avoid class conflicts).
 
 Test sources delombok action attached to `process-test-sources` phase. So, for delombok sources and tests, placed in `src/main/java` and `src/test/java` respectively, tap this command in terminal:
 ```shell
 ./mvnw clean generate-test-sources
 ```
-Then you can view delombok results in `target/generated-sources/delomboked` and `target/generated-test-sources/delomboked` folders respectively.
+Then you can view delombok results in `target/generated-sources/delomboked` and `target/generated-test-sources/delomboked` folders respectively (if you use IntelliJ IDEA, you should unmark this directories if it automatically marked as "generated source root", to avoid class conflicts).
 
 ## How to enter
 Then go to http://localhost:8080/swagger-ui.html for swagger-ui 
@@ -38,4 +38,4 @@ Use `user` as a login and see logs for automatically-generated password (every s
   - Experimental features demo - package `ru.vlapin.demo.lombokdemo.experimental.*`
   - Example of realization of homework №6 of OTUS Java course: `ru.vlapin.demo.lombokdemo.homeworks.O6.*`
   - Example of AOP - `@Loggable` annotation aspect - `ru.vlapin.demo.lombokdemo.common.Loggable`
-  - OpenFeign example by using http://jsonplaceholder.typicode.com/ site API
+  - OpenFeign and OpenAPI-Generator example by using http://jsonplaceholder.typicode.com/ site API

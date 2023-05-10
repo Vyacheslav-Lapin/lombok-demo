@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +18,7 @@ import java.util.Objects;
 })
 @RestController
 @RequiredArgsConstructor
-@SuppressWarnings("java:S125")
+@SuppressWarnings("java:S2259")
 @RequestMapping("api/comments")
 public class CommentController {
 
@@ -27,7 +26,6 @@ public class CommentController {
 
   @NotNull
   @GetMapping
-  @Contract(pure = true)
   public List<Comment> comments() {
     return client.comments(null)
             .getBody()
@@ -36,7 +34,6 @@ public class CommentController {
 
   @NotNull
   @GetMapping("{id}")
-  @Contract(pure = true)
   @SuppressWarnings("java:S125")
   public Comment comment(@PathVariable @NotNull Integer id) {
     return client.pickComment(id)

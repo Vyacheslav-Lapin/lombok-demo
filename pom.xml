@@ -33,12 +33,12 @@
 
     <!--region Libs-->
     <vavr.version>0.10.4</vavr.version>
-    <checker.version>3.33.0</checker.version>
+    <checker.version>3.34.0</checker.version>
     <spotbugs.version>4.7.3</spotbugs.version>
     <annotations.version>24.0.1</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
     <springdoc-openapi.version>2.1.0</springdoc-openapi.version>
-    <error_prone_annotations.version>2.18.0</error_prone_annotations.version>
+    <error_prone_annotations.version>2.19.0</error_prone_annotations.version>
     <!--endregion-->
 
     <!--region Test-libs-->
@@ -46,9 +46,9 @@
 
     <!--region Plugins-->
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-    <jacoco-maven-plugin.version>0.8.9</jacoco-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-    <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
     <maven-enforcer-plugin.version>3.3.0</maven-enforcer-plugin.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -354,7 +354,7 @@
           <version>${maven-source-plugin.version}</version>
           <executions>
             <execution>
-              <id>attach-sources</id>
+              <id>attach-sources:verify:jar-no-fork</id>
               <phase>verify</phase>
               <goals>
                 <goal>jar-no-fork</goal>
@@ -367,7 +367,7 @@
           <version>${maven-antrun-plugin.version}</version>
           <executions>
             <execution>
-              <id>openapi-generator-cleaning</id>
+              <id>openapi-generator-cleaning:generate-sources:run</id>
               <phase>generate-sources</phase>
               <goals>
                 <goal>run</goal>
@@ -384,9 +384,9 @@
                   <delete file="${openapi.generator.maven.plugin.output}/README.md"/>
                 </target>
               </configuration>
-            </execution><!--openapi-generator-cleaning:generate-sources:run-->
+            </execution>
             <execution>
-              <id>delombok-openapi-generated-sources</id>
+              <id>delombok-openapi-generated-sources:generate-sources:run</id>
               <phase>generate-sources</phase>
               <goals>
                 <goal>run</goal>
@@ -408,9 +408,9 @@
                   </java>
                 </target>
               </configuration>
-            </execution><!--delombok-openapi-generated-sources:generate-sources:run-->
+            </execution>
             <execution>
-              <id>delombok-sources</id>
+              <id>delombok-sources:process-sources:run</id>
               <phase>process-sources</phase>
               <goals>
                 <goal>run</goal>
@@ -436,9 +436,9 @@
                   </java>
                 </target>
               </configuration>
-            </execution><!--delombok-sources:process-sources:run-->
+            </execution>
             <execution>
-              <id>delombok-test-sources</id>
+              <id>delombok-test-sources:process-test-sources:run</id>
               <phase>process-test-sources</phase>
               <goals>
                 <goal>run</goal>
@@ -466,7 +466,7 @@
                   </java>
                 </target>
               </configuration>
-            </execution><!--delombok-test-sources:process-test-sources:run-->
+            </execution>
           </executions>
         </plugin>
         <plugin>
@@ -474,7 +474,7 @@
           <version>${maven-enforcer-plugin.version}</version>
           <executions>
             <execution>
-              <id>enforce-maven</id>
+              <id>break-if-maven-has-version-lower-then-minimal:validate:enforce</id>
               <goals>
                 <goal>enforce</goal>
               </goals>
@@ -494,7 +494,8 @@
           <version>${jacoco-maven-plugin.version}</version>
           <executions>
             <execution>
-              <id>jacoco-initialize</id>
+              <id>jacoco-initialize:initialize:prepare-agent</id>
+              <!--<phase>initialize</phase>&lt;!&ndash;default&ndash;&gt;-->
               <goals>
                 <goal>prepare-agent</goal>
               </goals>
@@ -503,15 +504,17 @@
               </configuration>
             </execution>
             <execution>
-              <id>post-unit-test</id>
+              <id>post-unit-test:test:report</id>
               <phase>test</phase>
+              <!--<phase>verify</phase>&lt;!&ndash;default&ndash;&gt;-->
               <goals>
                 <goal>report</goal>
               </goals>
             </execution>
             <execution>
-              <id>pre-integration-test</id>
+              <id>pre-integration-test:pre-integration-test:prepare-agent</id>
               <phase>pre-integration-test</phase>
+              <!--<phase>initialize</phase>&lt;!&ndash;default&ndash;&gt;-->
               <goals>
                 <goal>prepare-agent</goal>
               </goals>
@@ -520,26 +523,11 @@
               </configuration>
             </execution>
             <execution>
-              <id>post-integration-test</id>
+              <id>post-integration-test:post-integration-test:report</id>
               <phase>post-integration-test</phase>
+              <!--<phase>verify</phase>&lt;!&ndash;default&ndash;&gt;-->
               <goals>
                 <goal>report</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>${versions-maven-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>update</id>
-              <phase>initialize</phase>
-              <goals>
-                <goal>update-parent</goal>
-                <goal>update-properties</goal>
-                <goal>display-plugin-updates</goal>
               </goals>
             </execution>
           </executions>
@@ -550,6 +538,7 @@
           <version>${yaml-properties-maven-plugin.version}</version>
           <executions>
             <execution>
+              <id>take-additional-properties-from-*.yml:initialize:read-project-properties</id>
               <phase>initialize</phase>
               <goals>
                 <goal>read-project-properties</goal>
@@ -560,6 +549,22 @@
                   <file>${maven.multiModuleProjectDirectory}/maven.yml</file>
                 </files>
               </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${versions-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>update:initialize:{update-parent,update-properties,display-plugin-updates}</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>update-parent</goal>
+                <goal>update-properties</goal>
+                <goal>display-plugin-updates</goal>
+              </goals>
             </execution>
           </executions>
         </plugin>
@@ -591,7 +596,7 @@
           <version>${build-helper-maven-plugin.version}</version>
           <executions>
             <execution>
-              <id>add-source</id>
+              <id>add-source:generate-sources:add-source</id>
               <!--<phase>generate-sources</phase>&lt;!&ndash;default&ndash;&gt;-->
               <goals>
                 <goal>add-source</goal>
@@ -602,10 +607,10 @@
                   <source>${lombok.outputDirectory}</source>
                 </sources>
               </configuration>
-            </execution><!--add-source:generate-sources:add-source-->
+            </execution>
             <execution>
-              <id>add-test-sources</id>
-              <!--<phase>generate-test-sources</phase>--><!--default-->
+              <id>add-test-sources:generate-test-sources:add-test-source</id>
+              <!--<phase>generate-test-sources</phase>&lt;!&ndash;default&ndash;&gt;-->
               <goals>
                 <goal>add-test-source</goal>
               </goals>
@@ -615,7 +620,7 @@
                   <source>${assertj.targetDir}</source>
                 </sources>
               </configuration>
-            </execution><!--add-test-sources:generate-test-sources:add-test-source-->
+            </execution>
           </executions>
         </plugin>
         <plugin>
@@ -624,12 +629,12 @@
           <version>${openapi-generator-maven-plugin.version}</version>
           <executions>
             <execution>
-              <id>generate-openapi-client-code</id>
+              <id>generate-openapi-client-code:generate-sources:generate</id>
               <phase>generate-sources</phase>
               <goals>
                 <goal>generate</goal>
               </goals>
-            </execution><!--generate-sources:generate-->
+            </execution>
           </executions>
         </plugin>
         <plugin>
