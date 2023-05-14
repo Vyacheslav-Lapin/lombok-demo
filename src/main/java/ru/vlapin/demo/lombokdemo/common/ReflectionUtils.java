@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import java.io.File;
@@ -42,13 +41,13 @@ public class ReflectionUtils {
                           .unchecked())
                   .andThen(Stream::of);
 
-  public <T> CheckedFunction1<Class<? extends T>, ? extends T> noArgsConstructor() {
+  public <T> CheckedFunction1<Class<? extends T>, T> noArgsConstructor() {
     return CheckedFunction1.<Class<? extends T>, Constructor<? extends T>>of(Class::getConstructor)
             .andThen(Constructor::newInstance);
   }
 
-  public <T> CheckedFunction0<? extends T> noArgsConstructor(Class<T> tClass) {
-//  public <T> CheckedFunction0<? extends T> noArgsConstructor(Class<? extends T> tClass) { //todo 07.05.2023: create bug report for that false positive error
+  public <T> CheckedFunction0<T> noArgsConstructor(Class<T> tClass) {
+//  public <T> CheckedFunction0<T> noArgsConstructor(Class<? extends T> tClass) { //todo 07.05.2023: create bug report for that false positive error
     return ReflectionUtils.<T>noArgsConstructor().supply(tClass);
 //    return noArgsConstructor().supply(tClass);
   }
@@ -59,7 +58,6 @@ public class ReflectionUtils {
             .get();
   }
 
-  @NotNull
   public <T> Stream<Method> annotatedMethods(Class<? extends T> testExampleClass, Class<? extends Annotation> annotationClass) {
     return testExampleClass.getDeclaredMethods().stream()
             .filter(method -> !method.isSynthetic())
@@ -68,9 +66,9 @@ public class ReflectionUtils {
             .filter(method -> method.isAnnotated(annotationClass));
   }
 
+  @SuppressWarnings("unchecked")
   public <T> Class<T> toClass(String className) {
-    //noinspection unchecked
-    return (Class<T>) CheckedFunction1.<String, Class<?>>of(Class::forName)
+    return CheckedFunction1.of((String className1) -> (Class<T>) Class.forName(className1))
             .unchecked()
             .apply(className);
   }
@@ -82,7 +80,7 @@ public class ReflectionUtils {
    * @param packageName The base package
    * @return The classes
    */
-  public Stream<Class<?>> getClasses(@NotNull String packageName) {
+  public Stream<Class<?>> getClasses(String packageName) {
     return CheckedFunction2.of(ClassLoader::getResources).unchecked()
             .reversed()
             .apply(packageName.replace('.', '/'))
@@ -123,7 +121,7 @@ public class ReflectionUtils {
         .flatMap(lookForClasses);
   }
 
-  private Stream<Class<?>> lookForClasses(String packageName, @NotNull File file) {
+  private Stream<Class<?>> lookForClasses(String packageName, File file) {
     val fileName = file.getName();
     return (file.isDirectory() && fileName.contains(".") ?
                 GET_CLASS_FROM_DIR.apply(file) : GET_CLASS_FROM_FILE)

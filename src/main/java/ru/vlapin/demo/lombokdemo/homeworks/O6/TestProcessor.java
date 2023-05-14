@@ -33,13 +33,13 @@ import static lombok.AccessLevel.*;
 })
 public class TestProcessor {
 
-  private static <T> Function<Class<? extends Annotation>, Stream<TestMethod<T>>> annotatedMethods(Class<? extends T> testExampleClass) {
+  private static <T> Function<? super Class<? extends Annotation>, Stream<? extends TestMethod<T>>> annotatedMethods(Class<? extends T> testExampleClass) {
     return annotationClass -> testExampleClass.annotatedMethods(annotationClass)
             .peek(method -> method.setAccessible(true))
             .map(TestMethod::new);
   }
 
-  private static <T> Function<TestMethod<? super T>, Try<Void>> toTry(Class<? extends T> testExampleClass) {
+  private static <T> Function<? super TestMethod<? super T>, ? extends Try<Void>> toTry(Class<? extends T> testExampleClass) {
     return Function1.<TestMethod<? super T>, CheckedConsumer<? super T>>of(TestMethod::consumer)
             .andThen(checkedConsumer -> checkedConsumer.compose(Function1.<Class<? extends T>, T>of(ReflectionUtils::newObject)))
 //            .andThen(checkedConsumer -> checkedConsumer.supply(testExampleClass)) //todo 07.05.2023: create bug report for that false positive error
@@ -51,7 +51,7 @@ public class TestProcessor {
 //                    testExampleClass.newObject()));
   }
 
-  public <T> Map<Method, Try<Void>> runTests(Class<T> testExampleClass) {
+  public <T> Map<Method, ? extends Try<Void>> runTests(Class<T> testExampleClass) {
     val getAnnotatedMethods = annotatedMethods(testExampleClass);
     return getAnnotatedMethods.apply(Test.class)
             .map(test -> test.withConsumer(

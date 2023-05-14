@@ -2,66 +2,65 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import io.vavr.CheckedFunction1;
 import io.vavr.Function1;
-import lombok.SneakyThrows;
+import io.vavr.control.Option;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.StandardException;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Properties;
 import java.util.function.UnaryOperator;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
+import static java.util.Comparator.*;
 
 @UtilityClass
 @ExtensionMethod({
     Arrays.class,
     InputStreamUtils.class,
+    AnnotatedElementUtils.class,
 })
 public class PropertiesUtils {
 
-  @NotNull
-  public <T> T from(@NotNull Class<? extends T> tClass) {
-    return from(tClass.getSimpleName(), tClass);
+  public <T> T getInstance(Class<? extends T> tClass) {
+
+    val propertiesFileName = Option.of(tClass.findMergedAnnotation(InitProperties.class))
+        .map(InitProperties::value)
+        .getOrElse(tClass::getSimpleName);
+
+    return from(tClass, propertiesFileName);
   }
 
-  @NotNull
-  public <T> T from(@NotNull String propertiesFileName,
-                    @NotNull Class<? extends T> tClass) {
+  public <T> T from(Class<? extends T> tClass, String propertiesFileName) {
     return from(
-        parseProperties(propertiesFileName),
+        parseProperties(propertiesFileName)::apply,
         getMaxArgsCountConstructor(tClass));
   }
 
-  @NotNull
-  public <T> T from(@NotNull String propertiesFileName,
-                    @NotNull Constructor<? extends T> constructor) {
-    return from(parseProperties(propertiesFileName), constructor);
+  public <T> T from(Constructor<? extends T> constructor, String propertiesFileName) {
+    return from(parseProperties(propertiesFileName)::apply, constructor);
   }
 
-  @NotNull
-  @SneakyThrows
-  public <T> T from(@NotNull Function1<@NotNull String, @NotNull String> getProperty,
-                    @NotNull Class<? extends T> tClass) {
+  public <T> T from(Class<? extends T> tClass, UnaryOperator<String> getProperty) {
     return from(getProperty, getMaxArgsCountConstructor(tClass));
   }
 
-  @NotNull
-  @SneakyThrows
-  public <T> T from(@NotNull Function1<@NotNull String, @NotNull String> getProperty,
-                    @NotNull Constructor<? extends T> constructor) {
+  public <T> T from(UnaryOperator<String> getProperty, Constructor<? extends T> constructor) {
     return CheckedFunction1.<Object[], T>of(constructor::newInstance).unchecked().apply(
         constructor.getParameters().stream()
             .map(parameter -> resolveParameter(getProperty, parameter))
             .toArray());
   }
 
-  @NotNull
-  public Function1<@NotNull String, @NotNull String> parseProperties(@NotNull String propertiesFileName) {
+  public Function1<String, String> parseProperties(String propertiesFileName) {
     val properties = new Properties();
     "%s.properties"
         .formatted(propertiesFileName)
@@ -69,24 +68,27 @@ public class PropertiesUtils {
     return properties::getProperty;
   }
 
-  @NotNull
+  /**
+   * Возвращает конструктор с максимальным кол-вом параметров.
+   *
+   * @param tClass
+   * @param <T>
+   * @return
+   */
   @SuppressWarnings("unchecked")
-  public <T> Constructor<T> getMaxArgsCountConstructor(@NotNull Class<? extends T> tClass) {
-    return (Constructor<T>) tClass.getConstructors().stream()
-        // Выбираем конструктор с максимальным кол-вом параметров
-        .max(Comparator.comparingInt(Constructor::getParameterCount))
+  public <T> Constructor<T> getMaxArgsCountConstructor(Class<? extends T> tClass) {
+    return ((Constructor<T>[]) tClass.getConstructors()).stream()
+        .max(comparingInt(Constructor::getParameterCount))
         .orElseThrow(() -> new PropsBinderException("Нет ни одного конструктора!"));
   }
 
-  public Object resolveParameter(@NotNull Function1<String, String> getValue,
-                                 @NotNull Parameter parameter) {
-    return resolveParameter(getValue, parameter.getName(), parameter.getType());
+  @SuppressWarnings("unchecked")
+  public <T> T resolveParameter(UnaryOperator<String> getValue, Parameter parameter) {
+    return resolveParameter(getValue, parameter.getName(), (Class<? extends T>) parameter.getType());
   }
 
-  public <T> T resolveParameter(@NotNull Function1<String, String> getValue,
-                                String name,
-                                Class<? extends T> type) {
-    //noinspection unchecked
+  @SuppressWarnings("unchecked")
+  public <T> T resolveParameter(UnaryOperator<String> getValue, String name, Class<? extends T> type) {
     return (T) switch (type) {
       case Class<? extends T> t when t == String.class -> getValue.apply(name);
       case Class<? extends T> t when t.isEnum() -> toEnumValue(getValue.apply(name), t);
@@ -98,23 +100,25 @@ public class PropertiesUtils {
       case Class<? extends T> t when t == float.class || t == Float.class -> Float.valueOf(getValue.apply(name));
       case Class<? extends T> t when t == short.class || t == Short.class -> Short.valueOf(getValue.apply(name));
       case Class<? extends T> t when t == byte.class || t == Byte.class -> Byte.valueOf(getValue.apply(name));
-      default -> resolveObjectParameter(getValue::apply, type, name);
+      default -> resolveObjectParameter(getValue, type, name);
     };
   }
 
+  @SuppressWarnings("unchecked")
   private <T extends Enum<T>> T toEnumValue(String s, Class<?> aClass) {
-    //noinspection unchecked
     return Enum.valueOf((Class<T>) aClass, s);
   }
 
-  @NotNull
-  private <T> T resolveObjectParameter(UnaryOperator<String> getProperty,
-                                       @NotNull Class<? extends T> type,
-                                       String prefix) {
-
+  private <T> T resolveObjectParameter(UnaryOperator<String> getProperty, Class<? extends T> type, String prefix) {
     if (type.isInterface() || Modifier.isAbstract(type.getModifiers()))
       throw new PropsBinderException("Type must not be an interface or abstract class!");
-    return from(s -> getProperty.apply(String.format("%s.%s", prefix, s)), type);
+    return from(type, s -> getProperty.apply("%s.%s".formatted(prefix, s)));
+  }
+
+  @Target(TYPE)
+  @Retention(RUNTIME)
+  public @interface InitProperties {
+    String value();
   }
 }
 

@@ -1,1 +1,1 @@
-{{#required}}@NotNull {{/required}}{{^useOptional}}{{>beanValidationCore}}{{/useOptional}}{{#useOptional}}{{#required}}{{>beanValidationCore}}{{/required}}{{/useOptional}}
+{{^required}}@Nullable {{/required}}{{^useOptional}}{{>beanValidationCore}}{{/useOptional}}{{#useOptional}}{{#required}}{{>beanValidationCore}}{{/required}}{{/useOptional}}

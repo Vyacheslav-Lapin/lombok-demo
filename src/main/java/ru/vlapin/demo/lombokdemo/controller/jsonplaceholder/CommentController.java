@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,27 +23,24 @@ public class CommentController {
 
   CommentApiClient client;
 
-  @NotNull
   @GetMapping
   public List<Comment> comments() {
-    return client.comments(null)
+    return client.comments(null) //todo 12.05.2023: generate 0-params method for http-methods with optional params
             .getBody()
             .requireNonNull();
   }
 
-  @NotNull
   @GetMapping("{id}")
   @SuppressWarnings("java:S125")
-  public Comment comment(@PathVariable @NotNull Integer id) {
+  public Comment comment(@PathVariable Integer id) {
     return client.pickComment(id)
             .getBody()
             .requireNonNull();
   }
 
-  //  @NotNull
   //  @GetMapping
   //  @Contract(pure = true)
-  //  public List<Comment> commentsByPostId(@RequestParam @NotNull Long postId) {
+  //  public List<Comment> commentsByPostId(@RequestParam Long postId) {
   //    return client.commentsByPostId(postId);
   //  }
 }

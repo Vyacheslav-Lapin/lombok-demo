@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -26,17 +25,17 @@ public class FileUtils {
 
   @SneakyThrows
   @Contract(pure = true)
-  public @NotNull Optional<Path> getPathFromFileName(@NotNull String fileName) {
+  public Optional<Path> getPathFromFileName(String fileName) {
     return Optional.ofNullable(
             FileUtils.class.getResource(adoptFileName(fileName)))
                .map(URL::getFile)
                .map(s -> s.charAt(2) == ':' ? s.substring(1)
-                             : s) // for windows usage only - there we have addresses like "/c:/asdf/sdf" and need to cut first char for correct work
+                             : s) // for windows usage only - there we have addresses like "/c:/dir/1.txt" and need to cut first char for correct work
                .map(Paths::get);
   }
 
   @SneakyThrows
-  public String readString(@NotNull Path path) {
+  public String readString(Path path) {
     return path.readString();
   }
 
@@ -48,7 +47,7 @@ public class FileUtils {
   }
 
   @SneakyThrows
-  public Path writeToFile(@NotNull Path filePath, String additionalContent) {
+  public Path writeToFile(Path filePath, String additionalContent) {
     return filePath.writeString(additionalContent, APPEND);
   }
 
@@ -57,15 +56,15 @@ public class FileUtils {
   }
 
   @SneakyThrows
-  public String getFileAsString(@NotNull Path file) {
+  public String getFileAsString(Path file) {
     @Cleanup Stream<String> stringStream = file.lines();
     return stringStream.collect(Collectors.joining());
   }
 
   @SneakyThrows
-  public String getFileAsString(@NotNull Path file, String delimeter) {
+  public String getFileAsString(Path file, String delimiter) {
     @Cleanup Stream<String> stringStream = file.lines();
-    return stringStream.collect(Collectors.joining(delimeter));
+    return stringStream.collect(Collectors.joining(delimiter));
   }
 
   @SneakyThrows

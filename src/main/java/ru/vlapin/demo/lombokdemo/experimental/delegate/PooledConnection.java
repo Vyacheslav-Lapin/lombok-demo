@@ -1,16 +1,17 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate;
 
-import java.io.Closeable;
-import java.sql.Connection;
-import java.util.function.Consumer;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Delegate;
 
+import java.io.Closeable;
+import java.sql.Connection;
+import java.util.function.Consumer;
+
 @AllArgsConstructor
 public class PooledConnection implements Connection {
 
-  Consumer<PooledConnection> closer;
+  Consumer<? super PooledConnection> closer;
 
   @Delegate(excludes = Closeable.class)
   Connection connection;

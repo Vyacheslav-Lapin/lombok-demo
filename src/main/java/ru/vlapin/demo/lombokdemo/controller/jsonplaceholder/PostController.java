@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class PostController {
 
   PostApiClient client;
 
-  @NotNull
   @GetMapping
   public List<Post> get() {
     return client.posts(null)
@@ -32,25 +30,22 @@ public class PostController {
             .requireNonNull();
   }
 
-  @NotNull
   @GetMapping("{id}")
-  public Post get(@PathVariable @NotNull Integer id) {
+  public Post get(@PathVariable Integer id) {
     return client.pickPost(id)
             .getBody()
             .requireNonNull();
   }
 
-  //  @NotNull
   //  @GetMapping
   //  @Contract(pure = true)
-  //  public List<Post> postsByUser(@RequestParam @NotNull Long userId) {
+  //  public List<Post> postsByUser(@RequestParam Long userId) {
   //    return client.postsByUserId(userId);
   //  }
 
-  //  @NotNull
   //  @Contract(pure = true)
   //  @GetMapping("{id}/comments")
-  //  public List<Comment> commentsByPostId(@PathVariable @NotNull Long id) {
+  //  public List<Comment> commentsByPostId(@PathVariable Long id) {
   //    return postService.commentsByPostId(id);
   //  }
 }

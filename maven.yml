@@ -8,6 +8,8 @@ maven:
   compiler:
     showDeprecation: true
     showWarnings: true
+    # todo разобраться, почему не работает:
+#    plugin.validation: VERBOSE
 
 lombok:
   # Где лежат исходные файлы, которые нужно delombok’нуть?

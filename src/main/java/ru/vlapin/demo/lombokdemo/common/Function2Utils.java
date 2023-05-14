@@ -2,20 +2,19 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import io.vavr.Function2;
 import lombok.experimental.UtilityClass;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @UtilityClass
 public class Function2Utils {
-  public <V1, V2, R, T> Function2<T, V2, R> compose1(@NotNull BiFunction<? super V1, ? super V2, ? extends R> self,
-                                                     @NotNull Function<? super T, ? extends V1> before) {
+  public <V1, V2, R, T> Function2<T, V2, R> compose1(BiFunction<? super V1, ? super V2, ? extends R> self,
+                                                     Function<? super T, ? extends V1> before) {
     return (t, v2) -> self.apply(before.apply(t), v2);
   }
 
-  public <V1, V2, R, T> Function2<V1, T, R> compose2(@NotNull BiFunction<? super V1, ? super V2, ? extends R> self,
-                                                     @NotNull Function<? super T, ? extends V2> before) {
+  public <V1, V2, R, T> Function2<V1, T, R> compose2(BiFunction<? super V1, ? super V2, ? extends R> self,
+                                                     Function<? super T, ? extends V2> before) {
     return (v1, t) -> self.apply(v1, before.apply(t));
   }
 }

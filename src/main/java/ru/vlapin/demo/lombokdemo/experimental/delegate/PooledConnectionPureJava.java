@@ -1,22 +1,23 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate;
 
+import lombok.SneakyThrows;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
-import lombok.SneakyThrows;
 
 //@AllArgsConstructor
 @SuppressWarnings("unused")
 public class PooledConnectionPureJava implements Connection {
 
-  Consumer<PooledConnectionPureJava> closer;
+  Consumer<? super PooledConnectionPureJava> closer;
 
   // @Delegate(excludes = Closeable.class)
   Connection connection;
 
-  public PooledConnectionPureJava(Consumer<PooledConnectionPureJava> closer,
+  public PooledConnectionPureJava(Consumer<? super PooledConnectionPureJava> closer,
                                   Connection connection) {
     this.closer = closer;
     this.connection = connection;

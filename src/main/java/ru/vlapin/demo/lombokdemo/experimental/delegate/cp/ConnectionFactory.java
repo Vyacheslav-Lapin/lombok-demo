@@ -1,6 +1,17 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
 import io.vavr.CheckedFunction3;
+import io.vavr.Function2;
+import lombok.Getter;
+import lombok.SneakyThrows;
+import lombok.Value;
+import lombok.experimental.ExtensionMethod;
+import lombok.val;
+import org.jetbrains.annotations.Contract;
+import ru.vlapin.demo.lombokdemo.common.FileUtils;
+import ru.vlapin.demo.lombokdemo.common.Function3Utils;
+import ru.vlapin.demo.lombokdemo.common.PropertiesUtils.InitProperties;
+
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,20 +21,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import lombok.Getter;
-import lombok.SneakyThrows;
-import lombok.Value;
-import lombok.experimental.ExtensionMethod;
-import lombok.val;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import ru.vlapin.demo.lombokdemo.common.FileUtils;
-import ru.vlapin.demo.lombokdemo.common.Function3Utils;
 
 import static lombok.AccessLevel.*;
 
 @Value
 @Getter(NONE)
+@InitProperties("db")
 @ExtensionMethod({
     Function3Utils.class,
 })
@@ -50,16 +53,19 @@ public class ConnectionFactory implements Supplier<Stream<Connection>> {
                .limit(poolSize);
   }
 
-  @NotNull
   @Contract(" -> new")
   public <T extends Connection> BlockingQueue<T> getSizedBlockingQueue() {
     return new ArrayBlockingQueue<>(poolSize);
   }
 
   public Stream<Path> getSqlInitFiles() {
+
+    val toFilePath = Function2.<String, String, String>of("/%s/%s.sql"::formatted)
+        .apply(initScriptsPath);
+
     return IntStream.iterate(1, operand -> operand + 1)
                .mapToObj(String::valueOf)
-               .map(fileName -> String.format("/%s/%s.sql", initScriptsPath, fileName))
+               .map(toFilePath)
                .map(FileUtils::getPathFromFileName)
                .takeWhile(Optional::isPresent)
                .flatMap(Optional::stream);

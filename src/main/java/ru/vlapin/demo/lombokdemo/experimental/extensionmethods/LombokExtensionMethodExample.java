@@ -1,7 +1,8 @@
 package ru.vlapin.demo.lombokdemo.experimental.extensionmethods;
 
-import java.util.Arrays;
 import lombok.experimental.ExtensionMethod;
+
+import java.util.Arrays;
 
 @ExtensionMethod({
     Arrays.class,
@@ -12,6 +13,7 @@ public class LombokExtensionMethodExample {
 
   @SuppressWarnings({"java:S2259", "java:S125"})
   String useExtensionMethods() {
+    //noinspection DataFlowIssue
     String iAmNull = null;
 
     return iAmNull.getIfNull("hELlO, WORlD!".toTitleCase());

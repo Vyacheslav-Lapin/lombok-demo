@@ -1,8 +1,11 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
 import io.vavr.Function2;
+import lombok.Cleanup;
 import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.NonFinal;
+import lombok.experimental.StandardException;
 import lombok.val;
 import ru.vlapin.demo.lombokdemo.common.FileUtils;
 import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
@@ -13,10 +16,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
-import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
+
+@ExtensionMethod({
+    FileUtils.class,
+    PropertiesUtils.class,
+})
 public class ConnectionPool implements Closeable, Supplier<Connection> {
 
   private static final HashMap<String, ConnectionPool> instances = new HashMap<>();
@@ -28,28 +35,25 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
   @SneakyThrows
   private ConnectionPool(String fileName) {
 
-    val connectionFactory = PropertiesUtils.from(fileName, ConnectionFactory.class);
+    val connectionFactory = ConnectionFactory.class.getInstance();
 
-    Function<Connection, PooledConnection> pooledConnectionFactory =
+    val pooledConnectionFactory =
         Function2.of(PooledConnection::new)
             .apply(this::closePolledConnection);
 
     connectionQueue = connectionFactory.get()
-                          .map(pooledConnectionFactory)
-                          .collect(Collectors.toCollection(connectionFactory::getSizedBlockingQueue));
+        .map(pooledConnectionFactory)
+        .collect(toCollection(connectionFactory::getSizedBlockingQueue));
 
     //init
     val sql = connectionFactory.getSqlInitFiles()
-                  .map(file -> FileUtils.getFileAsString(file, "\n"))
-                  .collect(Collectors.joining("\n\n"));
+        .map(file -> file.getFileAsString("\n"))
+        .collect(joining("\n\n"));
 
-    try (val connection = get();
-         val statement = connection.createStatement()) {
-      statement.executeUpdate(sql);
-      connection.commit();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    @Cleanup val connection = get();
+    @Cleanup val statement = connection.createStatement();
+    statement.executeUpdate(sql);
+    connection.commit();
   }
 
   public static ConnectionPool getPoolFor(String dbConfig) {
@@ -99,4 +103,8 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
           "Error connecting to the data source.", e);
     }
   }
+}
+
+@StandardException
+class ConnectionPoolException extends RuntimeException {
 }

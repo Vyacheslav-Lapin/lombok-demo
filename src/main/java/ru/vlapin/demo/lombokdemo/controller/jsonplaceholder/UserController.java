@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class UserController {
 
   UserApiClient client;
 
-  @NotNull
   @GetMapping
   public List<User> all() {
     return client.users()
@@ -33,7 +31,7 @@ public class UserController {
   }
 
   @GetMapping("{id}")
-  public User byId(@PathVariable @NotNull Integer id) {
+  public User byId(@PathVariable Integer id) {
     return client.pickUser(id)
             .getBody()
             .requireNonNull();

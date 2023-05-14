@@ -1,7 +1,5 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import io.vavr.Lazy;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -73,7 +71,7 @@ public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
   }
 
   static <T1, T2> Consumer2<T1, T2> from(BiConsumer<T1, T2> biConsumer) {
-    return Consumer2.of(biConsumer::accept);
+    return biConsumer::accept;
   }
 
   /**
@@ -87,9 +85,5 @@ public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
 
   default Consumer<T2> accept(T1 t) {
     return t2 -> accept(t, t2);
-  }
-
-  default Consumer<T2> accept(Lazy<? extends T1> t1Supplier) {
-    return t2 -> accept(t1Supplier.get(), t2);
   }
 }

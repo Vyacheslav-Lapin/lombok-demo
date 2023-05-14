@@ -2,34 +2,41 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import io.vavr.CheckedConsumer;
 import io.vavr.CheckedFunction1;
-import java.io.InputStream;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-import org.jetbrains.annotations.NotNull;
+
+import java.io.InputStream;
+import java.util.Objects;
 
 @UtilityClass
 @ExtensionMethod({
     FileUtils.class,
+    Objects.class,
 })
 public class InputStreamUtils {
 
   @SneakyThrows
   @SuppressWarnings("unused")
-  public <T> T mapFileInputStream(@NotNull String fileName,
-                                  @NotNull CheckedFunction1<InputStream, T> fisMapper) {
+  public <T> T mapFileInputStream(String fileName, CheckedFunction1<? super InputStream, ? extends T> fisMapper) {
 
-    @Cleanup val inputStream = InputStreamUtils.class.getResourceAsStream(fileName.adoptFileName());
+    @Cleanup val inputStream =
+        InputStreamUtils.class.getResourceAsStream(
+                fileName.adoptFileName())
+            .requireNonNull();
+
     return fisMapper.apply(inputStream);
   }
 
   @SneakyThrows
-  public void withFileInputStream(@NotNull String fileName,
-                                  @NotNull CheckedConsumer<? super InputStream> fisConsumer) {
-    @Cleanup
-    val inputStream = InputStreamUtils.class.getResourceAsStream(fileName.adoptFileName());
+  public void withFileInputStream(String fileName, CheckedConsumer<? super InputStream> fisConsumer) {
+    @Cleanup val inputStream =
+        InputStreamUtils.class.getResourceAsStream(
+                fileName.adoptFileName())
+            .requireNonNull();
+
     fisConsumer.accept(inputStream);
   }
 }

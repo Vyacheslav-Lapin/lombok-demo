@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class TodoController {
 
   TodoApiClient todoService;
 
-  @NotNull
   @GetMapping
   public List<Todo> todos() {
     return todoService.todos(null)
@@ -33,7 +31,7 @@ public class TodoController {
   }
 
   @GetMapping("{id}")
-  public Todo todo(@PathVariable @NotNull Integer id) {
+  public Todo todo(@PathVariable Integer id) {
     return todoService.pickTodo(id)
             .getBody()
             .requireNonNull();

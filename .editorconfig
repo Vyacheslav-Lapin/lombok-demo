@@ -10,7 +10,7 @@ indent_style = space
 max_line_length = 150
 insert_final_newline = true
 trim_trailing_whitespace = true
-ij_continuation_indent_size = 8
+ij_continuation_indent_size = 4
 ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = true
@@ -53,7 +53,6 @@ ij_visual_guides = none
 ij_gherkin_keep_indents_on_empty_lines = false
 
 [*.java]
-ij_continuation_indent_size = 4
 ij_visual_guides = none
 ij_java_align_consecutive_assignments = false
 ij_java_align_consecutive_variable_declarations = false
@@ -343,7 +342,6 @@ ij_less_use_double_quotes = true
 ij_less_value_alignment = 0
 
 [*.proto]
-ij_continuation_indent_size = 4
 ij_visual_guides = none
 ij_protobuf_keep_blank_lines_in_code = 2
 ij_protobuf_keep_indents_on_empty_lines = false
@@ -619,7 +617,7 @@ ij_asciidoc_formatting_enabled = true
 ij_asciidoc_one_sentence_per_line = true
 
 [{*.ant,*.fxml,*.jhm,*.jnlp,*.jrxml,*.pom,*.qrc,*.rng,*.tld,*.wadl,*.wsdd,*.wsdl,*.xjb,*.xml,*.xsd,*.xsl,*.xslt,*.xul}]
-ij_continuation_indent_size = 4
+max_line_length = 200
 ij_visual_guides = none
 ij_xml_align_attributes = true
 ij_xml_align_text = false
@@ -640,7 +638,6 @@ ij_xml_space_inside_empty_tag = false
 ij_xml_text_wrap = normal
 
 [{*.ats,*.cts,*.mts,*.ts}]
-ij_continuation_indent_size = 4
 ij_visual_guides = none
 ij_typescript_align_imports = false
 ij_typescript_align_multiline_array_initializer_expression = false
@@ -821,7 +818,6 @@ ij_shell_switch_cases_indented = false
 ij_shell_use_unix_line_separator = true
 
 [{*.cjs,*.js}]
-ij_continuation_indent_size = 4
 ij_visual_guides = none
 ij_javascript_align_imports = false
 ij_javascript_align_multiline_array_initializer_expression = false
@@ -1235,7 +1231,6 @@ ij_html_text_wrap = normal
 
 [{*.http,*.rest}]
 indent_size = 0
-ij_continuation_indent_size = 4
 ij_visual_guides = none
 ij_http request_call_parameters_wrap = normal
 
@@ -1276,7 +1271,6 @@ ij_visual_guides = none
 indent_style = tab
 
 [{*.pb,*.textproto}]
-ij_continuation_indent_size = 4
 ij_visual_guides = none
 ij_prototext_keep_blank_lines_in_code = 2
 ij_prototext_keep_indents_on_empty_lines = false

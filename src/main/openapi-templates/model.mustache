@@ -16,7 +16,7 @@ import {{javaxPackage}}.validation.Valid;
 import {{javaxPackage}}.validation.constraints.*;
 {{/useBeanValidation}}
 {{^useBeanValidation}}
-import {{javaxPackage}}.validation.constraints.NotNull;
+import org.jetbrains.annotations.Nullable;
 {{/useBeanValidation}}
 {{#performBeanValidation}}
 import org.hibernate.validator.constraints.*;

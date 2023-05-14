@@ -1,8 +1,12 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import io.vavr.*;
+import io.vavr.CheckedConsumer;
+import io.vavr.CheckedFunction0;
+import io.vavr.CheckedFunction1;
+import io.vavr.CheckedRunnable;
 import lombok.experimental.UtilityClass;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
 
 @UtilityClass
 public class CheckedConsumerUtils {
@@ -15,30 +19,30 @@ public class CheckedConsumerUtils {
    * @param before the action that will be executed before this action
    * @return a new {@code CheckedConsumer} that chains {@code before} and {@code this}
    */
-  public <T> CheckedConsumer<T> atFirst(@NotNull CheckedConsumer<? super T> self,
-                                        @NotNull CheckedConsumer<? super T> before) {
+  public <T> CheckedConsumer<T> atFirst(CheckedConsumer<? super T> self,
+                                        CheckedConsumer<? super T> before) {
     return t -> {
       before.accept(t);
       self.accept(t);
     };
   }
 
-  public <T1, T2> CheckedConsumer<T1> compose(@NotNull CheckedConsumer<? super T2> self,
-                                              @NotNull Function1<? super T1, ? extends T2> before) {
+  public <T1, T2> CheckedConsumer<T1> compose(CheckedConsumer<? super T2> self,
+                                              Function<? super T1, ? extends T2> before) {
     return t1 -> self.accept(before.apply(t1));
   }
 
-  public <T1, T2> CheckedConsumer<T1> composeChecked(@NotNull CheckedConsumer<? super T2> self,
-                                                     @NotNull CheckedFunction1<? super T1, ? extends T2> before) {
+  public <T1, T2> CheckedConsumer<T1> composeChecked(CheckedConsumer<? super T2> self,
+                                                     CheckedFunction1<? super T1, ? extends T2> before) {
     return t1 -> self.accept(before.apply(t1));
   }
 
-  public static <T> CheckedRunnable supply(@NotNull CheckedConsumer<? super T> self,
-                                           @NotNull CheckedFunction0<? extends T> supplier) {
+  public static <T> CheckedRunnable supply(CheckedConsumer<? super T> self,
+                                           CheckedFunction0<? extends T> supplier) {
     return () -> self.accept(supplier.apply());
   }
 
-  public <T> CheckedRunnable supply(@NotNull CheckedConsumer<? super T> self, @NotNull T t) {
+  public <T> CheckedRunnable supply(CheckedConsumer<? super T> self, T t) {
     return () -> self.accept(t);
   }
 }

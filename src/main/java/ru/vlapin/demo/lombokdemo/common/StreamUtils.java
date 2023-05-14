@@ -1,19 +1,21 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class StreamUtils {
 
   @SuppressWarnings("unchecked")
-  public <T> Stream<T> reverse(@NotNull Stream<T> input) {
-    val temp = input.toArray();
-    return (Stream<T>) IntStream.range(0, temp.length)
-                           .map(i -> temp.length - i - 1)
-                           .mapToObj(i -> temp[i]);
+  public <T> Stream<T> reverse(Stream<? extends T> input) {
+    val temp = (T[]) input.toArray();
+    val length = temp.length;
+
+    return IntStream.iterate(length - 1, i -> i - 1)
+        .limit(length)
+        .mapToObj(i -> temp[i]);
   }
 }
