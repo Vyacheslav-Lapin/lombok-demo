@@ -12,6 +12,7 @@ public class Extensions {
     return that == null ? ifNull : that;
   }
 
+  @Contract(pure = true)
   public String toTitleCase(String that) {
     return that.isEmpty() ? that :
                "%s%s".formatted(

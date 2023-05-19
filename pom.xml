@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.0.6</version>
+    <version>3.1.0</version>
         <!--<groupId>org.springframework.cloud</groupId>-->
         <!--<artifactId>spring-cloud-starter-parent</artifactId>-->
         <!--<version>2022.0.2</version>-->
@@ -23,7 +23,7 @@
     <!--region General-->
     <java.version>20</java.version>
     <minimal.maven.version>3.9.2</minimal.maven.version>
-    <spring-boot.version>3.0.6</spring-boot.version>
+    <spring-boot.version>3.1.0</spring-boot.version>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
@@ -80,13 +80,6 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
         <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>${testcontainers.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

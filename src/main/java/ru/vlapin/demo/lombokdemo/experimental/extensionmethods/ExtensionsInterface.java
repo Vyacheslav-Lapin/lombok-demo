@@ -10,6 +10,7 @@ public interface ExtensionsInterface {
     return that == null ? ifNull : that;
   }
 
+  @Contract(pure = true)
   static String toTitleCase(String that) {
     return that.isEmpty() ? that :
                String.format("%s%s",
