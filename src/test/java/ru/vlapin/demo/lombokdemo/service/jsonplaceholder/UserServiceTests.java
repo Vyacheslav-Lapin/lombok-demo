@@ -1,7 +1,6 @@
 package ru.vlapin.demo.lombokdemo.service.jsonplaceholder;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Address;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Geo;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -21,7 +20,6 @@ class UserServiceTests {
   UserApiClient client;
 
   @Test
-  @SneakyThrows
   @DisplayName("User service works correctly")
   void userServiceWorksCorrectlyTest() {
 

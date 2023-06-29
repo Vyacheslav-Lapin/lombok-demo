@@ -6,10 +6,11 @@ import lombok.Setter;
 /**
  * SetterExample.
  */
+@SuppressWarnings("java:S125")
 public class SetterExample {
   @Setter
   @Getter
-  private int x;
+  int x;
 
   // Зачем писать/генерить?
   // Итак же очевидно!

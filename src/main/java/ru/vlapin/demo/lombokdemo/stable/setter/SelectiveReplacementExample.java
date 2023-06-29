@@ -10,11 +10,11 @@ import lombok.Setter;
 @Getter
 public class SelectiveReplacementExample {
 
-  private int x;
+  int x;
   //@Setter
-  private int y;
+  int y;
   //@Setter
-  private int z;
+  int z;
 
   // А если полю нужен свой,
   // специальный setter?..

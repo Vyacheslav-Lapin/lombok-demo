@@ -22,7 +22,7 @@
 
     <!--region General-->
     <java.version>20</java.version>
-    <minimal.maven.version>3.9.2</minimal.maven.version>
+    <minimal.maven.version>3.9.3</minimal.maven.version>
     <spring-boot.version>3.1.1</spring-boot.version>
     <!--endregion-->
 

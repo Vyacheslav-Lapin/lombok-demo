@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 public class MarkedClassExample {
 //@Setter
-  protected int x;
+  int x;
 //@Setter
-  protected int y;
+  int y;
 //@Setter
-  protected int z;
+  int z;
 }

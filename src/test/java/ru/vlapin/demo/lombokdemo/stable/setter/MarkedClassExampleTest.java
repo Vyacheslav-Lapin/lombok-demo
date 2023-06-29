@@ -1,5 +1,6 @@
 package ru.vlapin.demo.lombokdemo.stable.setter;
 
+import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class MarkedClassExampleTest {
   @DisplayName("marked class setter works correctly")
   void markedClassSetterWorksCorrectlyTest() {
     // given
-    var mce = new MarkedClassExample();
+    val mce = new MarkedClassExample();
 
     // when
     mce.setX(1);
@@ -24,10 +25,8 @@ class MarkedClassExampleTest {
 
     // then
     assertThat(mce).isNotNull()
-        .extracting(
-            it -> it.x,
-            it -> it.y,
-            it -> it.z)
-        .contains(1, 2, 3);
+        .hasFieldOrPropertyWithValue("x", 1)
+        .hasFieldOrPropertyWithValue("y", 2)
+        .hasFieldOrPropertyWithValue("z", 3);
   }
 }
