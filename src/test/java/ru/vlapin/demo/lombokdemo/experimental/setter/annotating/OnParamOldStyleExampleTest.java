@@ -1,4 +1,4 @@
-package ru.vlapin.demo.lombokdemo.stable.setter.annotating;
+package ru.vlapin.demo.lombokdemo.experimental.setter.annotating;
 
 import lombok.SneakyThrows;
 import lombok.val;

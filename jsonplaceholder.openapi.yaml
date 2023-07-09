@@ -628,7 +628,7 @@ paths:
                   lat: 12.3456
                   lng: 56.7890
               phone: '+7 (909) 222-3322'
-              website: 'http://vpupkin.ru'
+              website: 'https://vpupkin.ru'
               company:
                 name: 'Roga & Copita'
                 catchPhrase: 'Lorem ipsum dolor sit amet'
@@ -682,7 +682,7 @@ paths:
                   lat: 12.3456
                   lng: 56.7890
               phone: '+7 (909) 222-3322'
-              website: 'http://vpupkin.ru'
+              website: 'https://vpupkin.ru'
               company:
                 name: 'Roga & Copita'
                 catchPhrase: 'Lorem ipsum dolor sit amet'
