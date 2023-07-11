@@ -16,7 +16,7 @@
 
   <groupId>ru.vlapin.demo</groupId>
   <artifactId>lombok-demo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>${revision}${sha1}${changelist}</version>
 
   <properties>
 
@@ -24,6 +24,9 @@
     <java.version>20</java.version>
     <minimal.maven.version>3.9.3</minimal.maven.version>
     <spring-boot.version>3.1.1</spring-boot.version>
+    <revision>0.0.1</revision>
+    <changelist>-SNAPSHOT</changelist>
+    <sha1/>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
@@ -57,9 +60,10 @@
     <yaml-properties-maven-plugin.version>1.1.3</yaml-properties-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.0.0-beta</openapi-generator-maven-plugin.version>
     <assertj-assertions-generator-maven-plugin.version>2.2.0</assertj-assertions-generator-maven-plugin.version>
+    <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
     <!--endregion-->
 
-    <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
+    <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
   </properties>
 
   <profiles>
@@ -731,6 +735,31 @@
             </templates>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>${flatten-maven-plugin.version}</version>
+          <configuration>
+            <updatePomFile>true</updatePomFile>
+            <flattenMode>resolveCiFriendliesOnly</flattenMode>
+          </configuration>
+          <executions>
+            <execution>
+              <id>flatten:process-resources:flatten</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>flatten</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>flatten.clean:clean:clean</id>
+              <phase>clean</phase>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -781,6 +810,10 @@
       <plugin>
         <!--suppress MavenModelInspection -->
         <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
       </plugin>
 
       <plugin>

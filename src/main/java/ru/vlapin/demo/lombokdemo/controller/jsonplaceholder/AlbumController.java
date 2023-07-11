@@ -13,6 +13,8 @@ import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Album;
 import java.util.List;
 import java.util.Objects;
 
+import static org.springframework.http.MediaType.*;
+
 @ExtensionMethod({
         Objects.class,
 })
@@ -25,14 +27,14 @@ public class AlbumController {
 
   AlbumApiClient client;
 
-  @GetMapping(produces = "application/json")
+  @GetMapping(produces = APPLICATION_JSON_VALUE)
   public List<Album> get() {
     return client.albums(null)
             .getBody()
             .requireNonNull();
   }
 
-  @GetMapping(path = "{id}", produces = "application/json")
+  @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
   public Album get(@PathVariable Integer id) {
     return client.pickAlbum(id)
             .getBody()

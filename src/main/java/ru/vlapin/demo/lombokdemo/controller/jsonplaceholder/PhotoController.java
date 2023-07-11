@@ -18,7 +18,7 @@ import java.util.Objects;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/photo")
-@SuppressWarnings("java:S2259")
+@SuppressWarnings({"java:S2259", "java:S125"})
 public class PhotoController {
 
   PhotoApiClient client;

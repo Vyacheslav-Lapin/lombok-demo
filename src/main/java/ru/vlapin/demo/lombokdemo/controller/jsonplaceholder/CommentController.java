@@ -17,7 +17,7 @@ import java.util.Objects;
 })
 @RestController
 @RequiredArgsConstructor
-@SuppressWarnings("java:S2259")
+@SuppressWarnings({"java:S2259", "java:S125"})
 @RequestMapping("api/comments")
 public class CommentController {
 
@@ -31,7 +31,6 @@ public class CommentController {
   }
 
   @GetMapping("{id}")
-  @SuppressWarnings("java:S125")
   public Comment comment(@PathVariable Integer id) {
     return client.pickComment(id)
             .getBody()
