@@ -16,8 +16,8 @@ public class LevelPrivateExample3Test {
 
   @SneakyThrows
   public static boolean checkFieldModifier(Class<?> aClass,
-                             String field,
-                             IntPredicate check) {
+                                           String field,
+                                           IntPredicate check) {
     return check.test(
         aClass.getDeclaredField(field)
             .getModifiers());

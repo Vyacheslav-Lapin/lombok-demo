@@ -22,8 +22,7 @@ class LevelPrivateExample4Test {
         ((IntPredicate) Modifier::isPrivate)
             .or(Modifier::isProtected)
             .or(Modifier::isPublic)
-            .negate()
-            ;
+            .negate();
 
     // when
     assertThat(LevelPrivateExample4.class)
