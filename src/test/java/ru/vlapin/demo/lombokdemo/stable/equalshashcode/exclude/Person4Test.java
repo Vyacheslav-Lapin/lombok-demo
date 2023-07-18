@@ -13,14 +13,14 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Vyacheslav Lapin
  */
-class EqualsAndHashCodeExcludeAnnotationExampleTest {
+class Person4Test {
 
   @Test
   @SneakyThrows
   @DisplayName("equalsAndHashcode annotation works correctly")
   void equalsAndHashcodeAnnotationWorksCorrectlyTest() {
-    val example1 = new EqualsAndHashCodeExcludeAnnotationExample(1L, "Вася", "Пупкин", LocalDate.now());
-    val example2 = new EqualsAndHashCodeExcludeAnnotationExample(2L, "Вася", "Пупкин", LocalDate.MAX);
+    val example1 = new Person4(1L, "Вася", "Пупкин", LocalDate.now());
+    val example2 = new Person4(2L, "Вася", "Пупкин", LocalDate.MAX);
     assertThat(example1).isNotNull()
         .isEqualTo(example2);
   }

@@ -13,14 +13,14 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Vyacheslav Lapin
  */
-class EqualsAndHashCodeOfAnnotationParamExampleTest {
+class Person2Test {
 
   @Test
   @SneakyThrows
   @DisplayName("EqualsAndHashCode with 'of' annotation param works correctly")
   void equalsAndHashCodeWithOfAnnotationParamWorksCorrectlyTest() {
-    val example1 = new EqualsAndHashCodeOfAnnotationParamExample(1L, "Вася", "Пупкин", LocalDate.now());
-    val example2 = new EqualsAndHashCodeOfAnnotationParamExample(2L, "Вася", "Пупкин", LocalDate.MAX);
+    val example1 = new Person2(1L, "Вася", "Пупкин", LocalDate.now());
+    val example2 = new Person2(2L, "Вася", "Пупкин", LocalDate.MAX);
     assertThat(example1).isNotNull()
         .isEqualTo(example2);
   }
