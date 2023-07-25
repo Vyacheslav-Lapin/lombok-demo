@@ -26,10 +26,10 @@ public class SpringSecurityConfig {
 //        .csrf(AbstractHttpConfigurer::disable) //don't do this!
         .authorizeHttpRequests(it -> it
             .requestMatchers(GET,"/about").permitAll()
-            .requestMatchers(POST,"/about").hasRole("ADMIN")
             .requestMatchers("/testExceptionHandler").permitAll()
             .requestMatchers("/makeNPE").permitAll()
             .requestMatchers("/api/*").permitAll()
+            .requestMatchers(POST,"/about").hasRole("ADMIN")
             .requestMatchers("/submissions").hasRole("SPEAKER")
             .anyRequest().authenticated())
         .build();

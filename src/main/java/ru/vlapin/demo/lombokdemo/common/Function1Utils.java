@@ -11,12 +11,14 @@ import java.util.function.Function;
 @ExtensionMethod({
     Arrays.class,
 })
+@SuppressWarnings("unused")
 public class Function1Utils {
 
   public <T, R> Function0<R> supply(Function<? super T, ? extends R> self, T param) {
     return () -> self.apply(param);
   }
 
+  @SafeVarargs
   public <T, R> Function0<R>[] supply(Function<? super T, ? extends R> self, T... params) {
     //noinspection SuspiciousToArrayCall,unchecked
     return params.stream()
@@ -24,6 +26,7 @@ public class Function1Utils {
         .toArray(value -> (Function0<R>[]) new Function0[value]);
   }
 
+  @SafeVarargs
   public <T, R> R[] apply(Function<? super T, ? extends R> self, T... params) {
     //noinspection unchecked
     return Arrays.stream(params)

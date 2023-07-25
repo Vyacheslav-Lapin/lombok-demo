@@ -17,13 +17,13 @@ class ToStringDemoTest {
   @DisplayName("toString method works correctly")
   void toStringMethodWorksCorrectlyTest() {
     // given
-    val demo = new ToStringDemo()
-        .setX(123)
-        .setS("Lor");
+    val demo = new ToStringDemo(
+        123,
+        "Lor");
 
     // when
-    assertThat(demo.toString()).isNotNull()
+    assertThat(demo)
         // then
-        .isEqualTo("ToStringDemo(x=123, s=Lor)");
+        .hasToString("ToStringDemo(x=123, s=Lor)");
   }
 }

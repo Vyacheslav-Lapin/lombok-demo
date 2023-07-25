@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Contract;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.function.Consumer;
+import java.util.function.IntPredicate;
 
 @UtilityClass
 public class TestUtils {
@@ -39,13 +40,22 @@ public class TestUtils {
   public String fromSystemOutPrintln(Runnable runnable) {
     val s = fromSystemOutPrint(runnable);
     return s.endsWith(LINE_SEPARATOR) ?
-               s.substring(0, s.length() - LINE_SEPARATOR.length()) :
-               s;
+        s.substring(0, s.length() - LINE_SEPARATOR.length()) :
+        s;
   }
 
   @Contract(pure = true)
   @SuppressWarnings("unused")
   public String toTestResourceFilePath(String fileName) {
     return TEST_RESOURCES_PATH + fileName;
+  }
+
+  @SneakyThrows
+  public boolean checkFieldModifier(Class<?> aClass,
+                                    String field,
+                                    IntPredicate check) {
+    return check.test(
+        aClass.getDeclaredField(field)
+            .getModifiers());
   }
 }

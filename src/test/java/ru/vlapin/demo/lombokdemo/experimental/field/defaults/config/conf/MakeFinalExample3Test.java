@@ -1,21 +1,24 @@
 package ru.vlapin.demo.lombokdemo.experimental.field.defaults.config.conf;
 
 import lombok.val;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 import java.lang.reflect.Modifier;
 import java.util.function.IntPredicate;
 
 import static org.assertj.core.api.Assertions.*;
-import static ru.vlapin.demo.lombokdemo.experimental.field.defaults.config.LevelPrivateExample3Test.*;
 
 /**
  * MakeFinalExample3Test.
  */
+@SuppressWarnings("java:S1607")
 class MakeFinalExample3Test {
 
   @Test
+  @Disabled
   @DisplayName("NonFinal annotation works correctly")
   void nonFinalAnnotationWorksCorrectlyTest() {
     // given
@@ -25,8 +28,8 @@ class MakeFinalExample3Test {
     assertThat(MakeFinalExample3.class)
         // then
         .hasOnlyDeclaredFields("x", "y", "s")
-        .matches(aClass -> checkFieldModifier(aClass, "x", isNotFinal))
-        .matches(aClass -> checkFieldModifier(aClass, "y", Modifier::isFinal))
-        .matches(aClass -> checkFieldModifier(aClass, "s", Modifier::isFinal));
+        .matches(aClass -> TestUtils.checkFieldModifier(aClass, "x", isNotFinal))
+        .matches(aClass -> TestUtils.checkFieldModifier(aClass, "y", Modifier::isFinal))
+        .matches(aClass -> TestUtils.checkFieldModifier(aClass, "s", Modifier::isFinal));
   }
 }

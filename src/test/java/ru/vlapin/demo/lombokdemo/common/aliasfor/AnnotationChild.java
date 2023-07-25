@@ -1,8 +1,9 @@
 package ru.vlapin.demo.lombokdemo.common.aliasfor;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import org.springframework.core.annotation.AliasFor;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
@@ -12,6 +13,8 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Retention(RUNTIME)
 public @interface AnnotationChild {
 
-  @AliasFor(annotation = AnnotaionBase.class, attribute = "value")
+  @AliasFor(
+      annotation = AnnotaionBase.class,
+      attribute = "value")
   String extendValue() default "";
 }

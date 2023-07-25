@@ -1,6 +1,5 @@
 package ru.vlapin.demo.lombokdemo.common.aliasfor;
 
-import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,7 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import static org.assertj.core.api.Assertions.*;
 
-// Написать тестовый класс
+//todo 19.07.2023: Написать отдельный класс для теста
 @AnnotationChild(extendValue = "extendValue")
 @ExtensionMethod({
     AnnotatedElementUtils.class,
@@ -16,7 +15,6 @@ import static org.assertj.core.api.Assertions.*;
 class ExtensionClassTest {
 
   @Test
-  @SneakyThrows
   @DisplayName("AlasFor annotation works correctly")
   void alasForAnnotationWorksCorrectlyTest() {
     assertThat(ExtensionClassTest.class.findMergedAnnotation(AnnotaionBase.class))

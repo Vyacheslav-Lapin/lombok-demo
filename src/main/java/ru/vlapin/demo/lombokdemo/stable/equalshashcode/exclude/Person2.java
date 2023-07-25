@@ -1,21 +1,20 @@
 package ru.vlapin.demo.lombokdemo.stable.equalshashcode.exclude;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.NonFinal;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-@SuppressWarnings("java:S125")
+@SuppressWarnings({"java:S125", "ClassCanBeRecord", "CommentedOutCode"})
 @EqualsAndHashCode(of = {"firstName", "lastName"})
-@Data
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class Person2 {
-  @NonFinal Long id; // исключаем поле из equals и hashcode
-  @NonFinal String firstName;
-  @NonFinal String lastName;
-  @NonFinal LocalDate dob; // тоже исключаем
+  Long id; // исключаем поле из equals и hashcode
+  String firstName;
+  String lastName;
+  LocalDate dob; // тоже исключаем
 
 //public boolean equals(final Object o) {
 //  return o == this

@@ -1,6 +1,6 @@
 package ru.vlapin.demo.lombokdemo.stable.tostring;
 
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -18,20 +18,18 @@ import lombok.ToString;
  *   MyClass(foo=123, bar=234)
  * }</pre></p>
  */
+@SuppressWarnings("java:S125")
 @ToString
-@Setter // lombok.accessors.chain = true
+@RequiredArgsConstructor
 public class ToStringDemo {
-  private int x;
-  private String s;
+  int x;
+  String s;
 
   // Зачем писать или генерировать?
 //@Override
-//@Generated
-//@SuppressWarnings("all")
-//@SuppressFBWarnings(
-//       justification = "generated code")
-//public java.lang.String toString() {
-//  return "ToStringCallSuperDemo(x=" +
-//         this.x + ", s=" + this.s + ")";
+//public String toString() {
+//  return "ToStringDemo1("
+//      + "x=" + this.x
+//      + ", s=" + this.s + ")";
 //}
 }
