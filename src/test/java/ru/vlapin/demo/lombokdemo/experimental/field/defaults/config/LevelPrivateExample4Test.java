@@ -21,6 +21,7 @@ class LevelPrivateExample4Test {
   @DisplayName("fields default works correctly for package-private")
   void fieldsDefaultWorksCorrectlyForPackagePrivateTest() {
     // given
+    //noinspection CommentedOutCode
     IntPredicate isPackagePrivate = //x ->
 //        !Modifier.isPrivate(x)
 //        && !Modifier.isPublic(x)

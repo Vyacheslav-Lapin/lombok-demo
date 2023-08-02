@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-@SuppressWarnings("java:S125")
+@SuppressWarnings({"java:S125", "CommentedOutCode", "ClassCanBeRecord"})
 @EqualsAndHashCode
 @Getter
 @RequiredArgsConstructor

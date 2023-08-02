@@ -1,4 +1,4 @@
 mail.credentials:
-  authMethod: basic
+  auth-method: basic
   username: user
   password: qwerty
