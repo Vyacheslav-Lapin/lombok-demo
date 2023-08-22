@@ -1,4 +1,4 @@
-package ru.vlapin.demo.lombokdemo.experimental.getter.annotating;
+package ru.vlapin.demo.lombokdemo;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

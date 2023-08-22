@@ -1,0 +1,20 @@
+name: Build
+
+# описание события, по которому будет запускаться наш скрипт
+on:
+  # этот workflow нужно запускать при создании пулл-реквестов
+  pull_request.branches:
+    - '*'
+  # и при каждом пуше в мастер
+  push.branches:
+    - 'master'
+
+jobs.build:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v1
+    - name: set up JDK 11
+      uses: actions/setup-java@v1
+      with.java-version: 1.19
+    - name: Maven Package
+      run: mvn -B clean package -DskipTests

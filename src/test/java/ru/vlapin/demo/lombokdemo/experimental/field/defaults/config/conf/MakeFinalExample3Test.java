@@ -4,12 +4,12 @@ import lombok.val;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 import java.lang.reflect.Modifier;
 import java.util.function.IntPredicate;
 
 import static org.assertj.core.api.Assertions.*;
+import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 
 /**
  * MakeFinalExample3Test.
@@ -28,8 +28,8 @@ class MakeFinalExample3Test {
     assertThat(MakeFinalExample3.class)
         // then
         .hasOnlyDeclaredFields("x", "y", "s")
-        .matches(aClass -> TestUtils.checkFieldModifier(aClass, "x", isNotFinal))
-        .matches(aClass -> TestUtils.checkFieldModifier(aClass, "y", Modifier::isFinal))
-        .matches(aClass -> TestUtils.checkFieldModifier(aClass, "s", Modifier::isFinal));
+        .matches(fieldModifierCheck("x", isNotFinal))
+        .matches(fieldModifierCheck("y", Modifier::isFinal))
+        .matches(fieldModifierCheck("s", Modifier::isFinal));
   }
 }

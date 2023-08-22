@@ -1,6 +1,8 @@
 package ru.vlapin.demo.lombokdemo.experimental.getter.annotating;
 
 import lombok.Getter;
+import ru.vlapin.demo.lombokdemo.FirstAnnotation;
+import ru.vlapin.demo.lombokdemo.SecondAnnotation;
 
 /**
  * AnnotatingExample2.
