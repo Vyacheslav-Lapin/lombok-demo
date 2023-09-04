@@ -6,7 +6,7 @@ import ru.vlapin.demo.lombokdemo.stable.builder.BuilderBeforeClassCustomizationD
 
 import static org.assertj.core.api.Assertions.*;
 
-class BuilderBeforeClassCustomizationDemoTests {
+class BuilderBeforeClassStaticConstructorDemoTests {
 
   @Test
   @DisplayName("@Builder castomization works correctly")

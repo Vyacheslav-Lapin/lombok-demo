@@ -1,6 +1,7 @@
-package ru.vlapin.demo.lombokdemo.common.aliasfor;
+package ru.vlapin.demo.lombokdemo.common.meta.aliasfor;
 
 import lombok.experimental.ExtensionMethod;
+import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -8,7 +9,7 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 import static org.assertj.core.api.Assertions.*;
 
 //todo 19.07.2023: Написать отдельный класс для теста
-@AnnotationChild(extendValue = "extendValue")
+@ChildAnnotation(7)
 @ExtensionMethod({
     AnnotatedElementUtils.class,
 })
@@ -17,10 +18,16 @@ class ExtensionClassTest {
   @Test
   @DisplayName("AlasFor annotation works correctly")
   void alasForAnnotationWorksCorrectlyTest() {
-    assertThat(ExtensionClassTest.class.findMergedAnnotation(AnnotaionBase.class))
+    // given
+    val innerAlias = getClass()
+        .findMergedAnnotation(InnerAlias.class);
+
+    //when
+    assertThat(innerAlias)
+        // then
         .isNotNull()
-        .isInstanceOf(AnnotaionBase.class)
-        .extracting(AnnotaionBase::value)
-        .isEqualTo("extendValue");
+        .isInstanceOf(InnerAlias.class)
+        .extracting(InnerAlias::x)
+        .isEqualTo(7);
   }
 }

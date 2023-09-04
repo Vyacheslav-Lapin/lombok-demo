@@ -42,12 +42,13 @@ public class ReflectionUtils {
                   .andThen(Stream::of);
 
   public <T> CheckedFunction1<Class<? extends T>, T> noArgsConstructor() {
-    return CheckedFunction1.<Class<? extends T>, Constructor<? extends T>>of(Class::getConstructor)
+    return CheckedFunction1.<Class<? extends T>, Constructor<? extends T>>of(Class::getDeclaredConstructor)
             .andThen(Constructor::newInstance);
   }
 
+  @SuppressWarnings({"java:S125", "java:S1135"})
   public <T> CheckedFunction0<T> noArgsConstructor(Class<T> tClass) {
-//  public <T> CheckedFunction0<T> noArgsConstructor(Class<? extends T> tClass) { //todo 07.05.2023: create bug report for that false positive error
+//    public <T> CheckedFunction0<T> noArgsConstructor(Class<? extends T> tClass) { //todo 07.05.2023: create bug report for that false positive error
     return ReflectionUtils.<T>noArgsConstructor().supply(tClass);
 //    return noArgsConstructor().supply(tClass);
   }

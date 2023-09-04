@@ -26,6 +26,7 @@ public class Cat {
   @NonNull String name;
 
   @Override
+  @SuppressWarnings("ConstantValue")
   public boolean equals(Object o) {
     return this == o || o != null &&
             Hibernate.getClass(this) == Hibernate.getClass(o)
