@@ -3,40 +3,53 @@ package ru.vlapin.demo.lombokdemo.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
-import org.hibernate.Hibernate;
+import lombok.ToString.Include;
+import lombok.experimental.ExtensionMethod;
+import ru.vlapin.demo.lombokdemo.common.HibernateUtils;
 
 import java.util.Objects;
 import java.util.UUID;
 
+import static ru.vlapin.demo.lombokdemo.common.HibernateUtils.*;
+
+@SuppressWarnings({
+    "JpaObjectClassSignatureInspection",
+    "com.haulmont.jpb.LombokDataInspection",
+    "java:S2097",
+})
+
 @Data
 @Entity
-@SuppressWarnings({
-        "JpaObjectClassSignatureInspection",
-        "com.haulmont.jpb.LombokDataInspection",
+@ExtensionMethod({
+    HibernateUtils.class,
 })
 public class Cat {
 
+  //region id and version
   @Id
+  @Include
   @GeneratedValue
   @Column(updatable = false, nullable = false)
   UUID id;
 
   @Version int version;
+  //endregion
 
   @NonNull String name;
 
+  //region equals and hashCode
   @Override
-  @SuppressWarnings("ConstantValue")
-  public boolean equals(Object o) {
-    return this == o || o != null &&
-            Hibernate.getClass(this) == Hibernate.getClass(o)
-            && id != null
-            && o instanceof Cat cat
-            && Objects.equals(id, cat.id);
+  @SuppressWarnings("com.haulmont.jpb.EqualsDoesntCheckParameterClass")
+  public final boolean equals(Object object) {
+    return this == object
+           || object != null
+              && persistentClass(this) == object.persistentClass()
+              && Objects.equals(getId(), ((Cat) object).getId());
   }
 
   @Override
-  public int hashCode() {
-    return getClass().hashCode();
+  public final int hashCode() {
+    return persistentClass(this).hashCode();
   }
+  //endregion
 }

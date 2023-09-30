@@ -1,7 +1,8 @@
 package ru.vlapin.demo.lombokdemo.experimental.field.defaults;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -9,13 +10,11 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
 
-/**
- * LevelPrivateExample1Test.
- */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class LevelPrivateExample1Test {
 
   @Test
-  @DisplayName("private modifier sets correctly")
+//  @DisplayName("private modifier sets correctly")
   void privateModifierSetsCorrectlyTest() {
     // when
     assertThat(LevelPrivateExample1.class)

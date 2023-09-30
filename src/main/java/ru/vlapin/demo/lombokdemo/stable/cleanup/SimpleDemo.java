@@ -1,25 +1,42 @@
 package ru.vlapin.demo.lombokdemo.stable.cleanup;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Cleanup;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldNameConstants;
+import lombok.val;
 
 import java.sql.DriverManager;
 
 import static ru.vlapin.demo.lombokdemo.stable.cleanup.Student.Fields.*;
 
+@SuppressWarnings({"java:S6437", "java:S125", "java:S106"})
 public interface SimpleDemo {
 
   @SneakyThrows
   static void main(String... __) {
 
 //    SPI
-//    Class.forName("com.epam.h2db.Driver");
+//    Class.forName("org.postgresql.Driver");
 
-    @Cleanup val connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+    @Cleanup val connection = DriverManager.getConnection(
+        "jdbc:postgresql://localhost:5432/postgres",
+        "postgres",
+        "postgres");
+
     @Cleanup val statement = connection.createStatement();
-    statement.executeUpdate("create table student (id identity, name varchar not null, group_id int)");
-    statement.executeUpdate("insert into student (name, group_id) values ('Вася Пупкин', 123456), ('Федя Прокопов', 654321)");
-    @Cleanup val resultSet = statement.executeQuery("select id, name, group_id as groupId from student");
+    statement.executeUpdate("drop table if exists student");
+    statement.executeUpdate("create table student (id serial primary key, name varchar not null, group_id int)");
+
+    //noinspection SqlResolve
+    statement.executeUpdate("""
+        -- noinspection SqlResolve @ table/"student"
+        insert into student (name, group_id) values ('Вася Пупкин', 123456), ('Федя Прокопов', 654321)""");
+
+    @Cleanup val resultSet = statement.executeQuery("""
+        -- noinspection SqlResolve
+        select id, name, group_id as groupId from student""");
+
     while (resultSet.next())
       System.out.println(
           Student.builder()

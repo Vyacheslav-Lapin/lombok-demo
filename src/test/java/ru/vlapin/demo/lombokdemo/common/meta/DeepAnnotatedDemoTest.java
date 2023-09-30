@@ -4,8 +4,10 @@ import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 import java.lang.annotation.Retention;
 
@@ -34,6 +36,7 @@ class DeepAnnotatedDemo {
 @ExtensionMethod({
     AnnotatedElementUtils.class,
 })
+@DisplayNameGeneration(TestUtils.ReplaceCamelCase.class)
 class DeepAnnotatedDemoTest {
 
   @Test

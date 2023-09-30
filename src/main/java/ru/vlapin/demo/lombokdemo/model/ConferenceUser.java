@@ -1,7 +1,7 @@
 package ru.vlapin.demo.lombokdemo.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @see <a href="https://youtu.be/TytSz7u1xQ8">"Test-Driven Security" by Eleftheria Stain-Kousathana, SpringOne, 2021</a>
  */
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class ConferenceUser {
   String username;
   String password;
@@ -20,10 +20,10 @@ public class ConferenceUser {
   boolean admin;
 
   protected ConferenceUser(ConferenceUser user) {
-    this.username = user.username;
-    this.password = user.password;
-    this.submissions = user.submissions;
-    this.speaker = user.speaker;
-    this.admin = user.admin;
+    username = user.username;
+    password = user.password;
+    submissions = user.submissions;
+    speaker = user.speaker;
+    admin = user.admin;
   }
 }

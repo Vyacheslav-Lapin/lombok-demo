@@ -48,9 +48,10 @@ public class ReflectionUtils {
 
   @SuppressWarnings({"java:S125", "java:S1135"})
   public <T> CheckedFunction0<T> noArgsConstructor(Class<T> tClass) {
-//    public <T> CheckedFunction0<T> noArgsConstructor(Class<? extends T> tClass) { //todo 07.05.2023: create bug report for that false positive error
-    return ReflectionUtils.<T>noArgsConstructor().supply(tClass);
-//    return noArgsConstructor().supply(tClass);
+//  public <T> CheckedFunction0<T> noArgsConstructor(Class<? extends T> tClass) { //todo 07.05.2023: create bug report for that false positive error
+
+//    return ReflectionUtils.<T>noArgsConstructor().supply(tClass);
+    return noArgsConstructor().supply(tClass);
   }
 
   public <T> T newObject(Class<? extends T> tClass) {
@@ -69,7 +70,7 @@ public class ReflectionUtils {
 
   @SuppressWarnings("unchecked")
   public <T> Class<T> toClass(String className) {
-    return CheckedFunction1.of((String className1) -> (Class<T>) Class.forName(className1))
+    return CheckedFunction1.of((String name) -> (Class<T>) Class.forName(name))
             .unchecked()
             .apply(className);
   }
@@ -82,6 +83,9 @@ public class ReflectionUtils {
    * @return The classes
    */
   public Stream<Class<?>> getClasses(String packageName) {
+    val findClasses = Function2.of(ReflectionUtils::findClasses)
+        .apply(packageName);
+
     return CheckedFunction2.of(ClassLoader::getResources).unchecked()
             .reversed()
             .apply(packageName.replace('.', '/'))
@@ -92,23 +96,22 @@ public class ReflectionUtils {
             .apply(Thread.currentThread())
             .map(URL::getFile)
             .map(File::new)
-            .flatMap(directory -> findClasses(directory, packageName));
+            .flatMap(findClasses);
   }
 
   private final Function3<File, String, String, Stream<Class<?>>> GET_CLASS_FROM_DIR =
           Function3.of((file, packageName, fileName) ->
-                  findClasses(file, "%s.%s".formatted(packageName, fileName)));
-
+                  findClasses("%s.%s".formatted(packageName, fileName), file));
 
   /**
    * Recursive method used to find all classes in a given directory and subdirs.
    *
-   * @param directory   The base directory
    * @param packageName The package name for classes found inside the base directory
+   * @param directory   The base directory
    * @return The classes
    */
   @SneakyThrows
-  private Stream<Class<?>> findClasses(File directory, String packageName) {
+  private Stream<Class<?>> findClasses(String packageName, File directory) {
 
     val lookForClasses =
         Function2.of(ReflectionUtils::lookForClasses)

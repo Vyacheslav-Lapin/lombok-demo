@@ -52,8 +52,12 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
 
     @Cleanup val connection = get();
     @Cleanup val statement = connection.createStatement();
+
+    //noinspection SqlSourceToSinkFlow
     statement.executeUpdate(sql);
-    connection.commit();
+
+    if (!connection.getAutoCommit())
+      connection.commit();
   }
 
   public static ConnectionPool getPoolFor(String dbConfig) {

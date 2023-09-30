@@ -6,6 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.model.AnnotationBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.service.AnnotationBasedImmutablePropertiesPlaceholderExample;
@@ -13,8 +17,15 @@ import ru.vlapin.demo.lombokdemo.service.AnnotationBasedImmutablePropertiesPlace
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Testcontainers
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PropertiesPlaceholderExamplesTest {
+
+  @Container
+  @ServiceConnection
+  @SuppressWarnings("unused")
+  static PostgreSQLContainer<?> postgreSQLContainer =
+      new PostgreSQLContainer<>("postgres:latest");
 
   AnnotationBasedSetterPropertiesPlaceholderExample absppe;
   JavaConfigBasedSetterPropertiesPlaceholderExample jcbsppe;

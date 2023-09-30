@@ -2,15 +2,15 @@ package ru.vlapin.demo.lombokdemo.experimental.getter.annotating;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.FirstAnnotation;
 import ru.vlapin.demo.lombokdemo.SecondAnnotation;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 import static org.assertj.core.api.Assertions.*;
 
-/**
- * AnnotatingExample1Test.
- */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class AnnotatingNewStyleExampleTest {
 
   @Test

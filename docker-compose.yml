@@ -1,11 +1,11 @@
-version: '3'
+version: '3.1'
 
 services:
-  postgres:
+  db:
     image: postgres
-    environment:
-      - POSTGRES_USER=bp
-      - POSTGRES_DB=bp
-      - POSTGRES_PASSWORD=bp
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres

@@ -3,9 +3,11 @@ package ru.vlapin.demo.lombokdemo.common.meta.aliasfor;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 import java.lang.annotation.Retention;
 
@@ -37,6 +39,7 @@ public class AliasDemo {
 @ExtensionMethod({
     AnnotatedElementUtils.class,
 })
+@DisplayNameGeneration(TestUtils.ReplaceCamelCase.class)
 class AliasDemoTest {
 
   @Test

@@ -4,7 +4,9 @@ import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 import java.util.Arrays;
 
@@ -16,6 +18,7 @@ import static org.assertj.core.api.Assertions.*;
     // ExtensionsInterface.class,
     Arrays.class,
 })
+@DisplayNameGeneration(TestUtils.ReplaceCamelCase.class)
 class ExtensionsInterfaceTest {
 
   @Test

@@ -2,3 +2,16 @@ mail.credentials:
   auth-method: basic
   username: user
   password: qwerty
+
+spring:
+  jpa.hibernate.ddl-auto: update
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    password: postgres
+#    username: postgres
+
+logging:
+  level:
+    web: trace
+#    org.springframework.web: trace
+#    org.apache: trace

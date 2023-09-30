@@ -6,14 +6,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpEntity;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.PostApiClient;
 
 import static ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.PostAssert.*;
 
 @SpringBootTest
+@Testcontainers
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PostControllerTest {
+
+  @Container
+  @ServiceConnection
+  @SuppressWarnings("unused")
+  static PostgreSQLContainer<?> postgreSQLContainer =
+      new PostgreSQLContainer<>("postgres:latest");
 
   private static final int ID = 57;
   private static final int USER_ID = 6;
@@ -38,6 +49,7 @@ class PostControllerTest {
   @Test
   @DisplayName("Get one post method works correctly")
   void getOnePostMethodWorksCorrectlyTest() {
+    //noinspection DataFlowIssue
     assertThat(postsApiClient.pickPost(ID).getBody()).isNotNull()
             .hasId(ID)
             .hasTitle(TITLE)

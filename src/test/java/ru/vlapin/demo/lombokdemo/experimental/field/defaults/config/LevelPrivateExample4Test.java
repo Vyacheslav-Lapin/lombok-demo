@@ -2,6 +2,7 @@ package ru.vlapin.demo.lombokdemo.experimental.field.defaults.config;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Modifier;
@@ -14,6 +15,7 @@ import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
  * LevelPrivateExample4Test.
  */
 @SuppressWarnings("java:S1607")
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class LevelPrivateExample4Test {
 
   @Test
