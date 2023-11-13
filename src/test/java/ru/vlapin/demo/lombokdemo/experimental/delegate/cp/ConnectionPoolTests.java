@@ -42,7 +42,7 @@ class ConnectionPoolTests {
                           new PortBinding(bindPort(5432),
                                           new ExposedPort(5432)))));
   static String SQL = """
-      -- noinspection SqlNoDataSourceInspection
+      -- noinspection SqlNoDataSourceInspection,SqlResolve
       select id, first_name, last_name, permission, dob, email, password, address, telephone
       from Person""";
 

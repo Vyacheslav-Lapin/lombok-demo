@@ -285,8 +285,9 @@
   </profiles>
 
   <build>
-    <!--    <defaultGoal>clean lombok:delombok</defaultGoal>-->
-    <defaultGoal>verify spring-boot:run</defaultGoal>
+    <!--<defaultGoal>clean lombok:delombok</defaultGoal>-->
+    <!--<defaultGoal>verify spring-boot:run</defaultGoal>-->
+    <defaultGoal>verify</defaultGoal>
     <sourceDirectory>${sourceDirectory}</sourceDirectory>
 
     <pluginManagement>
@@ -344,6 +345,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
+          <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-surefire-plugin.version}</version>
           <configuration>
             <argLine>--enable-preview</argLine>
@@ -390,13 +392,13 @@
               </goals>
               <configuration>
                 <target name="cleanup-openapi-dir">
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <delete dir="${openapi.generator.maven.plugin.output}/.openapi-generator"/>
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <delete file="${openapi.generator.maven.plugin.output}/.openapi-generator-ignore"/>
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <delete file="${openapi.generator.maven.plugin.output}/pom.xml"/>
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <delete file="${openapi.generator.maven.plugin.output}/README.md"/>
                 </target>
               </configuration>
@@ -412,11 +414,11 @@
                   <property name="maven.classpath" refid="maven.compile.classpath"/>
                   <java classname="lombok.launch.Main" fork="true">
                     <classpath>
-                      <!--suppress MavenModelInspection -->
+                      <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${maven.classpath}"/>
                     </classpath>
                     <arg value="delombok"/>
-                    <!--suppress MavenModelInspection -->
+                    <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${openapi.generator.maven.plugin.output}"/>
                     <arg value="-d"/>
                     <!--suppress MavenModelInspection -->
@@ -438,13 +440,13 @@
                   <mkdir dir="${lombok.outputDirectory}"/>
                   <java classname="lombok.launch.Main" fork="true">
                     <classpath>
-                      <!--suppress MavenModelInspection -->
+                      <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${maven.classpath}"/>
-                      <!--suppress MavenModelInspection -->
+                      <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${openapi.generator.maven.plugin.output}"/>
                     </classpath>
                     <arg value="delombok"/>
-                    <!--suppress MavenModelInspection -->
+                    <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${lombok.sourceDirectory}"/>
                     <arg value="-d"/>
                     <!--suppress MavenModelInspection -->
@@ -462,22 +464,22 @@
               <configuration>
                 <target name="delombok-test-sources">
                   <property name="maven.classpath" refid="maven.test.classpath"/>
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <mkdir dir="${lombok.testOutputDirectory}"/>
                   <java classname="lombok.launch.Main" fork="true">
                     <classpath>
-                      <!--suppress MavenModelInspection -->
+                      <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${maven.classpath}"/>
                       <!--suppress MavenModelInspection -->
                       <pathelement path="${lombok.outputDirectory}"/>
-                      <!--suppress MavenModelInspection -->
+                      <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${assertj.targetDir}"/>
                     </classpath>
                     <arg value="delombok"/>
-                    <!--suppress MavenModelInspection -->
+                    <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${lombok.testSourceDirectory}"/>
                     <arg value="-d"/>
-                    <!--suppress MavenModelInspection -->
+                    <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${lombok.testOutputDirectory}"/>
                   </java>
                 </target>
@@ -493,7 +495,7 @@
                 <target name="cleanup-openapi-dir">
                   <!--suppress MavenModelInspection -->
                   <delete dir="${lombok.outputDirectory}"/>
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <delete dir="${lombok.testOutputDirectory}"/>
                 </target>
               </configuration>
@@ -502,6 +504,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
+          <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
             <release>${java.version}</release>
@@ -512,6 +515,7 @@
               <id>attach-javadocs:package:jar</id>
               <!--<phase>package</phase> &lt;!&ndash; default &ndash;&gt;-->
               <goals>
+                <!--suppress MybatisXMapperXmlInspection -->
                 <goal>jar</goal>
               </goals>
             </execution>
@@ -690,7 +694,7 @@
               </goals>
               <configuration>
                 <sources>
-                  <!--suppress MavenModelInspection -->
+                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                   <source>${assertj.targetDir}</source>
                 </sources>
               </configuration>
