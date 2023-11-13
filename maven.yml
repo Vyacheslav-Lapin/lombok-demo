@@ -27,7 +27,7 @@ lombok:
 
   # Куда lombok-maven-plugin’у поместить результат delombok’а исходников?
   # default: ${project.build.directory}/generated-sources/delombok
-  outputDirectory: target/generated-sources/delomboked
+#  outputDirectory: target/generated-sources/delomboked
 
   # Куда lombok-maven-plugin’у поместить результат delombok’а тестов?
   # default: ${project.build.directory}/generated-test-sources/delombok

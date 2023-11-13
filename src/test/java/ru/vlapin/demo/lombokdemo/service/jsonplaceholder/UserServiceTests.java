@@ -15,7 +15,7 @@ import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Address;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Geo;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Testcontainers

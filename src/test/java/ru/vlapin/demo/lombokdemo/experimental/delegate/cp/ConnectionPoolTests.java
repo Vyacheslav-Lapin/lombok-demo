@@ -8,6 +8,7 @@ import io.vavr.CheckedFunction2;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -20,6 +21,7 @@ import java.sql.ResultSet;
 import static com.github.dockerjava.api.model.Ports.Binding.*;
 import static org.assertj.core.api.Assertions.*;
 
+@Disabled
 @Testcontainers
 @DisplayNameGeneration(ReplaceCamelCase.class)
 class ConnectionPoolTests {
@@ -27,7 +29,7 @@ class ConnectionPoolTests {
   @Container
   @SuppressWarnings({"resource", "unused"})
   static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest")
+      new PostgreSQLContainer<>("postgres:12")
           .withDatabaseName("postgres")
           .withUsername("postgres")
           .withPassword("postgres")

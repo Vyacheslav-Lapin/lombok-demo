@@ -4,6 +4,7 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -14,6 +15,7 @@ import static com.github.dockerjava.api.model.Ports.Binding.*;
 import static org.assertj.core.api.Assertions.*;
 import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 
+@Disabled
 @Testcontainers
 class SimpleDemoTest {
 

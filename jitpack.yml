@@ -1,6 +1,6 @@
 jdk:
   - openjdk
-    20
+    21
 before_install:
-  - sdk install java 20-amzn
-  - sdk use java 20-amzn
+  - sdk install java 21-amzn
+  - sdk use java 21-amzn

@@ -1,11 +1,9 @@
-version: '3.1'
-
 services:
-  db:
-    image: postgres
-    ports:
-      - "5432:5432"
+  postgres:
+    image: 'postgres:latest'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432'
