@@ -39,12 +39,12 @@ public class Cat {
 
   //region equals and hashCode
   @Override
-  @SuppressWarnings("com.haulmont.jpb.EqualsDoesntCheckParameterClass")
   public final boolean equals(Object object) {
     return this == object
            || object != null
               && persistentClass(this) == object.persistentClass()
-              && Objects.equals(getId(), ((Cat) object).getId());
+              && object instanceof Cat cat
+              && Objects.equals(getId(), cat.getId());
   }
 
   @Override
