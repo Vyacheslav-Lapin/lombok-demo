@@ -3,4 +3,5 @@
 /target/
 /pom.xml.versionsBackup
 !.idea/inspectionProfiles
-/.flattened-pom.xml
+/**/.flattened-pom.xml
+/**/.git-versioner.pom.xml

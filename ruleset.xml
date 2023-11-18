@@ -15,28 +15,10 @@
       </ignoreVersions>
     </rule>
 
-    <rule groupId="org.projectlombok"
-        artifactId="lombok" comparisonMethod="maven">
-      <ignoreVersions>
-        <ignoreVersion type="regex">1\.18\.2[0-4]</ignoreVersion>
-        <ignoreVersion type="regex">1\.18\.1\d</ignoreVersion>
-        <ignoreVersion type="regex">1\.18\.\d</ignoreVersion>
-        <ignoreVersion type="regex">1\.1[0-7]\.\d+</ignoreVersion>
-        <ignoreVersion type="regex">0\.\d+\.\d+(-RC\d)?</ignoreVersion>
-      </ignoreVersions>
-    </rule>
-
-    <rule groupId="org.openapitools"
-        artifactId="openapi-generator-maven-plugin" comparisonMethod="maven">
-      <ignoreVersions>
-        <ignoreVersion>6.2.1</ignoreVersion>
-      </ignoreVersions>
-    </rule>
-
     <rule groupId="org.springframework.boot"
-        artifactId="spring-boot-starter-parent" comparisonMethod="maven">
+        artifactId="spring-boot-*" comparisonMethod="maven">
       <ignoreVersions>
-        <ignoreVersion type="regex">3[\w.]+</ignoreVersion>
+        <ignoreVersion type="regex">3\.2[\w.]*</ignoreVersion>
       </ignoreVersions>
     </rule>
 
