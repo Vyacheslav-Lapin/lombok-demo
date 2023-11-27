@@ -296,6 +296,11 @@ if $cygwin; then
     MAVEN_PROJECTBASEDIR=`cygpath --path --windows "$MAVEN_PROJECTBASEDIR"`
 fi
 
+LOMBOK_OUTPUT=$(cat ./pom.xml \
+  | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v \
+  /pom:project/pom:properties/pom:lombok.outputDirectory)
+export MAVEN_CONFIG="-DsourceDirectory=$LOMBOK_OUTPUT $MAVEN_CONFIG"
+
 # Provide a "standardized" way to retrieve the CLI args that will
 # work with both Windows and non-Windows executions.
 MAVEN_CMD_LINE_ARGS="$MAVEN_CONFIG $@"
