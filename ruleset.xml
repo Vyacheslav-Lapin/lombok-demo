@@ -9,16 +9,9 @@
   <rules>
 
     <rule groupId="org.springframework.cloud"
-        artifactId="spring-cloud-starter-parent" comparisonMethod="maven">
+        artifactId="spring-cloud-*" comparisonMethod="maven">
       <ignoreVersions>
-        <ignoreVersion type="regex">1.0.\d.\w+</ignoreVersion>
-      </ignoreVersions>
-    </rule>
-
-    <rule groupId="org.springframework.boot"
-        artifactId="spring-boot-*" comparisonMethod="maven">
-      <ignoreVersions>
-        <ignoreVersion type="regex">3\.2[\w.]*</ignoreVersion>
+        <ignoreVersion type="regex">1\.0\.\d\.\w+</ignoreVersion>
       </ignoreVersions>
     </rule>
 

@@ -1,7 +1,7 @@
 default.package: ru.vlapin.demo.lombokdemo
 client.package: ${default.package}.jsonplaceholder.client
 
-generateBackupPoms: false
+#generateBackupPoms: false
 
 maven:
   version.rules: file://${maven.multiModuleProjectDirectory}/ruleset.xml
@@ -16,6 +16,8 @@ maven:
     # todo разобраться, почему не работает:
 #    plugin.validation: VERBOSE
 
+surefire.exitTimeout: 60
+
 lombok:
   # Где лежат исходные файлы, которые нужно delombok’нуть?
   # default: ${project.basedir}/src/main/lombok
@@ -27,7 +29,7 @@ lombok:
 
   # Куда lombok-maven-plugin’у поместить результат delombok’а исходников?
   # default: ${project.build.directory}/generated-sources/delombok
-#  outputDirectory: target/generated-sources/delomboked
+  outputDirectory: target/generated-sources/delomboked
 
   # Куда lombok-maven-plugin’у поместить результат delombok’а тестов?
   # default: ${project.build.directory}/generated-test-sources/delombok
@@ -78,6 +80,5 @@ openapi.generator.maven.plugin:
 # https://github.com/assertj/assertj-assertions-generator-maven-plugin
 assertj:
   generate.JUnitSoftAssertions: false
-  targetDir: target/generated-test-sources/assertj-assertions
   packages:
     - ${openapi.generator.maven.plugin.modelPackage}

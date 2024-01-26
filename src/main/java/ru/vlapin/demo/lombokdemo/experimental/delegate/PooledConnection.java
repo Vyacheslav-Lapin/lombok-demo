@@ -1,12 +1,11 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate;
 
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.experimental.Delegate;
-
 import java.io.Closeable;
 import java.sql.Connection;
 import java.util.function.Consumer;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.experimental.Delegate;
 
 @AllArgsConstructor
 public class PooledConnection implements Connection {

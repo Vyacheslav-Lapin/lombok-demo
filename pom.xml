@@ -4,10 +4,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.6</version>
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-parent</artifactId>-->
-        <!--<version>2022.0.4</version>-->
+    <version>3.2.2</version>
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -18,49 +15,49 @@
 
     <!--region General-->
     <java.version>21</java.version>
-    <minimal.maven.version>3.9.5</minimal.maven.version>
-    <spring-boot.version>3.1.6</spring-boot.version>
-    <revision>0.0.2</revision>
+    <minimal.maven.version>3.9.6</minimal.maven.version>
+    <revision>0.0.2-2</revision>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-cloud.version>2022.0.4</spring-cloud.version>
+    <spring-boot.version>3.2.2</spring-boot.version>
+    <spring-cloud.version>2023.0.0</spring-cloud.version>
     <!--endregion-->
 
     <!--region Libs-->
     <vavr.version>0.10.4</vavr.version>
-    <lombok.version>1.18.30</lombok.version>
-    <checker.version>3.40.0</checker.version>
-    <spotbugs.version>4.8.1</spotbugs.version>
+    <checker.version>3.42.0</checker.version>
+    <spotbugs.version>4.8.3</spotbugs.version>
     <annotations.version>24.1.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
-    <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
-    <error_prone_annotations.version>2.23.0</error_prone_annotations.version>
+    <springdoc-openapi.version>2.3.0</springdoc-openapi.version>
+    <error_prone_annotations.version>2.24.1</error_prone_annotations.version>
     <!--endregion-->
 
     <!--region Test-libs-->
     <!--endregion-->
 
     <!--region Plugins-->
-    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
     <maven.compiler.parameters>false</maven.compiler.parameters>
 
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
-    <maven-javadoc-plugin.version>3.6.2</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     <sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
-    <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
     <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.8.1.0</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.8.3.0</spotbugs-maven-plugin.version>
     <yaml-properties-maven-plugin.version>1.1.3</yaml-properties-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.1.0</openapi-generator-maven-plugin.version>
-    <assertj-assertions-generator-maven-plugin.version>2.2.0</assertj-assertions-generator-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.2.0</openapi-generator-maven-plugin.version>
     <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
-    <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+
+    <assertj-assertions-generator-maven-plugin.version>2.2.0</assertj-assertions-generator-maven-plugin.version>
+    <assertj.targetDir>target/generated-test-sources/assertj-assertions</assertj.targetDir>
 
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
-    <sourceDirectory>src/main/java</sourceDirectory>
     <lombok.outputDirectory>target/generated-sources/delomboked</lombok.outputDirectory>
     <!--endregion-->
 
@@ -272,11 +269,11 @@
   </dependencies>
 
   <build>
-    <!--<defaultGoal>verify</defaultGoal>-->
+    <!--    <defaultGoal>verify</defaultGoal>-->
     <defaultGoal>clean verify</defaultGoal>
     <!--<defaultGoal>clean lombok:delombok</defaultGoal>-->
     <!--<defaultGoal>verify spring-boot:run</defaultGoal>-->
-    <sourceDirectory>${sourceDirectory}</sourceDirectory>
+    <sourceDirectory>${maven.sourceDirectory}</sourceDirectory>
 
     <pluginManagement>
       <plugins>
@@ -405,9 +402,20 @@
                       <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${maven.classpath}"/>
                     </classpath>
+
                     <arg value="delombok"/>
                     <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${openapi.generator.maven.plugin.output}"/>
+
+                    <arg value="-f"/>
+                    <arg value="indent:2"/>
+
+                    <arg value="-f"/>
+                    <arg value="finalParams:skip"/>
+
+                    <arg value="-f"/>
+                    <arg value="pretty"/>
+
                     <arg value="-d"/>
                     <!--suppress MavenModelInspection -->
                     <arg value="${lombok.outputDirectory}"/>
@@ -424,8 +432,19 @@
               <configuration>
                 <target name="delombok-sources">
                   <property name="maven.classpath" refid="maven.compile.classpath"/>
-                  <!--suppress MavenModelInspection -->
                   <mkdir dir="${lombok.outputDirectory}"/>
+
+                  <!--<taskdef classname="lombok.delombok.ant.Tasks$Delombok"-->
+                  <!--         classpath="${maven.classpath}"-->
+                  <!--         name="delombok"/>-->
+                  <!--<delombok encoding="${project.build.sourceEncoding}"-->
+                  <!--          to="${lombok.outputDirectory}"-->
+                  <!--          from="src">-->
+                  <!--  <format value="indent:2"/>-->
+                  <!--  <format value="finalParams:skip"/>-->
+                  <!--  <format value="pretty"/>-->
+                  <!--</delombok>-->
+
                   <java classname="lombok.launch.Main" fork="true">
                     <classpath>
                       <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
@@ -433,11 +452,21 @@
                       <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                       <pathelement path="${openapi.generator.maven.plugin.output}"/>
                     </classpath>
+
                     <arg value="delombok"/>
                     <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${lombok.sourceDirectory}"/>
+
+                    <arg value="-f"/>
+                    <arg value="indent:2"/>
+
+                    <arg value="-f"/>
+                    <arg value="finalParams:skip"/>
+
+                    <arg value="-f"/>
+                    <arg value="pretty"/>
+
                     <arg value="-d"/>
-                    <!--suppress MavenModelInspection -->
                     <arg value="${lombok.outputDirectory}"/>
                   </java>
                 </target>
@@ -466,6 +495,16 @@
                     <arg value="delombok"/>
                     <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${lombok.testSourceDirectory}"/>
+
+                    <arg value="-f"/>
+                    <arg value="indent:2"/>
+
+                    <arg value="-f"/>
+                    <arg value="finalParams:skip"/>
+
+                    <arg value="-f"/>
+                    <arg value="pretty"/>
+
                     <arg value="-d"/>
                     <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
                     <arg value="${lombok.testOutputDirectory}"/>
@@ -691,11 +730,6 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>org.sonarsource.scanner.maven</groupId>
-          <artifactId>sonar-maven-plugin</artifactId>
-          <version>${sonar-maven-plugin.version}</version>
-        </plugin>
-        <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${spring-boot.version}</version>
@@ -709,6 +743,11 @@
             <executable>true</executable>
             <jvmArguments>--enable-preview</jvmArguments>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.assertj</groupId>

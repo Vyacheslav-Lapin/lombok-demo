@@ -92,7 +92,7 @@ paths:
       responses:
         200:
           description: The server successfully processed the request, but is not returning any content
-          content: { application/javascript: { schema: { $ref: '#/components/schemas/Post' } } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/Post' } } }
     delete:
       tags: [ post ]
       operationId: removePost
@@ -201,7 +201,7 @@ paths:
         404: { $ref: '#/components/responses/404' }
     put:
       tags: [ comment ]
-      operationId: updateCommennt
+      operationId: updateComment
       summary: Updating a comment
       description: Important - resource will not be really updated on the server but it will be faked as if
       parameters:
@@ -237,7 +237,7 @@ paths:
       responses:
         200:
           description: Comment will not be really patched on the server but it will be faked as if
-          content: { application/javascript: { schema: { $ref: '#/components/schemas/Comment' } } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/Comment' } } }
     delete:
       tags: [ comment ]
       operationId: removeComment
@@ -336,7 +336,7 @@ paths:
       responses:
         200:
           description: Album will not be really patched on the server but it will be faked as if
-          content: { application/javascript: { schema: { $ref: '#/components/schemas/Album' } } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/Album' } } }
     delete:
       tags: [ album ]
       operationId: removeAlbum
@@ -477,7 +477,7 @@ paths:
       responses:
         200:
           description: Photo will not be really patched on the server but it will be faked as if
-          content: { application/javascript: { schema: { $ref: '#/components/schemas/Photo' } } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/Photo' } } }
     delete:
       tags: [ photo ]
       operationId: removePhoto
@@ -579,7 +579,7 @@ paths:
       responses:
         200:
           description: Task to do will not be really patched on the server but it will be faked as if
-          content: { application/javascript: { schema: { $ref: '#/components/schemas/Todo' } } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/Todo' } } }
     delete:
       tags: [ todo ]
       operationId: removeTodo
@@ -710,7 +710,7 @@ paths:
       responses:
         200:
           description: User will not be really patched on the server but it will be faked as if
-          content: { application/javascript: { schema: { $ref: '#/components/schemas/User' } } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/User' } } }
     delete:
       tags: [ user ]
       operationId: removeUser

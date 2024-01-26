@@ -19,7 +19,7 @@
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
-# Maven Start Up Batch script
+# Maven2 Start Up Batch script
 #
 # Required ENV vars:
 # ------------------
@@ -114,6 +114,7 @@ if $mingw ; then
     M2_HOME="`(cd "$M2_HOME"; pwd)`"
   [ -n "$JAVA_HOME" ] &&
     JAVA_HOME="`(cd "$JAVA_HOME"; pwd)`"
+  # TODO classpath?
 fi
 
 if [ -z "$JAVA_HOME" ]; then
@@ -211,11 +212,7 @@ else
     if [ "$MVNW_VERBOSE" = true ]; then
       echo "Couldn't find .mvn/wrapper/maven-wrapper.jar, downloading it ..."
     fi
-    if [ -n "$MVNW_REPOURL" ]; then
-      jarUrl="$MVNW_REPOURL/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar"
-    else
-      jarUrl="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar"
-    fi
+    jarUrl="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.4.2/maven-wrapper-0.4.2.jar"
     while IFS="=" read key value; do
       case "$key" in (wrapperUrl) jarUrl="$value"; break ;;
       esac
@@ -224,38 +221,22 @@ else
       echo "Downloading from: $jarUrl"
     fi
     wrapperJarPath="$BASE_DIR/.mvn/wrapper/maven-wrapper.jar"
-    if $cygwin; then
-      wrapperJarPath=`cygpath --path --windows "$wrapperJarPath"`
-    fi
 
     if command -v wget > /dev/null; then
         if [ "$MVNW_VERBOSE" = true ]; then
           echo "Found wget ... using wget"
         fi
-        if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
-            wget "$jarUrl" -O "$wrapperJarPath"
-        else
-            wget --http-user=$MVNW_USERNAME --http-password=$MVNW_PASSWORD "$jarUrl" -O "$wrapperJarPath"
-        fi
+        wget "$jarUrl" -O "$wrapperJarPath"
     elif command -v curl > /dev/null; then
         if [ "$MVNW_VERBOSE" = true ]; then
           echo "Found curl ... using curl"
         fi
-        if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
-            curl -o "$wrapperJarPath" "$jarUrl" -f
-        else
-            curl --user $MVNW_USERNAME:$MVNW_PASSWORD -o "$wrapperJarPath" "$jarUrl" -f
-        fi
-
+        curl -o "$wrapperJarPath" "$jarUrl"
     else
         if [ "$MVNW_VERBOSE" = true ]; then
           echo "Falling back to using Java to download"
         fi
         javaClass="$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.java"
-        # For Cygwin, switch paths to Windows format before running javac
-        if $cygwin; then
-          javaClass=`cygpath --path --windows "$javaClass"`
-        fi
         if [ -e "$javaClass" ]; then
             if [ ! -e "$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.class" ]; then
                 if [ "$MVNW_VERBOSE" = true ]; then
@@ -296,20 +277,27 @@ if $cygwin; then
     MAVEN_PROJECTBASEDIR=`cygpath --path --windows "$MAVEN_PROJECTBASEDIR"`
 fi
 
-LOMBOK_OUTPUT=$(cat ./pom.xml \
-  | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v \
-  /pom:project/pom:properties/pom:lombok.outputDirectory)
-export MAVEN_CONFIG="-DsourceDirectory=$LOMBOK_OUTPUT $MAVEN_CONFIG"
-
-# Provide a "standardized" way to retrieve the CLI args that will
-# work with both Windows and non-Windows executions.
-MAVEN_CMD_LINE_ARGS="$MAVEN_CONFIG $@"
-export MAVEN_CMD_LINE_ARGS
-
 WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
+
+# https://stackoverflow.com/questions/36852819/pipe-out-a-substring-by-removing-the-last-n-characters
+pipe_substr () {
+  sed "s/.\{$1\}$//"
+}
+
+# concatenates all lines of a file to compliant maven environment variables cli parameters (ignoring comments)
+concat_vars() {
+  if [ -f "$1" ]; then
+    echo "-Denv.$(cat $1 | grep -v '^#' | tr -s '\n' '|' | sed 's/|/ -Denv./g' | pipe_substr 7)"
+  fi
+}
+
+export MAVEN_CONFIG="$(concat_vars "$MAVEN_PROJECTBASEDIR/.mvn/.env") $MAVEN_CONFIG"
 
 exec "$JAVACMD" \
   $MAVEN_OPTS \
   -classpath "$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar" \
-  "-Dmaven.home=${M2_HOME}" "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
-  ${WRAPPER_LAUNCHER} $MAVEN_CONFIG "$@"
+  "-Dmaven.home=${M2_HOME}" \
+  "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
+  ${WRAPPER_LAUNCHER} $MAVEN_CONFIG \
+  "-Dmaven.sourceDirectory=target/generated-sources/delomboked" \
+  "$@"
