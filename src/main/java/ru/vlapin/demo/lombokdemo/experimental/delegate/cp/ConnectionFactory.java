@@ -1,17 +1,9 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
+import static lombok.AccessLevel.*;
+
 import io.vavr.CheckedFunction3;
 import io.vavr.Function2;
-import lombok.Getter;
-import lombok.SneakyThrows;
-import lombok.Value;
-import lombok.experimental.ExtensionMethod;
-import lombok.val;
-import org.jetbrains.annotations.Contract;
-import ru.vlapin.demo.lombokdemo.common.FileUtils;
-import ru.vlapin.demo.lombokdemo.common.Function3Utils;
-import ru.vlapin.demo.lombokdemo.common.PropertiesUtils.InitProperties;
-
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,8 +13,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static lombok.AccessLevel.*;
+import lombok.Getter;
+import lombok.Value;
+import lombok.experimental.ExtensionMethod;
+import lombok.val;
+import org.jetbrains.annotations.Contract;
+import ru.vlapin.demo.lombokdemo.common.FileUtils;
+import ru.vlapin.demo.lombokdemo.common.Function3Utils;
+import ru.vlapin.demo.lombokdemo.common.PropertiesUtils.InitProperties;
 
 @Value
 @Getter(NONE)
@@ -41,7 +39,6 @@ public class ConnectionFactory implements Supplier<Stream<Connection>> {
   String initScriptsPath;
 
   @Override
-  @SneakyThrows
   public Stream<Connection> get() {
 
     val connectionSupplier =

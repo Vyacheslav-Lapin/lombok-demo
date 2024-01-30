@@ -1,14 +1,13 @@
 package ru.vlapin.demo.lombokdemo.stable.cleanup;
 
+import static ru.vlapin.demo.lombokdemo.stable.cleanup.Student.Fields.*;
+
+import java.sql.DriverManager;
 import lombok.Builder;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldNameConstants;
 import lombok.val;
-
-import java.sql.DriverManager;
-
-import static ru.vlapin.demo.lombokdemo.stable.cleanup.Student.Fields.*;
 
 @SuppressWarnings({"java:S6437", "java:S125", "java:S106"})
 public interface SimpleDemo {

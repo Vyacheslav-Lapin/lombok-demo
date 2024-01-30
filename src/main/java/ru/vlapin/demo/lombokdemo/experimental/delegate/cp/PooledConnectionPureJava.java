@@ -1,4 +1,4 @@
-package ru.vlapin.demo.lombokdemo.experimental.delegate;
+package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
 import lombok.SneakyThrows;
 

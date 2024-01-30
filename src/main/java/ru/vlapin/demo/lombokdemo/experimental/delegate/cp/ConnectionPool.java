@@ -1,6 +1,15 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
+import static java.util.stream.Collectors.*;
+
 import io.vavr.Function2;
+import java.io.Closeable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.function.Supplier;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
@@ -9,16 +18,6 @@ import lombok.experimental.StandardException;
 import lombok.val;
 import ru.vlapin.demo.lombokdemo.common.FileUtils;
 import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
-import ru.vlapin.demo.lombokdemo.experimental.delegate.PooledConnection;
-
-import java.io.Closeable;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.concurrent.BlockingQueue;
-import java.util.function.Supplier;
-
-import static java.util.stream.Collectors.*;
 
 @ExtensionMethod({
     FileUtils.class,
@@ -26,7 +25,7 @@ import static java.util.stream.Collectors.*;
 })
 public class ConnectionPool implements Closeable, Supplier<Connection> {
 
-  private static final HashMap<String, ConnectionPool> instances = new HashMap<>();
+  private static final Map<String, ConnectionPool> instances = new HashMap<>();
   BlockingQueue<PooledConnection> connectionQueue;
 
   @NonFinal
@@ -93,8 +92,7 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
   @Override
   public void close() {
     opened = false;
-    connectionQueue
-        .forEach(PooledConnection::reallyClose);
+    connectionQueue.forEach(PooledConnection::reallyClose);
   }
 
   @Override

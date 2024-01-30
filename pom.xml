@@ -138,6 +138,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
+    <!--suppress VulnerableLibrariesLocal -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-rest</artifactId>
@@ -269,7 +270,7 @@
   </dependencies>
 
   <build>
-    <!--    <defaultGoal>verify</defaultGoal>-->
+    <!--<defaultGoal>verify</defaultGoal>-->
     <defaultGoal>clean verify</defaultGoal>
     <!--<defaultGoal>clean lombok:delombok</defaultGoal>-->
     <!--<defaultGoal>verify spring-boot:run</defaultGoal>-->
@@ -278,11 +279,15 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <!--suppress MybatisXMapperXmlInspection -->
           <artifactId>maven-compiler-plugin</artifactId>
+          <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
             <compilerArgs>
               <arg>--enable-preview</arg><!--maven.compiler.enablePreview-->
+              <arg>--add-modules</arg><!--See: https://dzone.com/articles/using-jdk21-preview-features-andor-incubator-class-->
+              <arg>jdk.incubator.vector</arg>
 
               <arg>-Xlint:all</arg> <!--Включает все рекомендуемые предупреждения.-->
               <arg>-Awarns</arg>  <!--CI: падать при наличии проблем -->
@@ -329,11 +334,17 @@
           </configuration>
         </plugin>
         <plugin>
+          <!--suppress MybatisXMapperXmlInspection -->
           <artifactId>maven-surefire-plugin</artifactId>
           <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-surefire-plugin.version}</version>
           <configuration>
-            <argLine>--enable-preview</argLine>
+            <!--See: https://dzone.com/articles/using-jdk21-preview-features-andor-incubator-class-->
+            <argLine>
+              --enable-preview
+              --add-modules jdk.incubator.vector
+              -XX:+EnableDynamicAgentLoading
+            </argLine>
             <includes>
               <include>**/Test*.java</include>
               <include>**/*Test.java</include>
@@ -353,7 +364,9 @@
         </plugin>
 
         <plugin>
+          <!--suppress MybatisXMapperXmlInspection -->
           <artifactId>maven-source-plugin</artifactId>
+          <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-source-plugin.version}</version>
           <executions>
             <execution>
@@ -366,7 +379,9 @@
           </executions>
         </plugin>
         <plugin>
+          <!--suppress MybatisXMapperXmlInspection -->
           <artifactId>maven-antrun-plugin</artifactId>
+          <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-antrun-plugin.version}</version>
           <executions>
             <execution>
@@ -530,6 +545,7 @@
           </executions>
         </plugin>
         <plugin>
+          <!--suppress MybatisXMapperXmlInspection -->
           <artifactId>maven-javadoc-plugin</artifactId>
           <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-javadoc-plugin.version}</version>
@@ -549,7 +565,9 @@
           </executions>
         </plugin>
         <plugin>
+          <!--suppress MybatisXMapperXmlInspection -->
           <artifactId>maven-enforcer-plugin</artifactId>
+          <!--suppress MybatisXMapperXmlInspection -->
           <version>${maven-enforcer-plugin.version}</version>
           <executions>
             <execution>
@@ -818,6 +836,7 @@
         <artifactId>versions-maven-plugin</artifactId>
       </plugin>
       <plugin>
+        <!--suppress MybatisXMapperXmlInspection, MavenModelInspection -->
         <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
       <plugin>
@@ -829,7 +848,7 @@
         <artifactId>openapi-generator-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <!--suppress MavenModelInspection -->
+        <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
         <artifactId>maven-antrun-plugin</artifactId>
       </plugin>
       <plugin>
@@ -853,7 +872,7 @@
         <artifactId>build-helper-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <!--suppress MavenModelInspection -->
+        <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
 <!--      <plugin>-->

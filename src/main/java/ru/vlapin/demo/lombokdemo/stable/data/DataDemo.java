@@ -1,6 +1,6 @@
 package ru.vlapin.demo.lombokdemo.stable.data;
 
-import lombok.*;
+import lombok.Data;
 
 /**
  * DataDemo.

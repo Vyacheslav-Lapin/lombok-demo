@@ -1,6 +1,5 @@
-package ru.vlapin.demo.lombokdemo.experimental.delegate;
+package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.util.function.Consumer;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ public class PooledConnection implements Connection {
 
   Consumer<? super PooledConnection> closer;
 
-  @Delegate(excludes = Closeable.class)
+  @Delegate
   Connection connection;
 
   @Override
