@@ -11,7 +11,7 @@ import lombok.experimental.Tolerate;
 @Getter
 public class TolerateExample {
 
-  private int x;
+  int x;
 
   @Tolerate
   public void setX(String x) {

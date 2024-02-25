@@ -6,7 +6,7 @@ public class HelperExample {
   int someMethod(@SuppressWarnings("SameParameterValue") int arg1) {
     int localVar = 5;
 
-    // @Helper // didn't work with IDEA Lombok plugin v.223.8214.52 :(
+    //@Helper // didn't work with IDEA Lombok plugin v.233.14015.106 :(
     //noinspection SameParameterValue
     class Helpers {
       int helperMethod(int arg) {
@@ -16,6 +16,6 @@ public class HelperExample {
     val $Helpers = new Helpers(); // should be removed after fix
 
     return $Helpers.helperMethod(10);
-    // return helperMethod(10); // error - didn't work with IDEA Lombok plugin v.223.8214.52 :(
+    //return helperMethod(10); // error - didn't work with IDEA Lombok plugin v.233.14015.106 :(
   }
 }

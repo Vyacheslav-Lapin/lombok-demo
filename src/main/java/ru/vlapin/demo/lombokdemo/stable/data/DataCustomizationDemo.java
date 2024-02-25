@@ -1,8 +1,10 @@
 package ru.vlapin.demo.lombokdemo.stable.data;
 
-import lombok.*;
-
 import static lombok.AccessLevel.*;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
 
 /**
  * DataCustomizationDemo.

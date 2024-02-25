@@ -1,16 +1,15 @@
 package ru.vlapin.demo.lombokdemo.experimental.field.defaults.config.conf;
 
+import static org.assertj.core.api.Assertions.*;
+import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
+
+import java.lang.reflect.Modifier;
+import java.util.function.IntPredicate;
 import lombok.val;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Modifier;
-import java.util.function.IntPredicate;
-
-import static org.assertj.core.api.Assertions.*;
-import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 
 /**
  * MakeFinalExample3Test.

@@ -1,8 +1,11 @@
 package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 
+import static ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.PostAssert.*;
+
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +15,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.PostApiClient;
-
-import static ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.PostAssert.*;
 
 @SpringBootTest
 @Testcontainers
@@ -38,6 +39,7 @@ class PostControllerTest {
   PostApiClient postsApiClient;
 
   @Test
+  @Tag("integration")
   @DisplayName("Get method works correctly")
   void get() {
     Assertions.assertThat(postsApiClient.posts(null)).isNotNull()
@@ -47,6 +49,7 @@ class PostControllerTest {
   }
 
   @Test
+  @Tag("integration")
   @DisplayName("Get one post method works correctly")
   void getOnePostMethodWorksCorrectlyTest() {
     //noinspection DataFlowIssue

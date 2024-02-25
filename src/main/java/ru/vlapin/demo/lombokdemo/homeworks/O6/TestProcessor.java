@@ -1,8 +1,17 @@
 package ru.vlapin.demo.lombokdemo.homeworks.O6;
 
+import static java.util.stream.Collectors.*;
+import static lombok.AccessLevel.*;
+
 import io.vavr.CheckedConsumer;
 import io.vavr.Function1;
 import io.vavr.control.Try;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.With;
@@ -13,16 +22,6 @@ import lombok.val;
 import ru.vlapin.demo.lombokdemo.common.CheckedConsumerUtils;
 import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
 import ru.vlapin.demo.lombokdemo.common.StreamUtils;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.*;
-import static lombok.AccessLevel.*;
 
 @UtilityClass
 @ExtensionMethod({

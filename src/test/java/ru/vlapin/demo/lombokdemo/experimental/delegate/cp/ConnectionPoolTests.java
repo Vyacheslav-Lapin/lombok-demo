@@ -1,14 +1,17 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
+import static com.github.dockerjava.api.model.Ports.Binding.*;
+import static org.assertj.core.api.Assertions.*;
+
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
 import io.vavr.CheckedFunction1;
 import io.vavr.CheckedFunction2;
+import java.sql.ResultSet;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -16,12 +19,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
-import java.sql.ResultSet;
-
-import static com.github.dockerjava.api.model.Ports.Binding.*;
-import static org.assertj.core.api.Assertions.*;
-
-@Disabled
 @Testcontainers
 @DisplayNameGeneration(ReplaceCamelCase.class)
 class ConnectionPoolTests {
