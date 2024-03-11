@@ -3,6 +3,7 @@ package ru.vlapin.demo.lombokdemo.tasks;
 import static org.assertj.core.api.Assertions.*;
 import static ru.vlapin.demo.lombokdemo.tasks.FlowerGardenPlantingCost.*;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,5 +20,18 @@ class FlowerGardenPlantingCostTest {
         // then
         .isEqualTo(8);
 
+  }
+
+  @Test
+  @SneakyThrows
+  @DisplayName(" works correctly")
+  void worksCorrectlyTest() {
+    // given
+    int[][] costs = {{1, 2, 3}, {2, 4, 5}, {20, 1, 80}};
+
+    // when
+    assertThat(minCost(costs))
+        // then
+        .isEqualTo(5);
   }
 }

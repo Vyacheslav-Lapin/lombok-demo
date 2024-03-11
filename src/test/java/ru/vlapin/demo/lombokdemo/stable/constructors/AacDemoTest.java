@@ -1,10 +1,10 @@
 package ru.vlapin.demo.lombokdemo.stable.constructors;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
 
 /**
  * AacDemoTest.
@@ -20,9 +20,7 @@ class AacDemoTest {
     // when
     assertThat(obj)
         // then
-        .extracting(AacDemo::getX,
-            AacDemo::getY,
-            AacDemo::isZ)
+        .extracting("x", "y", "z")
         .contains(1, "Lor", true);
   }
 }

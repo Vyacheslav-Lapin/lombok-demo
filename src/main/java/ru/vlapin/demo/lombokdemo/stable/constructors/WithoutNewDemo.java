@@ -15,9 +15,9 @@ public class WithoutNewDemo {
   String s;
   boolean b;
 
-//public static WithoutNewDemo WithoutNewDemo(final int x,
-//                                            final String s,
-//                                            final boolean b) {
+//public static WithoutNewDemo WithoutNewDemo(int x,
+//                                            String s,
+//                                            boolean b) {
 //  return new WithoutNewDemo(x, s, b);
 //}
 }

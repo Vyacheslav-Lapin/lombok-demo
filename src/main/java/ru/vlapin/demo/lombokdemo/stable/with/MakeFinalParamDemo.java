@@ -1,13 +1,18 @@
-package ru.vlapin.demo.lombokdemo.stable.accessors;
+package ru.vlapin.demo.lombokdemo.stable.with;
 
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.Accessors;
 
+@SuppressWarnings({
+    "java:S125",
+    "CommentedOutCode",
+    "ClassCanBeRecord",
+})
+
 @With
 @Value
 @Accessors(makeFinal = true)
-@SuppressWarnings({"java:S125", "CommentedOutCode"})
 public class MakeFinalParamDemo {
   int x;
 
