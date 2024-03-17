@@ -34,4 +34,17 @@ class PetTest {
         // then
         .isEqualTo(1L);
   }
+
+  @Test
+  void aDynamicMethodWithoutParametersCanBeTransformedToSupplierTest() {
+    // given
+    Function<Pet, Long> getIdAsFunction = Pet::getId;
+    Supplier<Long> getIdAsSupplier = () -> getIdAsFunction.apply(new Pet());
+    Long id = getIdAsSupplier.get();
+
+    // when
+    assertThat(id).isNotNull()
+                  // then
+                  .isEqualTo(1L);
+  }
 }

@@ -1,5 +1,8 @@
 package ru.vlapin.demo.lombokdemo.experimental.extensionmethods;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.Arrays;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.extern.slf4j.Slf4j;
@@ -8,18 +11,16 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
-import java.util.Arrays;
-
-import static org.assertj.core.api.Assertions.*;
+@SuppressWarnings("RedundantSuppression")
 
 @Slf4j
 @ExtensionMethod({
-    Extensions.class,
-    // ExtensionsInterface.class,
+    StringExtensions.class,
+    ObjectExtensions.class,
     Arrays.class,
 })
 @DisplayNameGeneration(TestUtils.ReplaceCamelCase.class)
-class ExtensionsInterfaceTest {
+class StringStringExtensionsInterfaceTest {
 
   @Test
   @DisplayName("ExtensionMethod from interface works correctly")
@@ -27,7 +28,9 @@ class ExtensionsInterfaceTest {
     //noinspection DataFlowIssue
     String iAmNull = null;
 
-    assertThat(iAmNull.getIfNull("hELlO, WORlD!".toTitleCase())).isNotNull()
+    //noinspection DataFlowIssue
+    assertThat(iAmNull.orIfNull(() -> "hELlO, WORlD!".toTitleCase()))
+        .isNotNull()
         .isEqualTo("Hello, world!");
   }
 
@@ -42,7 +45,7 @@ class ExtensionsInterfaceTest {
     // when
     //noinspection ImplicitArrayToString
     log.info(x.toString()); // [5, 3, 8, 2]
-    //    log.info(Arrays.toString(x)); // [5, 3, 8, 2]
+    //log.info(Arrays.toString(x)); // [5, 3, 8, 2]
 
     // when
     //noinspection ImplicitArrayToString

@@ -7,7 +7,8 @@ import java.util.Arrays;
 @ExtensionMethod({
     Arrays.class,
     String.class,
-    Extensions.class,
+    StringExtensions.class,
+    ObjectExtensions.class,
 })
 public class LombokExtensionMethodExample {
 
@@ -16,21 +17,23 @@ public class LombokExtensionMethodExample {
     //noinspection DataFlowIssue
     String iAmNull = null;
 
-    return iAmNull.getIfNull("hELlO, WORlD!".toTitleCase());
-    // return Extensions.getIfNull(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
+    return iAmNull.orIfNull("hELlO, WORlD!".toTitleCase());
+    // return ObjectExtensions.getIfNull(iAmNull, Extensions.toTitleCase("hELlO, WORlD!"));
   }
 
   @SuppressWarnings("java:S125")
   public int[] getSortedArray() {
-    int[] intarray = {5, 3, 8, 2};
+    int[] ints = {5, 3, 8, 2};
 
-    intarray.sort();
-    // Arrays.sort(intarray);
+    ints.sort();
+    // Arrays.sort(ints);
 
-    return intarray;
+    return ints;
   }
 
+  @SuppressWarnings("java:S2209")
   public String hw(int count) {
+    // NOTE! Это не "formatter", а "format" - extension method
     return "Hello, %d World!".format(count);
   }
 }

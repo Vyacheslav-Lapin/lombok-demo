@@ -1,19 +1,18 @@
 package ru.vlapin.demo.lombokdemo.experimental.extensionmethods;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
-import static org.assertj.core.api.Assertions.*;
-
 
 @DisplayNameGeneration(ReplaceCamelCase.class)
 class LombokExtensionMethodExampleTests {
 
   @Test
-  @SneakyThrows
   @DisplayName("UseExtensionMethods method works correctly")
   void useExtensionMethodsMethodWorksCorrectlyTest() {
     assertThat(new LombokExtensionMethodExample()
