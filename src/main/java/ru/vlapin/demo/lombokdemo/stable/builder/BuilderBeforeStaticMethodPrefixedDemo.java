@@ -4,25 +4,24 @@ import java.time.LocalDate;
 import lombok.Builder;
 import lombok.experimental.UtilityClass;
 
-@SuppressWarnings({"java:S125", "CommentedOutCode"})
+@SuppressWarnings({"java:S125", "CommentedOutCode", "unused"})
 
 @UtilityClass
-public class BuilderBeforeStaticMethodDemo {
+public class BuilderBeforeStaticMethodPrefixedDemo {
 
   @Builder(builderMethodName = "beforeNowCaller",
            buildMethodName = "call",
-           builderClassName = "BeforeNowCaller")
-  public static LocalDate beforeNow(int days, int months) {
+           builderClassName = "BeforeNowCaller",
+           setterPrefix = "with")
+  public LocalDate beforeNow(int days, int months) {
     return LocalDate.now().minusDays(days).minusMonths(months);
   }
 
-//public static BeforeNowCaller beforeNowCaller() {
-//  return new BeforeNowCaller();
+//public static LocalDateBuilder beforeNowCaller() {
+//  return new LocalDateBuilder();
 //}
 
-//@Setter
 //@ToString
-//@Accessors(fluent = true)
 //@FieldDefaults(level = PRIVATE)
 //@NoArgsConstructor(access = PACKAGE)
 //public static class BeforeNowCaller {
@@ -32,5 +31,7 @@ public class BuilderBeforeStaticMethodDemo {
 //  public LocalDate call() {
 //    return beforeNow(this.days, this.months);
 //  }
+//  public BeforeNowCaller withDays(int days) { this.days = days; return this; }
+//  public BeforeNowCaller withMonths(int months) { this.months = months; return this; }
 //}
 }

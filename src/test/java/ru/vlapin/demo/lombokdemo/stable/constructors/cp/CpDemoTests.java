@@ -1,20 +1,19 @@
 package ru.vlapin.demo.lombokdemo.stable.constructors.cp;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.beans.ConstructorProperties;
+import java.lang.reflect.Parameter;
+import java.util.Arrays;
 import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.beans.ConstructorProperties;
-import java.lang.reflect.Parameter;
-import java.util.Arrays;
-
-import static org.assertj.core.api.Assertions.*;
-
-@ExtensionMethod({
-    Arrays.class,
-})
+@ExtensionMethod(
+    value = Arrays.class,
+    suppressBaseMethods = false)
 class CpDemoTests {
 
   @Test

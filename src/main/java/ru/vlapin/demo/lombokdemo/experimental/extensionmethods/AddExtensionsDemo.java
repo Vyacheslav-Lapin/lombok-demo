@@ -7,20 +7,15 @@ import lombok.val;
 
 @SuppressWarnings({"java:S2116", "java:S125"})
 
-@ExtensionMethod(Arrays.class)
+@ExtensionMethod(value = {
+    Arrays.class,
+}, suppressBaseMethods = false)
 @UtilityClass
-public class ExtensionsDemo {
-
+public class AddExtensionsDemo {
   int[] getSortedArray(int... ints) {
     val result = ints.clone();
     result.sort();
   //Arrays.sort(result);
     return result;
-  }
-
-  public String demo(int... ints) {
-    //noinspection ImplicitArrayToString
-    return ints.toString();
-  //return Arrays.toString(ints);
   }
 }

@@ -1,16 +1,16 @@
 package ru.vlapin.demo.lombokdemo.controller.jsonplaceholder;
 
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vlapin.demo.lombokdemo.common.Loggable;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.PostApiClient;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Post;
-
-import java.util.List;
-import java.util.Objects;
 
 @ExtensionMethod({
         Objects.class,

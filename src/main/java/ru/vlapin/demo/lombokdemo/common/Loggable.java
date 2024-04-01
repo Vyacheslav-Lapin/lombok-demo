@@ -1,5 +1,9 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
+import static ru.vlapin.demo.lombokdemo.common.Loggable.LogLevel.*;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.util.function.BiConsumer;
@@ -11,10 +15,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
-import static ru.vlapin.demo.lombokdemo.common.Loggable.LogLevel.*;
 
 /**
  * Aspect annotation.
@@ -36,14 +36,15 @@ public @interface Loggable {
 @ExtensionMethod(AspectUtils.class)
 final class LoggableAspect {
 
-  @Pointcut("@annotation(Loggable) || within(@Loggable *)"
-            + " || execution(@(@Loggable *) * *(..)) || within (@(@Loggable *) *)"
-            + " || execution(@(@(@Loggable *) *) * *(..)) || within (@(@(@Loggable *) *) *)"
-            + " || execution(@(@(@(@Loggable *) *) *) * *(..)) || within (@(@(@(@Loggable *) *) *) *)"
-            + " || execution(@(@(@(@(@Loggable *) *) *) *) * *(..)) || within (@(@(@(@(@Loggable *) *) *) *) *)"
-            + " || execution(@(@(@(@(@(@Loggable *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@Loggable *) *) *) *) *) *)"
-            + " || execution(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *)"
-            + " || execution(@(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *) *)")
+  @Pointcut("""
+      @annotation(Loggable) || within(@Loggable *)\
+      || execution(@(@Loggable *) * *(..)) || within (@(@Loggable *) *)\
+      || execution(@(@(@Loggable *) *) * *(..)) || within (@(@(@Loggable *) *) *)\
+      || execution(@(@(@(@Loggable *) *) *) * *(..)) || within (@(@(@(@Loggable *) *) *) *)\
+      || execution(@(@(@(@(@Loggable *) *) *) *) * *(..)) || within (@(@(@(@(@Loggable *) *) *) *) *)\
+      || execution(@(@(@(@(@(@Loggable *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@Loggable *) *) *) *) *) *)\
+      || execution(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *)\
+      || execution(@(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *) * *(..)) || within (@(@(@(@(@(@(@(@Loggable *) *) *) *) *) *) *) *)""")
   void pointcut() {
   }
 

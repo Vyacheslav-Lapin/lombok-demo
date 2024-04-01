@@ -6,12 +6,12 @@
           https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.3</version>
-<!--    <groupId>org.springframework.cloud</groupId>-->
-<!--    <artifactId>spring-cloud-starter-parent</artifactId>-->
-<!--    <version>2023.0.0</version>-->
+<!--    <groupId>org.springframework.boot</groupId>-->
+<!--    <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--    <version>3.2.4</version>-->
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-parent</artifactId>
+    <version>2023.0.1</version>
   </parent>
 
   <groupId>ru.vlapin.demo</groupId>
@@ -28,8 +28,8 @@
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-boot.version>3.2.3</spring-boot.version>
-    <spring-cloud.version>2023.0.0</spring-cloud.version>
+    <spring-boot.version>3.2.4</spring-boot.version>
+    <spring-cloud.version>2023.0.1</spring-cloud.version>
     <!--endregion-->
 
     <!--region Libs-->
@@ -68,13 +68,13 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.springframework.cloud</groupId>-->
+<!--        <artifactId>spring-cloud-dependencies</artifactId>-->
+<!--        <version>${spring-cloud.version}</version>-->
+<!--        <type>pom</type>-->
+<!--        <scope>import</scope>-->
+<!--      </dependency>-->
 
       <dependency>
         <groupId>io.vavr</groupId>
