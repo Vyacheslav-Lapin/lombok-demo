@@ -1,5 +1,8 @@
 package ru.vlapin.demo.lombokdemo.controller;
 
+import static org.springframework.http.ResponseEntity.*;
+
+import java.util.List;
 import lombok.SneakyThrows;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.Contract;
@@ -11,10 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vlapin.demo.lombokdemo.model.ConferenceUser;
-
-import java.util.List;
-
-import static org.springframework.http.ResponseEntity.*;
 
 /**
  * ConferenceController.
@@ -29,7 +28,7 @@ public class ConferenceController {
 
   @NotNull
   @Contract(pure = true)
-  @GetMapping("/about")
+  @GetMapping(path = "/about", params = "id")
   public ResponseEntity<@NotNull String> getAbout() {
     return ok(aboutConference);
   }

@@ -1,16 +1,20 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import io.vavr.*;
-import lombok.SneakyThrows;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-import lombok.val;
-import org.springframework.core.annotation.AnnotatedElementUtils;
+import static java.lang.reflect.Modifier.*;
+import static java.util.Spliterator.*;
 
+import io.vavr.CheckedFunction0;
+import io.vavr.CheckedFunction1;
+import io.vavr.CheckedFunction2;
+import io.vavr.Function2;
+import io.vavr.Function3;
+import java.beans.ConstructorProperties;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -18,9 +22,11 @@ import java.util.Optional;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import static java.lang.reflect.Modifier.*;
-import static java.util.Spliterator.*;
+import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
+import lombok.val;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 @UtilityClass
 @SuppressWarnings("unused")
@@ -130,5 +136,20 @@ public class ReflectionUtils {
     return (file.isDirectory() && fileName.contains(".") ?
                 GET_CLASS_FROM_DIR.apply(file) : GET_CLASS_FROM_FILE)
         .apply(packageName, fileName);
+  }
+
+  public Stream<String> paramNames(Executable executable) {
+    val nativeParams = executable.getParameters();
+
+    if (executable instanceof Constructor<?>
+        && executable.isAnnotationPresent(ConstructorProperties.class)
+        && nativeParams.length >= 1
+        && nativeParams[0].getName().startsWith("arg")) {
+      val argumentNames = executable.getAnnotation(ConstructorProperties.class)
+                                    .value();
+      if (argumentNames.length == nativeParams.length)
+        return argumentNames.stream();
+    }
+    return nativeParams.stream().map(Parameter::getName);
   }
 }

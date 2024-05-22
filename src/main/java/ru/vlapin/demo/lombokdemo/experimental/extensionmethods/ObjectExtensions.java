@@ -14,7 +14,7 @@ public class ObjectExtensions {
   }
 
   @Contract(pure = true)
-  public <T> T orIfNull(@Nullable T that, Supplier<T> ifNull) {
+  public <T> T orIfNull(@Nullable T that, Supplier<? extends T> ifNull) {
     return that == null ? ifNull.get() : that;
   }
 }

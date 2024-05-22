@@ -1,14 +1,12 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
+import static java.util.Comparator.*;
+
 import io.vavr.CheckedFunction1;
 import io.vavr.Function1;
 import io.vavr.control.Option;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.StandardException;
-import lombok.experimental.UtilityClass;
-import lombok.val;
-import org.springframework.core.annotation.AnnotatedElementUtils;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Constructor;
@@ -17,10 +15,11 @@ import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.function.UnaryOperator;
-
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
-import static java.util.Comparator.*;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.StandardException;
+import lombok.experimental.UtilityClass;
+import lombok.val;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 @UtilityClass
 @ExtensionMethod({
@@ -64,7 +63,7 @@ public class PropertiesUtils {
     val properties = new Properties();
     "%s.properties"
         .formatted(propertiesFileName)
-        .withFileInputStream(properties::load);
+        .withFileInputStreamChecked(properties::load);
     return properties::getProperty;
   }
 
