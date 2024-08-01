@@ -15,3 +15,5 @@ logging:
     web: trace
 #    org.springframework.web: trace
 #    org.apache: trace
+
+my-properties:

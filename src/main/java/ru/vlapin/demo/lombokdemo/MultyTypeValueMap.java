@@ -7,8 +7,8 @@ import lombok.experimental.Delegate;
 
 interface MultiTypeValueMapKey<T> {
 
+  @SuppressWarnings("unchecked")
   default Optional<T> get(MultyTypeValueMap<MultiTypeValueMapKey<T>> map) {
-    //noinspection unchecked
     return Optional.ofNullable((T) map.get(this));
   }
 }

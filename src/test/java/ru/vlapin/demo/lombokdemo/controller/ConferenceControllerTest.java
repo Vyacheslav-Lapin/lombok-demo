@@ -158,6 +158,5 @@ class ConferenceControllerTest {
             .content("Lorem ipsum dolor sit amet")
             .with(csrf()))
         .andExpect(status().isUnauthorized());
-
   }
 }

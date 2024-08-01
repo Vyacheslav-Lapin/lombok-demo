@@ -1,10 +1,6 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import lombok.Cleanup;
-import lombok.SneakyThrows;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-import org.jetbrains.annotations.Contract;
+import static java.nio.file.StandardOpenOption.*;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -13,14 +9,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.nio.file.StandardOpenOption.*;
+import lombok.Cleanup;
+import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
+import lombok.val;
+import org.jetbrains.annotations.Contract;
 
 @UtilityClass
-@ExtensionMethod({
-    Files.class,
-})
+@ExtensionMethod(value = Files.class,
+                 suppressBaseMethods = false)
 public class FileUtils {
 
   @SneakyThrows
@@ -29,8 +27,7 @@ public class FileUtils {
     return Optional.ofNullable(
             FileUtils.class.getResource(adoptFileName(fileName)))
                .map(URL::getFile)
-               .map(s -> s.charAt(2) == ':' ? s.substring(1)
-                             : s) // for windows usage only - there we have addresses like "/c:/dir/1.txt" and need to cut first char for correct work
+               .map(s -> s.charAt(2) == ':' ? s.substring(1) : s) // for windows usage only - there we have addresses like "/c:/dir/1.md" and need to cut first char for correct work
                .map(Paths::get);
   }
 
@@ -52,18 +49,18 @@ public class FileUtils {
   }
 
   public String adoptFileName(String fileName) {
-    return fileName.startsWith("/") ? fileName : "/" + fileName;
+    return fileName.startsWith("/") ? fileName : "/%s".formatted(fileName);
   }
 
   @SneakyThrows
   public String getFileAsString(Path file) {
-    @Cleanup Stream<String> stringStream = file.lines();
+    @Cleanup val stringStream = file.lines();
     return stringStream.collect(Collectors.joining());
   }
 
   @SneakyThrows
   public String getFileAsString(Path file, String delimiter) {
-    @Cleanup Stream<String> stringStream = file.lines();
+    @Cleanup val stringStream = file.lines();
     return stringStream.collect(Collectors.joining(delimiter));
   }
 

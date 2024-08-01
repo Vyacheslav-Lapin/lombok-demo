@@ -19,10 +19,11 @@ import lombok.val;
 import ru.vlapin.demo.lombokdemo.common.FileUtils;
 import ru.vlapin.demo.lombokdemo.common.PropertiesUtils;
 
-@ExtensionMethod({
-    FileUtils.class,
-    PropertiesUtils.class,
-})
+@ExtensionMethod(suppressBaseMethods = false,
+                 value = {
+                     FileUtils.class,
+                     PropertiesUtils.class,
+                 })
 public class ConnectionPool implements Closeable, Supplier<Connection> {
 
   private static final Map<String, ConnectionPool> instances = new HashMap<>();

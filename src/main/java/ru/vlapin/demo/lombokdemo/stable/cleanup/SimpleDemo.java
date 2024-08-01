@@ -29,8 +29,9 @@ public interface SimpleDemo {
 
     //noinspection SqlResolve
     statement.executeUpdate("""
-        -- noinspection SqlResolve @ table/"student"
-        insert into student (name, group_id) values ('Вася Пупкин', 123456), ('Федя Прокопов', 654321)""");
+        insert into student (name, group_id)
+        values ('Вася Пупкин', 123456),
+               ('Федя Прокопов', 654321)""");
 
     @Cleanup val resultSet = statement.executeQuery("""
         -- noinspection SqlResolve
@@ -39,9 +40,9 @@ public interface SimpleDemo {
     while (resultSet.next())
       System.out.println(
           Student.builder()
-              .id(resultSet.getLong(id))
-              .name(resultSet.getString(name))
-              .groupId(resultSet.getInt(groupId)).build());
+              .id(resultSet.getLong(ID))
+              .name(resultSet.getString(NAME))
+              .groupId(resultSet.getInt(GROUP_ID)).build());
   }
 }
 

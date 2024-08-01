@@ -233,56 +233,56 @@ class MedicalRecord {
    * Уникальный идентификатор записи
    */
   @Getter(lazy = true)
-  int id = GET_INT.apply(jsonObject, Fields.id);
+  int id = GET_INT.apply(jsonObject, Fields.ID);
 
   /**
    * Временная метка создания записи (в UTC в миллисекундах)
    */
   @Getter(lazy = true)
-  long timestamp = GET_LONG.apply(jsonObject, Fields.timestamp);
+  long timestamp = GET_LONG.apply(jsonObject, Fields.TIMESTAMP);
 
   /**
    * Идентификатор пользователя, для которого была записана транзакция
    */
   @Getter(lazy = true)
-  int userId = GET_INT.apply(jsonObject, Fields.userId);
+  int userId = GET_INT.apply(jsonObject, Fields.USER_ID);
 
   /**
    * Имя пациента, для которого была зарегистрирована транзакция
    */
   @Getter(lazy = true)
-  String userName = GET_STRING.apply(jsonObject, Fields.userName);
+  String userName = GET_STRING.apply(jsonObject, Fields.USER_NAME);
 
   /**
    * Дата рождения пользователя в формате DD-MM-YYYY
    */
   @Getter(lazy = true)
-  LocalDate userDob = GET_STRING.apply(jsonObject, Fields.userDob)
+  LocalDate userDob = GET_STRING.apply(jsonObject, Fields.USER_DOB)
                                 .parse(DATE_FORMATTER);
 
   /**
    * Показатели жизнедеятельности пользователя
    */
   @Getter(lazy = true)
-  Vitals vitals = new Vitals(GET_OBJECT.apply(jsonObject, Fields.vitals));
+  Vitals vitals = new Vitals(GET_OBJECT.apply(jsonObject, Fields.VITALS));
 
   /**
    * Диагноз пользователя
    */
   @Getter(lazy = true)
-  Diagnosis diagnosis = new Diagnosis(GET_OBJECT.apply(jsonObject, Fields.diagnosis));
+  Diagnosis diagnosis = new Diagnosis(GET_OBJECT.apply(jsonObject, Fields.DIAGNOSIS));
 
   /**
    * Врач, диагностировавший состояние
    */
   @Getter(lazy = true)
-  Doctor doctor = new Doctor(GET_OBJECT.apply(jsonObject, Fields.doctor));
+  Doctor doctor = new Doctor(GET_OBJECT.apply(jsonObject, Fields.DOCTOR));
 
   /**
    * Метаинформация о пользователе
    */
   @Getter(lazy = true)
-  Meta meta = new Meta(GET_OBJECT.apply(jsonObject, Fields.meta));
+  Meta meta = new Meta(GET_OBJECT.apply(jsonObject, Fields.META));
 }
 
 @RequiredArgsConstructor
@@ -297,31 +297,31 @@ class Vitals {
    * Показания диастолического давления пользователя, мм рт. ст.
    */
   @Getter(lazy = true)
-  int bloodPressureDiastole = GET_INT.apply(jsonObject, Fields.bloodPressureDiastole);
+  int bloodPressureDiastole = GET_INT.apply(jsonObject, Fields.BLOOD_PRESSURE_DIASTOLE);
 
   /**
    * Показания систолического давления пользователя, мм рт. ст.
    */
   @Getter(lazy = true)
-  int bloodPressureSystole = GET_INT.apply(jsonObject, Fields.bloodPressureSystole);
+  int bloodPressureSystole = GET_INT.apply(jsonObject, Fields.BLOOD_PRESSURE_SYSTOLE);
 
   /**
    * Частота пульса пользователя, ударов в минуту
    */
   @Getter(lazy = true)
-  int pulse = GET_INT.apply(jsonObject, Fields.pulse);
+  int pulse = GET_INT.apply(jsonObject, Fields.PULSE);
 
   /**
    * Частота дыхания пользователя, вдохов в минуту
    */
   @Getter(lazy = true)
-  int breathingRate = GET_INT.apply(jsonObject, Fields.breathingRate);
+  int breathingRate = GET_INT.apply(jsonObject, Fields.BREATHING_RATE);
 
   /**
    * Температура тела пользователя, градусы по Фаренгейту
    */
   @Getter(lazy = true)
-  int bodyTemperature = GET_INT.apply(jsonObject, Fields.bodyTemperature);
+  int bodyTemperature = GET_INT.apply(jsonObject, Fields.BODY_TEMPERATURE);
 }
 
 @RequiredArgsConstructor
@@ -336,19 +336,19 @@ class Diagnosis {
    * Идентификатор диагностируемого состояния
    */
   @Getter(lazy = true)
-  int id = GET_INT.apply(jsonObject, Fields.id);
+  int id = GET_INT.apply(jsonObject, Fields.ID);
 
   /**
    * Название диагностируемого состояния
    */
   @Getter(lazy = true)
-  String name = GET_STRING.apply(jsonObject, Fields.name);
+  String name = GET_STRING.apply(jsonObject, Fields.NAME);
 
   /**
    * Степень тяжести диагностированного состояния
    */
   @Getter(lazy = true)
-  int severity = GET_INT.apply(jsonObject, Fields.severity);
+  int severity = GET_INT.apply(jsonObject, Fields.SEVERITY);
 }
 
 @RequiredArgsConstructor
@@ -363,13 +363,13 @@ class Doctor {
    * Идентификатор врача, диагностировавшего состояние
    */
   @Getter(lazy = true)
-  int id = GET_INT.apply(jsonObject, Fields.id);
+  int id = GET_INT.apply(jsonObject, Fields.ID);
 
   /**
    * Имя врача, диагностировавшего заболевание
    */
   @Getter(lazy = true)
-  String name = GET_STRING.apply(jsonObject, Fields.name);
+  String name = GET_STRING.apply(jsonObject, Fields.NAME);
 }
 
 @RequiredArgsConstructor
@@ -384,11 +384,11 @@ class Meta {
    * Текущий рост пользователя, в сантиметрах
    */
   @Getter(lazy = true)
-  int height = GET_INT.apply(jsonObject, Fields.height);
+  int height = GET_INT.apply(jsonObject, Fields.HEIGHT);
 
   /**
    * Текущий вес пользователя, фунты
    */
   @Getter(lazy = true)
-  int weight = GET_INT.apply(jsonObject, Fields.weight);
+  int weight = GET_INT.apply(jsonObject, Fields.WEIGHT);
 }

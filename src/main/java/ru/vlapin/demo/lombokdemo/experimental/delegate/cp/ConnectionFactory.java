@@ -25,9 +25,10 @@ import ru.vlapin.demo.lombokdemo.common.PropertiesUtils.InitProperties;
 @Value
 @Getter(NONE)
 @InitProperties("db")
-@ExtensionMethod({
-    Function3Utils.class,
-})
+@ExtensionMethod(suppressBaseMethods = false,
+                 value = {
+                     Function3Utils.class,
+                 })
 public class ConnectionFactory implements Supplier<Stream<Connection>> {
 
   String url;

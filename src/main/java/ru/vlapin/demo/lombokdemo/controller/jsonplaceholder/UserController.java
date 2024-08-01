@@ -12,13 +12,12 @@ import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 import java.util.List;
 import java.util.Objects;
 
-@ExtensionMethod({
-        Objects.class,
-})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/users")
 @SuppressWarnings("java:S2259")
+@ExtensionMethod(value = Objects.class,
+                 suppressBaseMethods = false)
 public class UserController {
 
   UserApiClient client;
@@ -26,14 +25,14 @@ public class UserController {
   @GetMapping
   public List<User> all() {
     return client.users()
-            .getBody()
-            .requireNonNull();
+                 .getBody()
+                 .requireNonNull();
   }
 
   @GetMapping("{id}")
   public User byId(@PathVariable Integer id) {
     return client.pickUser(id)
-            .getBody()
-            .requireNonNull();
+                 .getBody()
+                 .requireNonNull();
   }
 }

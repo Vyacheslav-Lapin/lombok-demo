@@ -1,12 +1,11 @@
 package ru.vlapin.demo.lombokdemo.stable.constructors;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * RacDemo2Test.
@@ -24,6 +23,6 @@ class RacDemo2Test {
     assertThat(racDemo)
         // then
         .extracting("x", "s", "b")
-        .contains(0, "lorem", true);
+        .contains(null, "lorem", true);
   }
 }

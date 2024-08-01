@@ -11,11 +11,11 @@ import lombok.experimental.NonFinal;
 @RequiredArgsConstructor
 public class RacDemo2 {
 
-  @NonFinal int x;
+  @NonFinal Integer x;
 
   String s;
 
-  @NonNull @NonFinal boolean b;
+  @NonNull @NonFinal Boolean b;
 
 //public RacDemo2(final String s,
 //                @NonNull final boolean b) {
