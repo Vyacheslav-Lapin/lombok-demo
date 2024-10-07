@@ -21,8 +21,8 @@ class CpDemoTests {
   @DisplayName("Constructor param names looses without '-parameters' compiler flag")
   void constructorParamNamesLoosesWithoutParametersCompilerFlagTest() {
 
-    // Note! The test will fail if the compiler receives the -parameters flag - in
-    // this case the parameter names are stored in byte-code. Spring Boot project
+    // Note! The test will fail if the compiler receives the "-parameters" flag - in
+    // this case, the parameter names are stored in byte-code. Spring Boot project
     // usually sets this flag, so if the Spring Boot project is a standard project,
     // the test will not work out of the box. To make it work in a Spring Boot
     // project, you need to explicitly set the maven.compiler.parameters property

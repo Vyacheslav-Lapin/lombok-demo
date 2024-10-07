@@ -10,6 +10,9 @@ maven:
     showWarnings: true
     fork: true
 
+    # https://dzone.com/articles/using-lombok-library-witk-jdk-23
+    proc: full
+
     # Unfortunately, unlike Maven, IDEA doesn't hook this property from the YAML file, so it has to be explicitly set in the POM...
 #    parameters: false
 

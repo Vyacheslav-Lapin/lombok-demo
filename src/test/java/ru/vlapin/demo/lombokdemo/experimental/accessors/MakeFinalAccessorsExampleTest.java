@@ -29,6 +29,7 @@ class MakeFinalAccessorsExampleTest {
     // when
     assertThat(methods)
         // then
+        .isNotNull()
         .isNotEmpty()
         .extracting(Method::getModifiers)
         .allMatch(Modifier::isFinal);

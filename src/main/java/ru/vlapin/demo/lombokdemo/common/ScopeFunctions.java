@@ -3,11 +3,11 @@ package ru.vlapin.demo.lombokdemo.common;
 import io.vavr.CheckedConsumer;
 import io.vavr.CheckedFunction0;
 import io.vavr.CheckedFunction1;
+import io.vavr.CheckedFunction2;
 import io.vavr.CheckedPredicate;
 import java.util.Objects;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 @UtilityClass
@@ -15,49 +15,53 @@ import org.checkerframework.checker.nullness.qual.Nullable;
                  suppressBaseMethods = false)
 public class ScopeFunctions {
 
-  public <T> void with(@NonNull T self,
-                       @NonNull CheckedConsumer<@NonNull ? super T> checkedConsumer) {
+  public <T> void with(T self,
+                       CheckedConsumer<? super T> checkedConsumer) {
     checkedConsumer.unchecked().accept(self);
   }
 
-  public <T> T peakWith(@NonNull T self,
-                        @NonNull CheckedConsumer<@NonNull ? super T> checkedConsumer) {
+  public <T> T peakWith(T self,
+                        CheckedConsumer<? super T> checkedConsumer) {
     with(self, checkedConsumer);
     return self;
   }
 
-  public <T, R> R mapWith(@NonNull T self,
-                          @NonNull CheckedFunction1<@NonNull ? super T, @NonNull ? extends R> mapper) {
+  public <T, R> R mapWith(T self,
+                          CheckedFunction1<? super T, ? extends R> mapper) {
     return mapper.unchecked().apply(self);
   }
 
-  public <T, R> R mapWithIfOrElse(@NonNull T self,
-                                  @NonNull CheckedPredicate<@NonNull ? super T> condition,
-                                  @NonNull CheckedFunction1<@NonNull ? super T, @NonNull ? extends R> mapperIfTrue,
-                                  @NonNull CheckedFunction1<@NonNull ? super T, @NonNull ? extends R> mapperIfFalse) {
+  public <T, U> T doWithIfNotNull(T self,
+                                  @Nullable U operand,
+                                  CheckedFunction2<? super T, ? super U, ? extends T> mapper) {
+    return operand.isNull() ? self : mapper.unchecked().apply(self, operand);
+  }
+
+  public <T, R> R mapWithIfOrElse(T self,
+                                  CheckedPredicate<? super T> condition,
+                                  CheckedFunction1<? super T, ? extends R> mapperIfTrue,
+                                  CheckedFunction1<? super T, ? extends R> mapperIfFalse) {
     return mapWith(self,
         condition.unchecked().test(self) ?
             mapperIfTrue
             : mapperIfFalse);
   }
 
-  @SuppressWarnings("DataFlowIssue")
   public <T> T orIfNull(@Nullable T self,
-                        @NonNull T alternative) {
+                        T alternative) {
     return self.isNull() ? alternative : self;
   }
 
-  @SuppressWarnings("DataFlowIssue")
   public <T> T orIfNull(@Nullable T self,
-                        @NonNull CheckedFunction0<@NonNull ? extends T> alternativeSource) {
+                        CheckedFunction0<? extends T> alternativeSource) {
     return self.isNull() ?
         alternativeSource.unchecked().apply()
         : self;
   }
 
   public <T, U> U mapOrIfNull(@Nullable T self,
-                              @NonNull CheckedFunction1<@NonNull ? super T, @NonNull ? extends U> mapper,
-                              @NonNull CheckedFunction0<@NonNull ? extends U> alternativeSource) {
+                              CheckedFunction1<? super T, ? extends U> mapper,
+                              CheckedFunction0<? extends U> alternativeSource) {
     return self.isNull() ?
         alternativeSource.unchecked().apply()
         : mapper.unchecked().apply(self);

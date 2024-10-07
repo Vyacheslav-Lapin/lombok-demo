@@ -16,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 class TestProcessorTests {
 
   @SneakyThrows
+//  @Disabled
   @org.junit.jupiter.api.Test
   @DisplayName("Test framework works in right order")
   void testFrameworkWorksInRightOrderTest() {

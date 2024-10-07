@@ -16,4 +16,5 @@ logging:
 #    org.springframework.web: trace
 #    org.apache: trace
 
-my-properties:
+server:
+  port: 8091

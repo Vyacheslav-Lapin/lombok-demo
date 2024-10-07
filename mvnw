@@ -279,6 +279,9 @@ fi
 
 WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
+verbose() { :; }
+[ "${MVNW_VERBOSE-}" != true ] || verbose() { printf %s\\n "${1-}"; }
+
 # https://stackoverflow.com/questions/36852819/pipe-out-a-substring-by-removing-the-last-n-characters
 pipe_substr () {
   sed "s/.\{$1\}$//"
@@ -287,14 +290,21 @@ pipe_substr () {
 # concatenates all lines of a file to compliant maven environment variables cli parameters (ignoring comments)
 concat_vars() {
   if [ -f "$1" ]; then
-    echo "-Denv.$(cat $1 | grep -v '^#' | tr -s '\n' '|' | sed 's/|/ -Denv./g' | pipe_substr 7)"
+    echo "-D$(cat "$1" | grep -v '^#' | tr -s '\n' '|' | sed 's/|/ -D/g' | pipe_substr 3)"
   fi
 }
 
-export MAVEN_CONFIG="$(concat_vars "$MAVEN_PROJECTBASEDIR/.mvn/.env") $MAVEN_CONFIG"
+ENV_FILE="$MAVEN_PROJECTBASEDIR/.mvn/.env"
+if [ -s "$ENV_FILE" ]; then
+    ENV_VARIABLES="$(concat_vars "$ENV_FILE") $ENV_VARIABLES"
+    MAVEN_CONFIG=$(echo "$ENV_VARIABLES $MAVEN_CONFIG" | xargs)
+    export MAVEN_CONFIG
+fi
+#verbose "Is $ENV_FILE present and not empty? - $([ -s "$ENV_FILE" ] && echo true || echo false)"
+#verbose "MAVEN_CONFIG = '$MAVEN_CONFIG'"
 
 exec "$JAVACMD" \
   $MAVEN_OPTS \
   -classpath "$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar" \
   "-Dmaven.home=${M2_HOME}" "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
-  ${WRAPPER_LAUNCHER} $MAVEN_CONFIG "$@"
+  ${WRAPPER_LAUNCHER} "$MAVEN_CONFIG" "$@"

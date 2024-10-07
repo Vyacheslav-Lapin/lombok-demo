@@ -3,8 +3,7 @@
  *
  * @author Vyacheslav Lapin
  */
-@DefaultQualifier(NotNull.class)
+@NullMarked
 package ru.vlapin.demo.lombokdemo;
 
-import org.jetbrains.annotations.NotNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
+import org.jspecify.annotations.NullMarked;

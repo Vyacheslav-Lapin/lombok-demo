@@ -1,6 +1,14 @@
 package ru.vlapin.demo.lombokdemo;
 
+import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.*;
+
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.aspectj.lang.annotation.Aspect;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,10 +24,7 @@ import ru.vlapin.demo.lombokdemo.model.Cat;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExampleImpl;
 
-import java.util.stream.Stream;
-
-import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.*;
-
+@Slf4j
 @EnableFeignClients
 @SpringBootApplication
 @ConfigurationPropertiesScan
@@ -28,14 +33,25 @@ import static org.springframework.hateoas.config.EnableHypermediaSupport.Hyperme
 public class LombokDemoApplication {
 
   public static void main(String[] args) {
+    log.info(alphabet());
     SpringApplication.run(LombokDemoApplication.class, args);
   }
 
+  @Contract(pure = true)
+  public static @NotNull String alphabet() {
+    val result = new StringBuilder();
+    IntStream.rangeClosed('A', 'Z')
+             .mapToObj(i -> (char) i)
+             .forEach(result::append);
+    return result.append("\nNow I know the alphabet!").toString();
+  }
+
   @Bean
+  @SuppressWarnings("java:S1190")
   ApplicationRunner runner(CatRepository catRepository) {
     return _ -> Stream.of("Мурзик, Барсик, Матроскин".split(", "))
-                     .map(Cat::new)
-                     .forEach(catRepository::save);
+                      .map(Cat::new)
+                      .forEach(catRepository::save);
   }
 
   @Bean
@@ -43,4 +59,5 @@ public class LombokDemoApplication {
   JavaConfigBasedSetterPropertiesPlaceholderExample mySetterProperties2() {
     return new JavaConfigBasedSetterPropertiesPlaceholderExampleImpl();
   }
+
 }

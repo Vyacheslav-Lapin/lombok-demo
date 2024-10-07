@@ -6,7 +6,6 @@ import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 import java.lang.reflect.Modifier;
 import java.util.function.IntPredicate;
 import lombok.val;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import org.junit.jupiter.api.Test;
 class MakeFinalExample3Test {
 
   @Test
-  @Disabled
+//  @Disabled
   @DisplayName("NonFinal annotation works correctly")
   void nonFinalAnnotationWorksCorrectlyTest() {
     // given
