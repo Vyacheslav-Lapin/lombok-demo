@@ -4,11 +4,14 @@ mail.credentials:
   password: qwerty
 
 spring:
-  jpa.hibernate.ddl-auto: update
+#  docker.compose.skip.in-tests: false
+  jpa:
+    hibernate.ddl-auto: update
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
 #  datasource:
-#    url: jdbc:postgresql://localhost:5432/postgres
-#    password: postgres
-#    username: postgres
+#    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+#    password: ${POSTGRES_PASSWORD:postgres}
+#    username: ${POSTGRES_USER:postgres}
 
 logging:
   level:
@@ -18,3 +21,4 @@ logging:
 
 server:
   port: 8091
+

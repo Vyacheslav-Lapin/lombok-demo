@@ -59,6 +59,11 @@ public class ReflectionUtils {
                                         .unchecked())
                .andThen(Stream::of);
 
+  @SuppressWarnings("unchecked")
+  public <T> Class<T> clazz(T self) {
+    return (Class<T>) self.getClass();
+  }
+
   public <T> CheckedFunction1<? super Class<? extends T>, T> noArgsConstructor() {
     return CheckedFunction1.<Class<? extends T>, Constructor<? extends T>>of(Class::getDeclaredConstructor)
                            .andThen(Constructor::newInstance);
@@ -78,11 +83,12 @@ public class ReflectionUtils {
         .get();
   }
 
-  public <T> Stream<Method> annotatedMethods(Class<? extends T> testExampleClass, Class<? extends Annotation> annotationClass) {
+  public <T> Stream<Method> annotatedMethods(Class<? extends T> testExampleClass,
+                                             Class<? extends Annotation> annotationClass) {
     return testExampleClass.getDeclaredMethods().stream()
                            .filter(method -> !method.isSynthetic())
                            .filter(method -> !isStatic(method.getModifiers()))
-//            .filter(method -> method.isAnnotationPresent(annotationClass))
+                           //.filter(method -> method.isAnnotationPresent(annotationClass))
                            .filter(method -> method.isAnnotated(annotationClass));
   }
 
