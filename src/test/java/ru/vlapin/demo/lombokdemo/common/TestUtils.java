@@ -1,7 +1,20 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import static org.junit.jupiter.api.DisplayNameGenerator.*;
+
 import io.vavr.CheckedFunction2;
 import io.vavr.CheckedFunction3;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Executable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
@@ -10,28 +23,15 @@ import lombok.val;
 import org.jetbrains.annotations.Contract;
 import org.junit.jupiter.api.DisplayNameGenerator;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.lang.reflect.Executable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.IntPredicate;
-import java.util.function.Predicate;
-
-import static org.junit.jupiter.api.DisplayNameGenerator.*;
-
 @SuppressWarnings("unused")
 
 @UtilityClass
-@ExtensionMethod({
-    PredicateUtils.class,
-})
+@ExtensionMethod(value = PredicateUtils.class, suppressBaseMethods =false)
 public class TestUtils {
 
   public final String LINE_SEPARATOR = System.lineSeparator();
   public final String TEST_RESOURCES_PATH = "./src/test/resources/";
+  public final String TEST_GENERATED_RESOURCES_PATH = "./target/generated-sources/openapi";
 
   @Contract(pure = true)
   private String fromPrintStream(Consumer<? super PrintStream> printStreamConsumer) {
@@ -58,6 +58,11 @@ public class TestUtils {
     return s.endsWith(LINE_SEPARATOR) ?
         s.substring(0, s.length() - LINE_SEPARATOR.length()) :
         s;
+  }
+
+  @SneakyThrows
+  public void toGeneratedSource(String fileName, String content) {
+    Files.writeString(Paths.get(TEST_GENERATED_RESOURCES_PATH, fileName), content);
   }
 
   @Contract(pure = true)
@@ -111,9 +116,7 @@ public class TestUtils {
         .compose(declaredMethodGet(methodName));
   }
 
-  @ExtensionMethod({
-      CharSequenceUtil.class,
-  })
+  @ExtensionMethod(value = CharSequenceUtil.class, suppressBaseMethods = false)
   public class ReplaceCamelCase extends DisplayNameGenerator.Standard {
     @Override
     public String generateDisplayNameForClass(Class<?> testClass) {

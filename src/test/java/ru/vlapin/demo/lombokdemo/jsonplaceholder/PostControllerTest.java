@@ -1,6 +1,8 @@
 package ru.vlapin.demo.lombokdemo.jsonplaceholder;
 
-import static ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.PostAssert.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.InstanceOfAssertFactories.*;
+import static ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.PostAssert.assertThat;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import pro.vlapin.experiments.jsonplacaholder.client.model.Post;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.PostApiClient;
 
 @SpringBootTest
@@ -24,8 +27,7 @@ class PostControllerTest {
   @Container
   @ServiceConnection
   @SuppressWarnings("unused")
-  static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest");
+  static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest");
 
   private static final int ID = 57;
   private static final int USER_ID = 6;
@@ -43,16 +45,15 @@ class PostControllerTest {
   @DisplayName("Get method works correctly")
   void get() {
     Assertions.assertThat(postsApiClient.posts(null)).isNotNull()
-            .extracting(HttpEntity::getBody).asList()
-            .isNotEmpty()
-            .hasSize(100);
+              .extracting(HttpEntity::getBody, as(list(Post.class)))
+              .isNotEmpty()
+              .hasSize(100);
   }
 
   @Test
   @Tag("integration")
   @DisplayName("Get one post method works correctly")
   void getOnePostMethodWorksCorrectlyTest() {
-    //noinspection DataFlowIssue
     assertThat(postsApiClient.pickPost(ID).getBody()).isNotNull()
             .hasId(ID)
             .hasTitle(TITLE)

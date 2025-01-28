@@ -10,9 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -30,16 +28,16 @@ class CatTest {
   static PostgreSQLContainer<?> postgreSQLContainer =
       new PostgreSQLContainer<>("postgres:latest");
 
-  MockMvc mockMvc;
+  MockMvcTester mockMvcTester;
 
   @Test
   @SneakyThrows
   @DisplayName("Cats is accessible via REST")
   void catsIsAccessibleViaRestTest() {
-    mockMvc.perform(MockMvcRequestBuilders.get("/cats"))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.page.totalElements").isNumber())
-        .andExpect(MockMvcResultMatchers.jsonPath("$.page.totalElements").value(3));
+    mockMvcTester.get().uri("/cats").assertThat()
+                 .hasStatusOk()
+                 .hasContentType(MediaTypes.HAL_JSON_VALUE)
+                 .bodyJson()
+                 .extractingPath("$.page.totalElements").convertTo(int.class).isEqualTo(3);
   }
 }

@@ -79,7 +79,6 @@ openapi.generator.maven.plugin:
 
   configurationFile: ${project.basedir}/openapi-config.json
 
-
 # https://github.com/assertj/assertj-assertions-generator-maven-plugin
 assertj:
   generate.JUnitSoftAssertions: false

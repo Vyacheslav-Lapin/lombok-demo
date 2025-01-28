@@ -29,6 +29,8 @@ public class SpringSecurityConfig {
             .requestMatchers("/testExceptionHandler").permitAll()
             .requestMatchers("/makeNPE").permitAll()
             .requestMatchers("/api/*").permitAll()
+            .requestMatchers(GET, "/v3/api-docs").permitAll()
+            .requestMatchers(GET, "/v3/api-docs.yaml").permitAll()
             .requestMatchers(POST,"/about").hasRole("ADMIN")
             .requestMatchers("/card").permitAll()
             .requestMatchers("/submissions").hasRole("SPEAKER")

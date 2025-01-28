@@ -1,4 +1,4 @@
-package ru.vlapin.demo.lombokdemo.stable.builder;
+package ru.vlapin.demo.lombokdemo.stable.builder.builder_default;
 
 import lombok.Builder;
 import lombok.experimental.FieldDefaults;
@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(makeFinal = true)
 //@AllArgsConstructor(access = PACKAGE)
 @SuppressWarnings({"java:S125", "CommentedOutCode"})
-public class BuilderDefaultSimpleDemo {
+public class BuilderDefaultDemo {
 
   @Builder.Default int x = 7; // int x;
 //  int x; // @Builder.Default int x = 7;
@@ -17,22 +17,22 @@ public class BuilderDefaultSimpleDemo {
 //  @ToString
 //  @FieldDefaults(level = PRIVATE)
 //  @NoArgsConstructor(access = PACKAGE)
-//  public static class BuilderDefaultSimpleDemoBuilder {
+//  public static class BuilderDefaultDemoBuilder {
 //    @ToString.Exclude boolean x$set;
 //    int x$value;
 
-//    public BuilderDefaultSimpleDemoBuilder x(final int x) {
+//    public BuilderDefaultDemoBuilder x(final int x) {
 //      x$value = x;
 //      x$set = true;
 //      return this;
 //    }
 
-//    public BuilderDefaultSimpleDemo build() {
-//      return new BuilderDefaultSimpleDemo(!x$set ? $default$x() : this.x$value);
+//    public BuilderDefaultDemo build() {
+//      return new BuilderDefaultDemo(!x$set ? $default$x() : this.x$value);
 //    }
 //  }
 
-//  public static BuilderDefaultSimpleDemoBuilder builder() {
-//    return new BuilderDefaultSimpleDemoBuilder();
+//  public static BuilderDefaultDemoBuilder builder() {
+//    return new BuilderDefaultDemoBuilder();
 //  }
 }

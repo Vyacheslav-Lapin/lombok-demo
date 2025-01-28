@@ -1,4 +1,4 @@
-package ru.vlapin.demo.lombokdemo.stable.builder;
+package ru.vlapin.demo.lombokdemo.stable.builder.builder_default;
 
 import java.util.stream.IntStream;
 

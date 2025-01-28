@@ -181,4 +181,12 @@ public class ReflectionUtils {
             Array.of(additionalInterfaces).append(mainInterface).toJavaArray(Class<?>[]::new),
             (proxy, method, args) -> invocationHandler.apply((T) proxy, method, args));
   }
+
+  @SuppressWarnings("unchecked")
+  public <T> Class<T> declaredClass(Class<?> self, String className) {
+    return (Class<T>) Arrays.stream(self.getDeclaredClasses())
+                            .filter(clazz -> clazz.getName().equals("%s$%s".formatted(self.getName(), className)))
+                            .findFirst()
+                            .orElseThrow();
+  }
 }

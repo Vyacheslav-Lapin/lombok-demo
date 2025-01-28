@@ -13,12 +13,9 @@ spring:
 #    password: ${POSTGRES_PASSWORD:postgres}
 #    username: ${POSTGRES_USER:postgres}
 
-logging:
-  level:
-    web: trace
-#    org.springframework.web: trace
-#    org.apache: trace
+#logging.level:
+#  web: trace
+#  org.springframework.web: trace
+#  org.apache: trace
 
-server:
-  port: 8091
-
+server.port: 8091
