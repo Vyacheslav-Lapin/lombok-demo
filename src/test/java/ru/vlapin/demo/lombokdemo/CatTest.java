@@ -38,6 +38,9 @@ class CatTest {
                  .hasStatusOk()
                  .hasContentType(MediaTypes.HAL_JSON_VALUE)
                  .bodyJson()
-                 .extractingPath("$.page.totalElements").convertTo(int.class).isEqualTo(3);
+                 .hasPathSatisfying("$.page.totalElements", provider ->
+                     provider.assertThat().convertTo(int.class).isEqualTo(3))
+                 .hasPathSatisfying("$.page.totalElements", provider ->
+                     provider.assertThat().convertTo(int.class).isEqualTo(3));
   }
 }
