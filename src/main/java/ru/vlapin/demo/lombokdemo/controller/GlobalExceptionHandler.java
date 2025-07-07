@@ -1,6 +1,7 @@
 package ru.vlapin.demo.lombokdemo.controller;
 
-import io.vavr.Tuple;
+import static io.vavr.API.*;
+
 import io.vavr.Tuple2;
 import io.vavr.control.Either;
 import jakarta.validation.ConstraintViolation;
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 import lombok.Builder;
 import lombok.Singular;
 import lombok.val;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,20 +45,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   protected ResponseEntity<Object> handleHandlerMethodValidationException(
       HandlerMethodValidationException ex,
-      HttpHeaders __, HttpStatusCode ___, WebRequest ____) {
+      @NotNull HttpHeaders __, @NotNull HttpStatusCode ___, @NotNull WebRequest ____) {
 
     Function<ParameterValidationResult, Either<Stream<MessageSourceResolvable>, Stream<FieldError>>> mapper =
         parameterValidationResult -> parameterValidationResult instanceof ParameterErrors parameterErrors ?
             Either.right(parameterErrors.getFieldErrors().stream())
             : Either.left(parameterValidationResult.getResolvableErrors().stream());
 
-    val errors = ex.getAllValidationResults().stream()
+    val errors = ex.getParameterValidationResults().stream()
                    .flatMap(parameterValidationResult ->
                        mapper.apply(parameterValidationResult)
                              .map(fieldErrors -> fieldErrors.map(fieldError ->
-                                 Tuple.of(fieldError.getField(), fieldError.getDefaultMessage())))
+                                 Tuple(fieldError.getField(), fieldError.getDefaultMessage())))
                              .getOrElseGet(messageSourceResolvables -> messageSourceResolvables.map(messageSourceResolvable ->
-                                 Tuple.of(parameterValidationResult.getMethodParameter().getParameterName(),
+                                 Tuple(parameterValidationResult.getMethodParameter().getParameterName(),
                                      messageSourceResolvable.getDefaultMessage()))))
                    .collect(Collectors.toMap(Tuple2::_1, Tuple2::_2));
 
@@ -70,6 +72,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   private record ErrorDetails(
       String message,
       @Singular Map<String, String> details) {
-
   }
 }

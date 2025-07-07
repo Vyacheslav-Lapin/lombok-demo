@@ -25,8 +25,11 @@ public sealed interface AnnotationBasedSetterPropertiesPlaceholderExample {
  * - need for PUBLIC setters
  * - so, you have to extract other methods to separate interface and use it by reference
  */
+@SuppressWarnings("unused")
+
 @Data
 @Validated
+//@Setter(PRIVATE)
 @ConfigurationProperties("my-properties")
 final class AnnotationBasedSetterPropertiesPlaceholderExampleImpl
     implements AnnotationBasedSetterPropertiesPlaceholderExample {

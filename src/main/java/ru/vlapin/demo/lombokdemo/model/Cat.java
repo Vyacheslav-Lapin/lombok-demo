@@ -1,28 +1,32 @@
 package ru.vlapin.demo.lombokdemo.model;
 
-import jakarta.persistence.*;
+import static ru.vlapin.demo.lombokdemo.common.HibernateUtils.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Version;
+import java.util.Objects;
+import java.util.UUID;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.ToString.Include;
 import lombok.experimental.ExtensionMethod;
 import ru.vlapin.demo.lombokdemo.common.HibernateUtils;
 
-import java.util.Objects;
-import java.util.UUID;
-
-import static ru.vlapin.demo.lombokdemo.common.HibernateUtils.*;
-
 @SuppressWarnings({
-    "JpaObjectClassSignatureInspection",
-    "com.haulmont.jpb.LombokDataInspection",
     "java:S2097",
+    "JpaObjectClassSignatureInspection",
+    "com.intellij.jpb.LombokDataInspection",
+    "com.haulmont.jpb.LombokDataInspection",
+    "com.haulmont.ampjpb.LombokDataInspection",
 })
 
 @Data
 @Entity
-@ExtensionMethod({
-    HibernateUtils.class,
-})
+@ExtensionMethod(suppressBaseMethods = false,
+                 value = HibernateUtils.class)
 public class Cat {
 
   //region id and version

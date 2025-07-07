@@ -39,11 +39,11 @@ public class LombokDemoApplication {
 
   @Contract(pure = true)
   public static @NotNull String alphabet() {
-    val result = new StringBuilder();
+    val accumulator = new StringBuilder();
     IntStream.rangeClosed('A', 'Z')
              .mapToObj(i -> (char) i)
-             .forEach(result::append);
-    return result.append("\nNow I know the alphabet!").toString();
+             .forEach(accumulator::append);
+    return accumulator.append("\nNow I know the alphabet!").toString();
   }
 
   @Bean
