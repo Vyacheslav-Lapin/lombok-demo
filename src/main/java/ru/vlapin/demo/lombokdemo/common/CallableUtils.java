@@ -7,6 +7,11 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class CallableUtils {
 
+  @SuppressWarnings({"unchecked", "unused", "java:S100"})
+  public <T> Callable<T> Callable(Callable<? extends T> callable) {
+    return (Callable<T>) callable;
+  }
+
   @SuppressWarnings("unchecked")
   public <T> Callable<T> of(Callable<? extends T> callable) {
     return (Callable<T>) callable;

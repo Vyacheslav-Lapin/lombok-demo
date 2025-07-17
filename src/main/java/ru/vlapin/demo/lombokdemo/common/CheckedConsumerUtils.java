@@ -19,8 +19,8 @@ public class CheckedConsumerUtils {
    * @param before the action that will be executed before this action
    * @return a new {@code CheckedConsumer} that chains {@code before} and {@code this}
    */
-  public <T> CheckedConsumer<T> atFirst(CheckedConsumer<? super T> self,
-                                        CheckedConsumer<? super T> before) {
+  public <T> CheckedConsumer<T> after(CheckedConsumer<? super T> self,
+                                      CheckedConsumer<? super T> before) {
     return t -> {
       before.accept(t);
       self.accept(t);

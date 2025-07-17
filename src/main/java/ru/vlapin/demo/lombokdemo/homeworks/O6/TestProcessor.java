@@ -24,18 +24,19 @@ import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
 import ru.vlapin.demo.lombokdemo.common.StreamUtils;
 
 @UtilityClass
-@ExtensionMethod({
+@ExtensionMethod(suppressBaseMethods = false,
+    value = {
         Arrays.class,
         StreamUtils.class,
         ReflectionUtils.class,
         CheckedConsumerUtils.class,
-})
+    })
 public class TestProcessor {
 
   private static <T> Function<? super Class<? extends Annotation>, Stream<? extends TestMethod<T>>> annotatedMethods(Class<? extends T> testExampleClass) {
-    return annotationClass -> testExampleClass.annotatedMethods(annotationClass)
-            .peek(method -> method.setAccessible(true))
-            .map(TestMethod::new);
+    return annotationClass -> testExampleClass.annotatedMethods(annotationClass).toJavaStream()
+                                              .peek(method -> method.setAccessible(true))
+                                              .map(TestMethod::new);
   }
 
   private static <T> Function<? super TestMethod<? super T>, ? extends Try<Void>> toTry(Class<? extends T> testExampleClass) {
@@ -57,7 +58,7 @@ public class TestProcessor {
                     getAnnotatedMethods.apply(Before.class)
                             .map(TestMethod::consumer)
                             .reverse()
-                            .reduce(test.consumer(), CheckedConsumerUtils::atFirst)))
+                            .reduce(test.consumer(), CheckedConsumerUtils::after)))
             .map(test -> test.withConsumer(
                     getAnnotatedMethods.apply(After.class)
                             .map(TestMethod::consumer)

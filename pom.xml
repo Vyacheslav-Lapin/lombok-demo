@@ -70,7 +70,7 @@
     <annotations.version>26.0.2</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
     <springdoc-openapi.version>2.8.9</springdoc-openapi.version>
-    <error_prone_annotations.version>2.39.0</error_prone_annotations.version>
+    <error_prone_annotations.version>2.40.0</error_prone_annotations.version>
     <json.version>20250517</json.version>
     <poi.version>5.4.1</poi.version>
     <fugue.version>2.7.0</fugue.version>
@@ -99,11 +99,6 @@
 
     <proguard-maven-plugin.version>2.6.1</proguard-maven-plugin.version>
     <proguard-core.version>9.1.7</proguard-core.version>
-    <!--endregion-->
-
-    <!--region default overrides-->
-    <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version> <!--default: 3.10.1 -->
-    <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version> <!--default: 2.17.1 -->
     <!--endregion-->
   </properties>
 

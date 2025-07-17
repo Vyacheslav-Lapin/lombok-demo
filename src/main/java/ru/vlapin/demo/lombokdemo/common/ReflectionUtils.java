@@ -1,15 +1,15 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import static io.vavr.API.*;
 import static java.lang.reflect.Modifier.*;
-import static java.util.Spliterator.*;
 
+import io.vavr.API;
 import io.vavr.CheckedFunction0;
 import io.vavr.CheckedFunction1;
-import io.vavr.CheckedFunction2;
 import io.vavr.CheckedFunction3;
 import io.vavr.Function2;
 import io.vavr.Function3;
-import io.vavr.collection.Array;
+import io.vavr.collection.Stream;
 import java.beans.ConstructorProperties;
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -21,10 +21,8 @@ import java.lang.reflect.Proxy;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Optional;
 import java.util.Spliterators;
 import java.util.function.IntPredicate;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
@@ -38,6 +36,7 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
                  value = {
                      Proxy.class,
                      Arrays.class,
+                     ArrayUtils.class,
                      Spliterators.class,
                      StreamSupport.class,
                      Function2Utils.class,
@@ -57,7 +56,7 @@ public class ReflectionUtils {
                .compose2((String name) -> name.substring(0, name.length() - 6))
                .andThen(CheckedFunction1.<String, Class<?>>of(Class::forName)
                                         .unchecked())
-               .andThen(Stream::of);
+               .andThen(API::Stream);
 
   @SuppressWarnings("unchecked")
   public <T> Class<T> clazz(T self) {
@@ -85,7 +84,7 @@ public class ReflectionUtils {
 
   public <T> Stream<Method> annotatedMethods(Class<? extends T> testExampleClass,
                                              Class<? extends Annotation> annotationClass) {
-    return testExampleClass.getDeclaredMethods().stream()
+    return Stream(testExampleClass.getDeclaredMethods())
                            .filter(method -> !method.isSynthetic())
                            .filter(method -> !isStatic(method.getModifiers()))
                            //.filter(method -> method.isAnnotationPresent(annotationClass))
@@ -94,9 +93,8 @@ public class ReflectionUtils {
 
   @SuppressWarnings("unchecked")
   public <T> Class<T> toClass(String className) {
-    return CheckedFunction1.of((String name) -> (Class<T>) Class.forName(name))
-                           .unchecked()
-                           .apply(className);
+    return unchecked((String name) -> (Class<T>) Class.forName(name))
+              .apply(className);
   }
 
   /**
@@ -106,20 +104,19 @@ public class ReflectionUtils {
    * @return The classes
    */
   public Stream<Class<?>> getClasses(String packageName) {
-    val findClasses = Function2.of(ReflectionUtils::findClasses)
+    val findClasses = Function(ReflectionUtils::findClasses)
                                .apply(packageName);
 
-    return CheckedFunction2.of(ClassLoader::getResources).unchecked()
-                           .reversed()
-                           .apply(packageName.replace('.', '/'))
-                           .andThen(Enumeration::asIterator)
-                           .andThen(urlIterator -> urlIterator.spliteratorUnknownSize(ORDERED))
-                           .andThen(urlSpliterator -> urlSpliterator.stream(false))
-                           .compose(Thread::getContextClassLoader)
-                           .apply(Thread.currentThread())
-                           .map(URL::getFile)
-                           .map(File::new)
-                           .flatMap(findClasses);
+    return unchecked(ClassLoader::getResources)
+        .reversed()
+        .apply(packageName.replace('.', '/'))
+        .andThen(Enumeration::asIterator)
+        .andThen(urlIterator -> Stream.ofAll(() -> urlIterator))
+        .compose(Thread::getContextClassLoader)
+        .apply(Thread.currentThread())
+        .map(URL::getFile)
+        .map(File::new)
+        .flatMap(findClasses);
   }
 
   /**
@@ -131,16 +128,12 @@ public class ReflectionUtils {
    */
   @SneakyThrows
   private Stream<Class<?>> findClasses(String packageName, File directory) {
-
-    val lookForClasses =
-        Function2.of(ReflectionUtils::lookForClasses)
-                 .apply(packageName);
-
-    return Optional.of(directory)
+    val lookForClasses = Function(ReflectionUtils::lookForClasses).apply(packageName);
+    return Option(directory)
                    .filter(File::exists)
                    .map(File::listFiles)
-                   .stream()
-                   .flatMap(Arrays::stream)
+                   .toStream()
+                   .flatMap(API::Array)
                    .flatMap(lookForClasses);
   }
 
@@ -158,35 +151,34 @@ public class ReflectionUtils {
         && executable.isAnnotationPresent(ConstructorProperties.class)
         && nativeParams.length >= 1
         && nativeParams[0].getName().startsWith("arg")) {
-      val argumentNames = executable.getAnnotation(ConstructorProperties.class)
-                                    .value();
+      val argumentNames = executable.getAnnotation(ConstructorProperties.class).value();
       if (argumentNames.length == nativeParams.length)
-        return argumentNames.stream();
+        return Stream(argumentNames);
     }
 
-    return nativeParams.stream().map(Parameter::getName);
+    return Stream(nativeParams)
+        .map(Parameter::getName);
   }
 
   private final Function3<File, String, String, Stream<Class<?>>> GET_CLASS_FROM_DIR =
-      Function3.of((file, packageName, fileName) ->
+      Function((file, packageName, fileName) ->
           findClasses("%s.%s".formatted(packageName, fileName), file));
 
   @SuppressWarnings("unchecked")
   public <T> T newProxyInstance(Class<? extends T> mainInterface,
                                 CheckedFunction3<? super T, Method, Object[], Object> invocationHandler,
                                 Class<?>... additionalInterfaces) {
-    return (T) ReflectionUtils.class
-        .getClassLoader()
-        .newProxyInstance(
-            Array.of(additionalInterfaces).append(mainInterface).toJavaArray(Class<?>[]::new),
-            (proxy, method, args) -> invocationHandler.apply((T) proxy, method, args));
+    return (T) Proxy.newProxyInstance(
+        ReflectionUtils.class.getClassLoader(),
+        additionalInterfaces.add(mainInterface),
+        (proxy, method, args) -> invocationHandler.apply((T) proxy, method, args));
   }
 
   @SuppressWarnings("unchecked")
   public <T> Class<T> declaredClass(Class<?> self, String className) {
-    return (Class<T>) Arrays.stream(self.getDeclaredClasses())
+    return (Class<T>) Array(self.getDeclaredClasses())
                             .filter(clazz -> clazz.getName().equals("%s$%s".formatted(self.getName(), className)))
-                            .findFirst()
-                            .orElseThrow();
+                            .headOption()
+                            .getOrElseThrow(IllegalArgumentException::new);
   }
 }

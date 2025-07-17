@@ -24,7 +24,7 @@ public class ArrayUtils {
   /**
    * Method for adding possibility to get generified class of an array object.
    * Unlike the native method {@link Object#getClass()}, this method has a convenient contract from a generics
-   * perspective - it returns an object of class "Class" with the correct generic type.
+   * perspective — it returns an object of class "Class" with the correct generic type.
    * @param self array
    * @return
    * @param <T>

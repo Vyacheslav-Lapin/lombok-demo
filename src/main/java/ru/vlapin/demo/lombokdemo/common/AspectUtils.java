@@ -1,9 +1,15 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import static io.vavr.API.*;
+
 import io.vavr.CheckedFunction1;
 import io.vavr.CheckedFunction2;
-import io.vavr.Tuple;
 import io.vavr.Tuple2;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
@@ -13,18 +19,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Objects;
-import java.util.Optional;
-
 @SuppressWarnings("unused")
 
 @UtilityClass
-@ExtensionMethod({
+@ExtensionMethod(value = {
     AnnotatedElementUtils.class,
     Objects.class,
-})
+}, suppressBaseMethods = false)
 public class AspectUtils {
 
   /**
@@ -33,13 +34,13 @@ public class AspectUtils {
    * @param pjp argument of advice-method
    */
   @SneakyThrows
-  public Optional<Method> getMethod(JoinPoint pjp) {
+  public Optional<Method> getImplMethod(JoinPoint pjp) {
     if (pjp.getSignature() instanceof MethodSignature methodSignature) {
       val method = methodSignature.getMethod();
-      return Optional.of(method.getDeclaringClass().isInterface() ?
+      return Optional.of(Modifier.isAbstract(method.getModifiers()) ?
           pjp.getTarget()
-              .getClass()
-              .getDeclaredMethod(methodSignature.getName(), method.getParameterTypes())
+             .getClass()
+             .getDeclaredMethod(methodSignature.getName(), method.getParameterTypes())
           : method);
     } else
       return Optional.empty();
@@ -47,15 +48,15 @@ public class AspectUtils {
 
   public <A extends Annotation> A getAnnotation(JoinPoint pjp,
                                                 Class<A> annotationClass) {
-    val method = getMethod(pjp).orElseThrow();
+    val method = getImplMethod(pjp).orElseThrow();
     return method.findMergedAnnotation(annotationClass)
-        .requireNonNullElseGet(() -> method.getDeclaringClass().findMergedAnnotation(annotationClass));
+                 .requireNonNullElseGet(() -> method.getDeclaringClass().findMergedAnnotation(annotationClass));
   }
 
   public <A extends Annotation> Tuple2<A, Method> getAnnotationAndMethod(JoinPoint jp,
                                                                          Class<A> annotationClass) {
-    val method = getMethod(jp).orElseThrow();
-    return Tuple.of(method.findMergedAnnotation(annotationClass), method);
+    val method = getImplMethod(jp).orElseThrow();
+    return Tuple(method.findMergedAnnotation(annotationClass), method);
   }
 
   public <A extends Annotation, R> R destruct(JoinPoint jp,
@@ -68,11 +69,11 @@ public class AspectUtils {
   public <R> R destruct(JoinPoint jp,
                         CheckedFunction1<? super Method, ? extends R> method) {
     return method.unchecked()
-               .apply(getMethod(jp).orElseThrow());
+                 .apply(getImplMethod(jp).orElseThrow());
   }
 
   public <A extends Annotation> A getAnnotation(Method method, Class<A> aClass) {
     return method.findMergedAnnotation(aClass)
-        .requireNonNull();
+                 .requireNonNull();
   }
 }
