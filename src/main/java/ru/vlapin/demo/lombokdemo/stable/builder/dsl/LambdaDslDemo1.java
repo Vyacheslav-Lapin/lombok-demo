@@ -38,9 +38,9 @@ public record LambdaDslDemo1(
 //
 //      @SuppressWarnings({"OptionalGetWithoutIsPresent", "SameParameterValue"})
 //      private int minimalIndex(String pattern) {
-//        return contacts$key == null || contacts$key.isEmpty() ? 1 :
+//        return props$key == null || props$key.isEmpty() ? 1 :
 //            IntStream.iterate(1, i -> i + 1)
-//                     .filter(i -> !contacts$key.contains(pattern.formatted(i)))
+//                     .filter(i -> !props$key.contains(pattern.formatted(i)))
 //                     .findFirst()
 //                     .getAsInt();
 //      }

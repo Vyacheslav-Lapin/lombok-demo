@@ -62,7 +62,7 @@
     <!--region Libs-->
     <lombok.version>1.18.38</lombok.version>
     <org-mapstruct.version>1.6.3</org-mapstruct.version>
-    <vavr.version>0.10.6</vavr.version>
+    <vavr.version>0.10.7</vavr.version>
     <guava.version>33.4.8-jre</guava.version>
     <jspecify.version>1.0.0</jspecify.version>
     <checker.version>3.49.5</checker.version>

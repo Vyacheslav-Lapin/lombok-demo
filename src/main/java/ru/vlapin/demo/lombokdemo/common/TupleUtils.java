@@ -75,6 +75,11 @@ public class TupleUtils {
   //endregion
 
   //region applyChecked
+  public <T1, R> R applyChecked(Tuple1<? extends T1> self,
+                                CheckedFunction1<? super T1, ? extends R> f) {
+    return self.apply(f.unchecked());
+  }
+
   public <T1, T2, R> R applyChecked(Tuple2<? extends T1, ? extends T2> self,
                                     CheckedFunction2<? super T1, ? super T2, ? extends R> f) {
     return self.apply(f.unchecked());

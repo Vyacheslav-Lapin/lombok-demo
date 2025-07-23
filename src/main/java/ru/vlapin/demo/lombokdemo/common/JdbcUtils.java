@@ -20,10 +20,10 @@ public class JdbcUtils {
                                 CheckedFunction1<? super ResultSet, ? extends T> mapper) {
     return StreamSupport.stream(
         new AbstractSpliterator<>(Long.MAX_VALUE, Spliterator.ORDERED) {
-          @Override
           @SneakyThrows
-          public boolean tryAdvance(Consumer<? super T> action) {
-            if (!resultSet.next()) return false;
+          public @Override boolean tryAdvance(Consumer<? super T> action) {
+            if (!resultSet.next())
+              return false;
             action.accept(mapper.apply(resultSet));
             return true;
           }
