@@ -6,6 +6,7 @@ import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import java.util.Collections;
 import java.util.List;
 import lombok.experimental.ExtensionMethod;
+import lombok.experimental.PackagePrivate;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,9 @@ import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
 @ExtensionMethod(value = ReflectionUtils.class, suppressBaseMethods = false)
 class PersonCollectionTest {
 
-  Class<Object> unmodifiableRandomAccessListClass = Collections.class.declaredClass("UnmodifiableRandomAccessList");
-  Class<Object> emptyListClass = Collections.class.declaredClass("EmptyList");
+  //todo 21.09.2025: Разобраться, почему в этим двум полям нельзя поставить модификатор private?
+  @PackagePrivate Class<Object> unmodifiableRandomAccessListClass = Collections.class.declaredClass("UnmodifiableRandomAccessList");
+  @PackagePrivate Class<Object> emptyListClass = Collections.class.declaredClass("EmptyList");
 
   @Test
   @DisplayName("@Singular annotation works identically before list and collection")

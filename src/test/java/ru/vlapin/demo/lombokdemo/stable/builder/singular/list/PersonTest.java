@@ -6,6 +6,7 @@ import static org.assertj.core.api.InstanceOfAssertFactories.*;
 import java.util.Collections;
 import java.util.List;
 import lombok.experimental.ExtensionMethod;
+import lombok.experimental.PackagePrivate;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,8 @@ import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
 @ExtensionMethod(value = ReflectionUtils.class, suppressBaseMethods = false)
 class PersonTest {
 
-  Class<Object> unmodifiableRandomAccessListClass = Collections.class.declaredClass("UnmodifiableRandomAccessList");
+  //todo 21.09.2025: Разобраться, почем этому полю нельзя поставить модификатор private?
+  @PackagePrivate Class<Object> unmodifiableRandomAccessListClass = Collections.class.declaredClass("UnmodifiableRandomAccessList");
 
   @Test
   @DisplayName("Builder with collection works correctly")

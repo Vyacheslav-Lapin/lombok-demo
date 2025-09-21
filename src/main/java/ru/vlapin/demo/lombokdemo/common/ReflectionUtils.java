@@ -51,12 +51,12 @@ public class ReflectionUtils {
 //          .or(Modifier::isPublic)
 //          .negate();
 
-  private final Function2<String, String, Stream<Class<?>>> GET_CLASS_FROM_FILE =
-      Function2.<String, String, String>of("%s.%s"::formatted)
-               .compose2((String name) -> name.substring(0, name.length() - 6))
-               .andThen(CheckedFunction1.<String, Class<?>>of(Class::forName)
-                                        .unchecked())
-               .andThen(API::Stream);
+  private final Function2<String, String, Stream<Class<?>>> GET_CLASS_FROM_FILE = (packageName, fileName) -> {
+    val className = fileName.substring(0, fileName.length() - 6); // ".class".length() is 6
+    val fullClassName = "%s.%s".formatted(packageName, className);
+    val aClass = API.<String, Class<?>>unchecked(Class::forName).apply(fullClassName);
+    return Stream(aClass);
+  };
 
   @SuppressWarnings("unchecked")
   public <T> Class<T> clazz(T self) {

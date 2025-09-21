@@ -13,9 +13,9 @@ class Person1Test {
   void builderWorksCorrectlyTest() {
     // given
     val vasilisaPupkina = Person1.builder(builder -> builder
-                                 .firstName("Василиса")
-                                 .lastName("Пупкина")
-                                 .age(21));
+        .firstName("Василиса")
+        .lastName("Пупкина")
+        .age(21));
     // when
     assertThat(vasilisaPupkina).isNotNull()
                                // then
@@ -32,12 +32,12 @@ class Person1Test {
   @DisplayName("Old builder works correctly")
   void oldBuilderWorksCorrectlyTest() {
     // given
-    val vasilisaPupkina = Person1.builder()
-                                 .firstName("Василиса")
-                                 .lastName("Пупкина")
-                                 .age(21)
-                                 .isMale(false)
-                                 .isMarried(false).build();
+    val vasilisaPupkina = Person1.builder(it -> it
+        .firstName("Василиса")
+        .lastName("Пупкина")
+        .age(21)
+        .isMale(false)
+        .isMarried(false));
     // when
     assertThat(vasilisaPupkina).isNotNull()
                                // then

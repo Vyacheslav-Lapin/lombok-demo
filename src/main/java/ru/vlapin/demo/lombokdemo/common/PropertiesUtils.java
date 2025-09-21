@@ -13,6 +13,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Properties;
 import java.util.function.UnaryOperator;
 import lombok.experimental.ExtensionMethod;
@@ -76,9 +77,10 @@ public class PropertiesUtils {
    */
   @SuppressWarnings("unchecked")
   public <T> Constructor<T> getMaxArgsCountConstructor(Class<? extends T> tClass) {
+    Comparator<Constructor<T>> comparator = comparingInt(Constructor::getParameterCount);
     return ((Constructor<T>[]) tClass.getConstructors()).stream()
-        .max(comparingInt(Constructor::getParameterCount))
-        .orElseThrow(() -> new PropsBinderException("Нет ни одного конструктора!"));
+                                                        .max(comparator)
+                                                        .orElseThrow(() -> new PropsBinderException("Нет ни одного конструктора!"));
   }
 
   @SuppressWarnings("unchecked")
