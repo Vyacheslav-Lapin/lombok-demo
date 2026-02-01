@@ -59,8 +59,8 @@ public class ReflectionUtils {
   };
 
   @SuppressWarnings("unchecked")
-  public <T> Class<T> clazz(T self) {
-    return (Class<T>) self.getClass();
+  public <T> Class<T> clazz(T $this) {
+    return (Class<T>) $this.getClass();
   }
 
   public <T> CheckedFunction1<? super Class<? extends T>, T> noArgsConstructor() {
@@ -175,9 +175,9 @@ public class ReflectionUtils {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> Class<T> declaredClass(Class<?> self, String className) {
-    return (Class<T>) Array(self.getDeclaredClasses())
-                            .filter(clazz -> clazz.getName().equals("%s$%s".formatted(self.getName(), className)))
+  public <T> Class<T> declaredClass(Class<?> $this, String className) {
+    return (Class<T>) Array($this.getDeclaredClasses())
+                            .filter(clazz -> clazz.getName().equals("%s$%s".formatted($this.getName(), className)))
                             .headOption()
                             .getOrElseThrow(IllegalArgumentException::new);
   }

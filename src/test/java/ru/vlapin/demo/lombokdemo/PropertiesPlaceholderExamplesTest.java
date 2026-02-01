@@ -1,5 +1,7 @@
 package ru.vlapin.demo.lombokdemo;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
@@ -14,10 +16,12 @@ import ru.vlapin.demo.lombokdemo.model.AnnotationBasedSetterPropertiesPlaceholde
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.service.AnnotationBasedImmutablePropertiesPlaceholderExample;
 
-import static org.assertj.core.api.Assertions.*;
-
-@SpringBootTest
-@Testcontainers
+@SpringBootTest(properties = {
+    "spring.docker.compose.enabled=false",
+    "management.metrics.export.defaults.enabled=false",
+    "management.observations.enabled=false"
+})
+@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PropertiesPlaceholderExamplesTest {
 

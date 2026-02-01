@@ -15,34 +15,34 @@ public class CheckedConsumerUtils {
    * Returns a chained {@code CheckedConsumer} that first executes {@code before.accept(t)}
    * and then {@code this.accept(t)}, for a given {@code t} of type {@code T}.
    *
-   * @param self   the action that will be executed
+   * @param $this   the action that will be executed
    * @param before the action that will be executed before this action
    * @return a new {@code CheckedConsumer} that chains {@code before} and {@code this}
    */
-  public <T> CheckedConsumer<T> after(CheckedConsumer<? super T> self,
+  public <T> CheckedConsumer<T> after(CheckedConsumer<? super T> $this,
                                       CheckedConsumer<? super T> before) {
     return t -> {
       before.accept(t);
-      self.accept(t);
+      $this.accept(t);
     };
   }
 
-  public <T1, T2> CheckedConsumer<T1> compose(CheckedConsumer<? super T2> self,
+  public <T1, T2> CheckedConsumer<T1> compose(CheckedConsumer<? super T2> $this,
                                               Function<? super T1, ? extends T2> before) {
-    return t1 -> self.accept(before.apply(t1));
+    return t1 -> $this.accept(before.apply(t1));
   }
 
-  public <T1, T2> CheckedConsumer<T1> composeChecked(CheckedConsumer<? super T2> self,
+  public <T1, T2> CheckedConsumer<T1> composeChecked(CheckedConsumer<? super T2> $this,
                                                      CheckedFunction1<? super T1, ? extends T2> before) {
-    return t1 -> self.accept(before.apply(t1));
+    return t1 -> $this.accept(before.apply(t1));
   }
 
-  public static <T> CheckedRunnable supply(CheckedConsumer<? super T> self,
+  public static <T> CheckedRunnable supply(CheckedConsumer<? super T> $this,
                                            CheckedFunction0<? extends T> supplier) {
-    return () -> self.accept(supplier.apply());
+    return () -> $this.accept(supplier.apply());
   }
 
-  public <T> CheckedRunnable supply(CheckedConsumer<? super T> self, T t) {
-    return () -> self.accept(t);
+  public <T> CheckedRunnable supply(CheckedConsumer<? super T> $this, T t) {
+    return () -> $this.accept(t);
   }
 }

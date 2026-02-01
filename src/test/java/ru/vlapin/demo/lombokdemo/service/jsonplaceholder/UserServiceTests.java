@@ -18,8 +18,14 @@ import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Address;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Geo;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 
-@SpringBootTest
-@Testcontainers
+@SpringBootTest(properties = {
+    "spring.docker.compose.enabled=false",
+    "spring.jackson.visibility.field=any",
+    "spring.jackson.visibility.getter=any",
+    "spring.jackson.visibility.setter=any",
+    "spring.jackson.visibility.creator=any"
+})
+@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class UserServiceTests {
 

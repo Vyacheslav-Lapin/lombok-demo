@@ -49,7 +49,7 @@ class SpelUtilsTest {
     @Language("SpEL") val expression = "inventions[0].toUpperCase";
 
     // when
-    assertThat(TESLA.executeWith(expression, String.class))
+    assertThat(expression.executeWith(TESLA, String.class))
         // then
         .isNotNull()
         .isEqualTo("induction motor".toUpperCase());

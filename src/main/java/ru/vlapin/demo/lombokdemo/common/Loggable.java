@@ -30,6 +30,12 @@ public @interface Loggable {
     ERROR, WARN, INFO, DEBUG, TRACE
   }
 }
+//
+//@Loggable
+//@interface LogInfo {
+//  @AliasFor(annotation = Loggable.class)
+//  Loggable.LogLevel value() default INFO;
+//}
 
 @Slf4j
 @Aspect

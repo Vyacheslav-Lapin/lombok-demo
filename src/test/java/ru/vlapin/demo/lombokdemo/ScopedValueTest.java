@@ -10,10 +10,9 @@ import org.junit.jupiter.api.Test;
 class ScopedValueTest {
 
   private static final ScopedValue<String> currentFruit = ScopedValue.newInstance();
-  // ...
 
   void printFruit() {
-    System.out.println("Fruit: " + currentFruit.get());
+    System.out.printf("Fruit: %s%n", currentFruit.get());
   }
 
   @Test

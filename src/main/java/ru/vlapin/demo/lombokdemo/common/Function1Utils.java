@@ -12,23 +12,23 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 public class Function1Utils {
 
-  public <T, R> Function0<R> supply(Function<? super T, ? extends R> self, T param) {
-    return () -> self.apply(param);
+  public <T, R> Function0<R> supply(Function<? super T, ? extends R> $this, T param) {
+    return () -> $this.apply(param);
   }
 
   @SafeVarargs
   @SuppressWarnings({"SuspiciousToArrayCall", "unchecked"})
-  public <T, R> Function0<R>[] supply(Function<? super T, ? extends R> self, T... params) {
+  public <T, R> Function0<R>[] supply(Function<? super T, ? extends R> $this, T... params) {
     return params.stream()
-        .map(param -> supply(self, param))
+        .map(param -> supply($this, param))
         .toArray(value -> (Function0<R>[]) new Function0[value]);
   }
 
   @SafeVarargs
   @SuppressWarnings("unchecked")
-  public <T, R> R[] apply(Function<? super T, ? extends R> self, T... params) {
+  public <T, R> R[] apply(Function<? super T, ? extends R> $this, T... params) {
     return params.stream()
-        .map(self)
+        .map($this)
         .toArray(length -> (R[]) new Object[length]);
   }
 }

@@ -15,55 +15,55 @@ import org.checkerframework.checker.nullness.qual.Nullable;
                  suppressBaseMethods = false)
 public class ScopeFunctions {
 
-  public <T> void with(T self,
+  public <T> void with(T $this,
                        CheckedConsumer<? super T> checkedConsumer) {
-    checkedConsumer.unchecked().accept(self);
+    checkedConsumer.unchecked().accept($this);
   }
 
-  public <T> T peakWith(T self,
+  public <T> T peakWith(T $this,
                         CheckedConsumer<? super T> checkedConsumer) {
-    with(self, checkedConsumer);
-    return self;
+    with($this, checkedConsumer);
+    return $this;
   }
 
-  public <T, R> R mapWith(T self,
+  public <T, R> R mapWith(T $this,
                           CheckedFunction1<? super T, ? extends R> mapper) {
-    return mapper.unchecked().apply(self);
+    return mapper.unchecked().apply($this);
   }
 
-  public <T, U> T doWithIfNotNull(T self,
+  public <T, U> T doWithIfNotNull(T $this,
                                   @Nullable U operand,
                                   CheckedFunction2<? super T, ? super U, ? extends T> mapper) {
-    return operand.isNull() ? self : mapper.unchecked().apply(self, operand);
+    return operand.isNull() ? $this : mapper.unchecked().apply($this, operand);
   }
 
-  public <T, R> R mapWithIfOrElse(T self,
+  public <T, R> R mapWithIfOrElse(T $this,
                                   CheckedPredicate<? super T> condition,
                                   CheckedFunction1<? super T, ? extends R> mapperIfTrue,
                                   CheckedFunction1<? super T, ? extends R> mapperIfFalse) {
-    return mapWith(self,
-        condition.unchecked().test(self) ?
+    return mapWith($this,
+        condition.unchecked().test($this) ?
             mapperIfTrue
             : mapperIfFalse);
   }
 
-  public <T> T orIfNull(@Nullable T self,
+  public <T> T orIfNull(@Nullable T $this,
                         T alternative) {
-    return self.isNull() ? alternative : self;
+    return $this.isNull() ? alternative : $this;
   }
 
-  public <T> T orIfNull(@Nullable T self,
+  public <T> T orIfNull(@Nullable T $this,
                         CheckedFunction0<? extends T> alternativeSource) {
-    return self.isNull() ?
+    return $this.isNull() ?
         alternativeSource.unchecked().apply()
-        : self;
+        : $this;
   }
 
-  public <T, U> U mapOrIfNull(@Nullable T self,
+  public <T, U> U mapOrIfNull(@Nullable T $this,
                               CheckedFunction1<? super T, ? extends U> mapper,
                               CheckedFunction0<? extends U> alternativeSource) {
-    return self.isNull() ?
+    return $this.isNull() ?
         alternativeSource.unchecked().apply()
-        : mapper.unchecked().apply(self);
+        : mapper.unchecked().apply($this);
   }
 }

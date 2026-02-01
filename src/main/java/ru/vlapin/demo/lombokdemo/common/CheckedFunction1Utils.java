@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class CheckedFunction1Utils {
 
-  public <T, R> CheckedFunction0<R> supply(CheckedFunction1<? super T, ? extends R> self, T param) {
-    return () -> self.apply(param);
+  public <T, R> CheckedFunction0<R> supply(CheckedFunction1<? super T, ? extends R> $this, T param) {
+    return () -> $this.apply(param);
   }
 }

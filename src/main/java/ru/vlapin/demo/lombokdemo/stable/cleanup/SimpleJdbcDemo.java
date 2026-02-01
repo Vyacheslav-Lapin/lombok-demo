@@ -10,12 +10,12 @@ import lombok.experimental.FieldNameConstants;
 import lombok.val;
 
 @SuppressWarnings({"java:S6437", "java:S125", "java:S106"})
-public interface SimpleDemo {
+public interface SimpleJdbcDemo {
 
   @SneakyThrows
   static void main(String... __) {
 
-//    SPI
+//    SPI — no need to do this:
 //    Class.forName("org.postgresql.Driver");
 
     @Cleanup val connection = DriverManager.getConnection(

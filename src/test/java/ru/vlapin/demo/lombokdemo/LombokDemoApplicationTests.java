@@ -8,9 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -18,11 +18,17 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 @Slf4j
-@SpringBootTest
-@Testcontainers
 @AutoConfigureMockMvc
 @SuppressWarnings("java:S125")
+@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@SpringBootTest(properties = {
+    "spring.docker.compose.enabled=false",
+    // Отключаем проблемную часть springdoc, которая тянет Data REST/HATEOAS(HAL) и валит контекст на Boot 4.x
+    "spring.autoconfigure.exclude=" +
+        "org.springdoc.core.configuration.SpringDocDataRestConfiguration," +
+        "org.springdoc.core.configuration.SpringDocHateoasConfiguration"
+})
 @ExtensionMethod(value = TestUtils.class, suppressBaseMethods = false)
 class LombokDemoApplicationTests {
 
@@ -39,7 +45,7 @@ class LombokDemoApplicationTests {
   @Test
   @SuppressWarnings({"java:S2699", "java:S1135"})
   void contextLoads() {
-    // this method is empty because it tests Spring application context load
+    // this method is empty because it tests a Spring application context load
   }
 
   @Test

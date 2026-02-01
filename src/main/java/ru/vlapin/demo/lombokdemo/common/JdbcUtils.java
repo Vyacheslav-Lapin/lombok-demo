@@ -2,6 +2,7 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import io.vavr.CheckedFunction1;
 import java.sql.ResultSet;
+import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.Spliterators.AbstractSpliterator;
 import java.util.function.Consumer;
@@ -29,5 +30,23 @@ public class JdbcUtils {
           }
         },
         false);
+  }
+
+  public <T> Iterator<T> toIterator(ResultSet resultSet, CheckedFunction1<? super ResultSet, ? extends T> mapper) {
+    return new Iterator<>() {
+      @Override
+      @SneakyThrows
+      public boolean hasNext() {
+        return !resultSet.isLast();
+      }
+
+      @Override
+      @SneakyThrows
+      public T next() {
+        if (!resultSet.next())
+          throw new RuntimeException();
+        return mapper.apply(resultSet);
+      }
+    };
   }
 }

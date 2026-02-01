@@ -16,12 +16,12 @@ import org.springframework.http.HttpEntity;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import pro.vlapin.experiments.jsonplacaholder.client.model.Post;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.PostApiClient;
+import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Post;
 
-@SpringBootTest
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@SpringBootTest(properties = "spring.docker.compose.enabled=false")
 class PostControllerTest {
 
   @Container

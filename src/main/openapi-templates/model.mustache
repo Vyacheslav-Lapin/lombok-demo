@@ -44,7 +44,11 @@ import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 import lombok.experimental.Accessors;
-import lombok.extern.jackson.Jacksonized;
+//import lombok.extern.jackson.Jacksonized; - rollback after https://github.com/projectlombok/lombok/issues/3950 is fixed
+//import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+//import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.*;
 import {{javaxPackage}}.annotation.Generated;
 

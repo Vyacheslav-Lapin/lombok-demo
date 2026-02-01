@@ -1,8 +1,8 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
+import static io.vavr.API.*;
 import static java.util.stream.Collectors.*;
 
-import io.vavr.Function2;
 import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,7 +38,7 @@ public class ConnectionPool implements Closeable, Supplier<Connection> {
     val connectionFactory = ConnectionFactory.class.getInstance();
 
     val pooledConnectionFactory =
-        Function2.of(PooledConnection::new)
+        Function(PooledConnection::new)
             .apply(this::closePolledConnection);
 
     connectionQueue = connectionFactory.get()

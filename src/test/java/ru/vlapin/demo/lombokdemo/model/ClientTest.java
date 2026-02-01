@@ -13,10 +13,14 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 /**
  * ClientTest.
  */
-@SpringBootTest
-@Testcontainers
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SuppressWarnings("java:S2699")
+@Testcontainers(disabledWithoutDocker = true)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@SpringBootTest(properties = {
+    "spring.docker.compose.enabled=false",
+    "spring.autoconfigure.exclude="
+        + "org.springdoc.core.configuration.SpringDocDataRestConfiguration"
+        + ",org.springdoc.core.configuration.SpringDocHateoasConfiguration"})
 class ClientTest {
 
   @Container

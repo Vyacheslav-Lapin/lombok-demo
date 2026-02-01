@@ -28,7 +28,7 @@ public class ConferenceController {
 
   @NotNull
   @Contract(pure = true)
-  @GetMapping(path = "/about", params = "id")
+  @GetMapping(path = "/about")
   public ResponseEntity<@NotNull String> getAbout() {
     return ok(aboutConference);
   }

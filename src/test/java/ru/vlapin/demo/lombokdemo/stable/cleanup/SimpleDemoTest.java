@@ -14,7 +14,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 class SimpleDemoTest {
 
   @Container
@@ -37,8 +37,8 @@ class SimpleDemoTest {
   @SneakyThrows
   @DisplayName("db select works correctly")
   void dbSelectWorksCorrectlyTest() {
-    assertThat(fromSystemOutPrintln(SimpleDemo::main)).isNotNull()
-        .isEqualTo("""
+    assertThat(fromSystemOutPrintln(SimpleJdbcDemo::main)).isNotNull()
+                                                          .isEqualTo("""
             Student[id=1, name=Вася Пупкин, groupId=123456]
             Student[id=2, name=Федя Прокопов, groupId=654321]""");
   }

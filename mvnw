@@ -19,7 +19,7 @@
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
-# Apache Maven Wrapper startup batch script, version 3.3.2
+# Apache Maven Wrapper startup batch script, version 3.3.4
 #
 # Required ENV vars:
 # ------------------
@@ -201,6 +201,14 @@ MAVEN_PROJECTBASEDIR=${MAVEN_BASEDIR:-"$BASE_DIR"}
 export MAVEN_PROJECTBASEDIR
 log "$MAVEN_PROJECTBASEDIR"
 
+trim() {
+  # MWRAPPER-139:
+  #   Trims trailing and leading whitespace, carriage returns, tabs, and linefeeds.
+  #   Needed for removing poorly interpreted newline sequences when running in more
+  #   exotic environments such as mingw bash on Windows.
+  printf "%s" "${1}" | tr -d '[:space:]'
+}
+
 ##########################################################################################
 # Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
 # This allows using the maven wrapper in projects that prohibit checking in binary data.
@@ -212,15 +220,13 @@ else
   log "Couldn't find $wrapperJarPath, downloading it ..."
 
   if [ -n "$MVNW_REPOURL" ]; then
-    wrapperUrl="$MVNW_REPOURL/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar"
+    wrapperUrl="$MVNW_REPOURL/org/apache/maven/wrapper/maven-wrapper/3.3.4/maven-wrapper-3.3.4.jar"
   else
-    wrapperUrl="https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar"
+    wrapperUrl="https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.4/maven-wrapper-3.3.4.jar"
   fi
   while IFS="=" read -r key value; do
-    # Remove '\r' from value to allow usage on windows as IFS does not consider '\r' as a separator ( considers space, tab, new line ('\n'), and custom '=' )
-    safeValue=$(echo "$value" | tr -d '\r')
     case "$key" in wrapperUrl)
-      wrapperUrl="$safeValue"
+      wrapperUrl=$(trim "${value-}")
       break
       ;;
     esac
@@ -235,17 +241,17 @@ else
     log "Found wget ... using wget"
     [ "$MVNW_VERBOSE" = true ] && QUIET="" || QUIET="--quiet"
     if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
-      wget $QUIET "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
+      wget ${QUIET:+"$QUIET"} "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
     else
-      wget $QUIET --http-user="$MVNW_USERNAME" --http-password="$MVNW_PASSWORD" "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
+      wget ${QUIET:+"$QUIET"} --http-user="$MVNW_USERNAME" --http-password="$MVNW_PASSWORD" "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
     fi
   elif command -v curl >/dev/null; then
     log "Found curl ... using curl"
     [ "$MVNW_VERBOSE" = true ] && QUIET="" || QUIET="--silent"
     if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
-      curl $QUIET -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
+      curl ${QUIET:+"$QUIET"} -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
     else
-      curl $QUIET --user "$MVNW_USERNAME:$MVNW_PASSWORD" -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
+      curl ${QUIET:+"$QUIET"} --user "$MVNW_USERNAME:$MVNW_PASSWORD" -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
     fi
   else
     log "Falling back to using Java to download"
@@ -276,7 +282,7 @@ fi
 wrapperSha256Sum=""
 while IFS="=" read -r key value; do
   case "$key" in wrapperSha256Sum)
-    wrapperSha256Sum=$value
+    wrapperSha256Sum=$(trim "${value-}")
     break
     ;;
   esac
@@ -284,7 +290,7 @@ done <"$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.properties"
 if [ -n "$wrapperSha256Sum" ]; then
   wrapperSha256Result=false
   if command -v sha256sum >/dev/null; then
-    if echo "$wrapperSha256Sum  $wrapperJarPath" | sha256sum -c >/dev/null 2>&1; then
+    if echo "$wrapperSha256Sum  $wrapperJarPath" | sha256sum -c - >/dev/null 2>&1; then
       wrapperSha256Result=true
     fi
   elif command -v shasum >/dev/null; then
@@ -322,32 +328,6 @@ MAVEN_CMD_LINE_ARGS="$MAVEN_CONFIG $*"
 export MAVEN_CMD_LINE_ARGS
 
 WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
-
-verbose() { :; }
-[ "${MVNW_VERBOSE-}" != true ] || verbose() { printf %s\\n "${1-}"; }
-
-# https://stackoverflow.com/questions/36852819/pipe-out-a-substring-by-removing-the-last-n-characters
-pipe_substr () {
-  sed "s/.\{$1\}$//"
-}
-
-# concatenates all lines of a file to compliant maven environment variables cli parameters (ignoring comments)
-concat_vars() {
-  if [ -f "$1" ]; then
-    # shellcheck disable=SC2002
-    echo "-D$(cat "$1" | sed -r 's/^\s*(\w[\w\.=:/\\+#\-\{\}]*)?\s*(#.*)?$/\1/g' | grep -v '^\s*$' | tr -s '\n' '|' | sed 's/|/ -D/g' | pipe_substr 3)"
-    # echo "-D$(cat "$1" | sed -r 's/^[\r\t\f\v ]*(\w[\w\.=:/\\+#\-\{\}]*)?[\r\t\f\v ]*(#.*)?$/\1/g' | grep -v '^\s*$' | tr -s '\n' '|' | sed 's/|/ -D/g' | pipe_substr 3)"
-  fi
-}
-
-ENV_FILE="$MAVEN_PROJECTBASEDIR/.mvn/.env"
-if [ -s "$ENV_FILE" ]; then
-    ENV_VARIABLES="$(concat_vars "$ENV_FILE") $ENV_VARIABLES"
-    MAVEN_CONFIG=$(echo "$ENV_VARIABLES $MAVEN_CONFIG" | xargs)
-    export MAVEN_CONFIG
-fi
-verbose "Is $ENV_FILE present and not empty? - $([ -s "$ENV_FILE" ] && echo true || echo false)"
-verbose "MAVEN_CONFIG = '$MAVEN_CONFIG'"
 
 # shellcheck disable=SC2086 # safe args
 exec "$JAVACMD" \

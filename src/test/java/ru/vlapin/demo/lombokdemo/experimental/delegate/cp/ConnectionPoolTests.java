@@ -19,7 +19,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @DisplayNameGeneration(ReplaceCamelCase.class)
 class ConnectionPoolTests {
 

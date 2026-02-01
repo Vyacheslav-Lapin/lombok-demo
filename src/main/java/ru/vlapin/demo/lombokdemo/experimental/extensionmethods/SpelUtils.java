@@ -23,30 +23,30 @@ public class SpelUtils {
         .parseExpression(spelExpression);
   }
 
-  public <T> T execute(@Language("SpEL") String self,
+  public <T> T execute(@Language("SpEL") String spelExpression,
                        Class<? extends T> resultType) {
-    return getParseExpression(self)
+    return getParseExpression(spelExpression)
         .getValue(resultType)
         .requireNonNull();
   }
 
   @SuppressWarnings("unchecked")
-  public <T> T execute(@Language("SpEL") String self,
+  public <T> T execute(@Language("SpEL") String spelExpression,
                        ParameterizedTypeReference<? extends T> resultType) {
-    return (T) execute(self, resultType.getType().rawClass());
+    return (T) execute(spelExpression, resultType.getType().rawClass());
   }
 
-  public <T> @Nullable T executeWith(Object object,
-                                     @Language("SpEL") String spelExpression,
+  public <T> @Nullable T executeWith(@Language("SpEL") String spelExpression,
+                                     Object object,
                                      Class<? extends T> resultType) {
     return getParseExpression(spelExpression)
         .getValue(object, resultType);
   }
 
   @SuppressWarnings("unchecked")
-  public <T> @Nullable T executeWith(Object object,
-                                     @Language("SpEL") String spelExpression,
+  public <T> @Nullable T executeWith(@Language("SpEL") String spelExpression,
+                                     Object object,
                                      ParameterizedTypeReference<? extends T> resultType) {
-    return (T) executeWith(object, spelExpression, resultType.getType().rawClass());
+    return (T) executeWith(spelExpression, object, resultType.getType().rawClass());
   }
 }

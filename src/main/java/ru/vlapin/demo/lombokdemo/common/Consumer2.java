@@ -14,12 +14,6 @@ import java.util.function.Consumer;
 public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
 
   /**
-   * The <a href="https://docs.oracle.com/javase/8/docs/api/index.html">serial version uid</a>.
-   */
-  @SuppressWarnings("unused")
-  long serialVersionUID = 1L;
-
-  /**
    * Creates a {@code Consumer2} based on
    * <ul>
    * <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">method reference</a></li>
@@ -57,17 +51,22 @@ public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
     return methodReference;
   }
 
+  static <T1, T2> Consumer2<T1, T2> Consumer2(Consumer2<T1, T2> methodReference) {
+    return methodReference;
+  }
+
+
   /**
    * Narrows the given {@code Consumer2<? super T1, ? super T2>} to {@code Consumer2<T1, T2>}
    *
-   * @param self A {@code Connsumer2}
+   * @param $this A {@code Consumer2}
    * @param <T1> 1st argument
    * @param <T2> 2nd argument
-   * @return the given {@code self} instance as narrowed type {@code Function2<T1, T2>}
+   * @return the given {@code $this} instance as narrowed type {@code Function2<T1, T2>}
    */
   @SuppressWarnings("unchecked")
-  static <T1, T2> Consumer2<T1, T2> narrow(Consumer2<? extends T1, ? extends T2> self) {
-    return (Consumer2<T1, T2>) self;
+  static <T1, T2> Consumer2<T1, T2> narrow(Consumer2<? extends T1, ? extends T2> $this) {
+    return (Consumer2<T1, T2>) $this;
   }
 
   static <T1, T2> Consumer2<T1, T2> from(BiConsumer<T1, T2> biConsumer) {
