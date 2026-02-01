@@ -5,8 +5,11 @@ import static ru.vlapin.demo.lombokdemo.tasks.FlowerGardenPlantingCost.*;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class FlowerGardenPlantingCostTest {
 
   @Test

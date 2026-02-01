@@ -1,37 +1,27 @@
 package ru.vlapin.demo.lombokdemo.model;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * ClientTest.
  */
 @SuppressWarnings("java:S2699")
-@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SpringBootTest(properties = {
-    "spring.docker.compose.enabled=false",
     "spring.autoconfigure.exclude="
         + "org.springdoc.core.configuration.SpringDocDataRestConfiguration"
         + ",org.springdoc.core.configuration.SpringDocHateoasConfiguration"})
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class ClientTest {
-
-  @Container
-  @ServiceConnection
-  @SuppressWarnings("unused")
-  static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest");
 
 //  ClientRepository clientRepository;
   @Test
-  @DisplayName("Client with payments creates correctly")
+  //@DisplayName("Client with payments creates correctly")
   void clientWithPaymentsCreatesCorrectlyTest() {
 
     // given

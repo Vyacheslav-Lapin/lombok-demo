@@ -1,43 +1,30 @@
 package ru.vlapin.demo.lombokdemo.experimental.delegate.cp;
 
-import static com.github.dockerjava.api.model.Ports.Binding.*;
 import static org.assertj.core.api.Assertions.*;
 
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.HostConfig;
-import com.github.dockerjava.api.model.PortBinding;
 import io.vavr.CheckedFunction1;
 import io.vavr.CheckedFunction2;
 import java.sql.ResultSet;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
-@Testcontainers(disabledWithoutDocker = true)
+@SpringBootTest
 @DisplayNameGeneration(ReplaceCamelCase.class)
 class ConnectionPoolTests {
 
-  @Container
-  @SuppressWarnings({"resource", "unused"})
-  static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:12")
-          .withDatabaseName("postgres")
-          .withUsername("postgres")
-          .withPassword("postgres")
-          .withReuse(true)
-          .withExposedPorts(5432)
-          .withCreateContainerCmdModifier(
-              cmd -> cmd.withHostConfig(
-                  new HostConfig()
-                      .withPortBindings(
-                          new PortBinding(bindPort(5432),
-                                          new ExposedPort(5432)))));
+  @Configuration
+  @ImportAutoConfiguration
+  static class Config {
+  }
+
   static String SQL = """
       -- noinspection SqlNoDataSourceInspection,SqlResolve
       select id, first_name, last_name, permission, dob, email, password, address, telephone
@@ -45,7 +32,7 @@ class ConnectionPoolTests {
 
   @Test
   @SneakyThrows
-//  @DisplayName("Connection Pool works correctly")
+  @DisplayName("Connection Pool works correctly")
   void connectionPoolWorksCorrectlyTest() {
     @Cleanup val connectionPool = ConnectionPool.getPool();
     @Cleanup val connection = connectionPool.get();

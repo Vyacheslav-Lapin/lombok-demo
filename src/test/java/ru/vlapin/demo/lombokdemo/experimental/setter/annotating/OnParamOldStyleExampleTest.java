@@ -1,15 +1,18 @@
 package ru.vlapin.demo.lombokdemo.experimental.setter.annotating;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * OnParamOldStyleExampleTest.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class OnParamOldStyleExampleTest {
 
   @Test

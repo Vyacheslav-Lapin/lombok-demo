@@ -1,19 +1,23 @@
 package ru.vlapin.demo.lombokdemo.stable.tostring.callsuper;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * ToStringCallSuperDemo2Test.
  */
+
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class ToStringCallSuperDemo2Test {
 
   @Test
-  @DisplayName("ToString annotation with callsuper param works correctly")
-  void toStringAnnotationWithCallsuperParamWorksCorrectlyTest() {
+  @DisplayName("@ToString annotation with callSuper param works correctly")
+  void toStringAnnotationWithCallSuperParamWorksCorrectlyTest() {
     // given
     val superDemo2 = new ToStringCallSuperDemo2(
         2, "Пупкин",

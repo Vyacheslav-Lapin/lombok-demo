@@ -15,13 +15,9 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 import ru.vlapin.demo.lombokdemo.model.ConferenceUser;
 import ru.vlapin.demo.lombokdemo.service.ConferenceUserService.ConferenceUserDetails;
@@ -32,7 +28,6 @@ import ru.vlapin.demo.lombokdemo.service.ConferenceUserService.ConferenceUserDet
  * @see <a href="https://youtu.be/TytSz7u1xQ8">"Test-Driven Security" by Eleftheria Stain-Kousathana, SpringOne, 2021</a>
  */
 @SpringBootTest(properties = {
-    "spring.docker.compose.enabled=false",
     "management.metrics.export.defaults.enabled=false",
     "management.observations.enabled=false",
     "spring.autoconfigure.exclude="
@@ -40,17 +35,10 @@ import ru.vlapin.demo.lombokdemo.service.ConferenceUserService.ConferenceUserDet
         + ",org.springdoc.core.configuration.SpringDocHateoasConfiguration",
 })
 @AutoConfigureMockMvc
-@Testcontainers(disabledWithoutDocker = true)
 @DisplayNameGeneration(ReplaceCamelCase.class)
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class ConferenceControllerTest {
-
-  @Container
-  @ServiceConnection
-  @SuppressWarnings("unused")
-  static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest");
 
   MockMvc mockMvc;
 

@@ -9,10 +9,13 @@ import lombok.experimental.ExtensionMethod;
 import lombok.experimental.PackagePrivate;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 @ExtensionMethod(value = ReflectionUtils.class, suppressBaseMethods = false)
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class PersonCollectionTest {
 
   //todo 21.09.2025: Разобраться, почему в этим двум полям нельзя поставить модификатор private?

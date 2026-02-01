@@ -21,7 +21,6 @@ public class CheckedFunction0Utils {
     return toVoidCallable($this, Exception::new);
   }
 
-  @SuppressWarnings("DataFlowIssue")
   public Callable<Void> toVoidCallable(CheckedFunction0<?> $this,
                                        Function<? super Throwable, ? extends Exception> throwableMapper) {
     return () -> {

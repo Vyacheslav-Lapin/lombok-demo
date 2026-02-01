@@ -3,16 +3,19 @@ package ru.vlapin.demo.lombokdemo.stable.getter;
 import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * SelectiveCancellationExampleTest.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class SelectiveCancellationExampleTest {
 
   @Test
-  @DisplayName("selective canncellation works correctly")
-  void selectiveCanncellationWorksCorrectlyTest() {
+  @DisplayName("selective cancellation works correctly")
+  void selectiveCancellationWorksCorrectlyTest() {
     // given
     val sce = new SelectiveCancellationExample();
 

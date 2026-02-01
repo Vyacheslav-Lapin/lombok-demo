@@ -9,11 +9,14 @@ import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 @ExtensionMethod(
     value = Arrays.class,
     suppressBaseMethods = false)
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class CpDemoTests {
 
   @Test

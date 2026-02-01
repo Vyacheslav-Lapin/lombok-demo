@@ -1,12 +1,14 @@
 package ru.vlapin.demo.lombokdemo.stable.getter;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * Вы можете пометить любое поле с помощью аннотаций @{@link Getter} и / или @{@link Setter},
@@ -17,6 +19,7 @@ import static org.assertj.core.api.Assertions.*;
  * <code>void</code> и принимают по одному аргументу того же типа, что и аннотированное поле,
  * просто присваивая полю значение.</p>
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class GetterExampleTest {
   @Test
   @DisplayName("generated getters works correctly")

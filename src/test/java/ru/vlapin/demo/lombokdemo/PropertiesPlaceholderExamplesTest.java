@@ -5,31 +5,22 @@ import static org.assertj.core.api.Assertions.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 import ru.vlapin.demo.lombokdemo.model.AnnotationBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.service.AnnotationBasedImmutablePropertiesPlaceholderExample;
 
 @SpringBootTest(properties = {
-    "spring.docker.compose.enabled=false",
     "management.metrics.export.defaults.enabled=false",
     "management.observations.enabled=false"
 })
-@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class PropertiesPlaceholderExamplesTest {
-
-  @Container
-  @ServiceConnection
-  @SuppressWarnings("unused")
-  static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest");
 
   AnnotationBasedSetterPropertiesPlaceholderExample absppe;
   JavaConfigBasedSetterPropertiesPlaceholderExample jcbsppe;

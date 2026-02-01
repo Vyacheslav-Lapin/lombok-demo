@@ -1,16 +1,19 @@
 package ru.vlapin.demo.lombokdemo.stable.data;
 
+import static org.assertj.core.api.Assertions.*;
+import static ru.vlapin.demo.lombokdemo.stable.data.StaticConstructorDemo.*;
+
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
-import static ru.vlapin.demo.lombokdemo.stable.data.StaticConstructorDemo.*;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * StaticConstructorDemoTest.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class StaticConstructorDemoTest {
 
   @Test

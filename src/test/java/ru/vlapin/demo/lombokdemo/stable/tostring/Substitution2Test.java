@@ -1,15 +1,18 @@
 package ru.vlapin.demo.lombokdemo.stable.tostring;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * Substitution2Test.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class Substitution2Test {
 
   @Test

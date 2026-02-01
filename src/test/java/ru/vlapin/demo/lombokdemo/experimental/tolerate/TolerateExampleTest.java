@@ -1,23 +1,25 @@
 package ru.vlapin.demo.lombokdemo.experimental.tolerate;
 
-import lombok.val;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import lombok.val;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * TolerateExampleTest.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class TolerateExampleTest {
 
   @Test
-  @DisplayName("Tolerate annotation works correctly")
+//  @DisplayName("Tolerate annotation works correctly")
   void tolerateAnnotationWorksCorrectlyTest() {
     // given
     val se = new TolerateExample();
 
-    // Как добиться, что бы был и стандартный,..
+    // Как добиться, чтобы был и стандартный,..
     se.setX(5);
     assertThat(se).isNotNull()
         .extracting(

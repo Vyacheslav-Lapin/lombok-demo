@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 
 @FunctionalInterface
@@ -14,6 +16,7 @@ interface TestFuncInt {
 
 @ExtensionMethod(value = ReflectionUtils.class,
                  suppressBaseMethods = false)
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class ReflectionUtilsTest {
 
   @Test

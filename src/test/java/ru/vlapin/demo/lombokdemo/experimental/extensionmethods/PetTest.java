@@ -12,7 +12,7 @@ import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 class PetTest {
 
   @Test
-  void aDynamicMethodWithoutParametersCanBeRepresentedAsASupplierTest() {
+  void dynamicMethodWithoutParametersCanBeRepresentedAsASupplierTest() {
     // given
     Supplier<Long> getIdAsSupplier = new Pet()::getId;
     Long id = getIdAsSupplier.get();
@@ -24,7 +24,7 @@ class PetTest {
   }
 
   @Test
-  void aDynamicMethodWithoutParametersCanBeRepresentedAsAFunctionWithOneParameterTest() {
+  void dynamicMethodWithoutParametersCanBeRepresentedAsAFunctionWithOneParameterTest() {
     // given
     Function<Pet, Long> getIdAsFunction = Pet::getId;
     Long id = getIdAsFunction.apply(new Pet());
@@ -36,7 +36,7 @@ class PetTest {
   }
 
   @Test
-  void aDynamicMethodWithoutParametersCanBeTransformedToSupplierTest() {
+  void dynamicMethodWithoutParametersCanBeTransformedToSupplierTest() {
     // given
     Function<Pet, Long> getIdAsFunction = Pet::getId;
     Supplier<Long> getIdAsSupplier = () -> getIdAsFunction.apply(new Pet());

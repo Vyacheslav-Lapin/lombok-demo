@@ -12,13 +12,16 @@ import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.intellij.lang.annotations.Language;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 @ExtensionMethod(value = {
     SpelUtils.class,
     Objects.class,
 }, suppressBaseMethods = false)
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class SpelUtilsTest {
 
   public static final Inventor TESLA = new Inventor(

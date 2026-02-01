@@ -1,16 +1,18 @@
 package ru.vlapin.demo.lombokdemo.stable.tostring.exclude.conf;
 
-import lombok.val;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDate;
-
-import static org.assertj.core.api.Assertions.*;
+import lombok.val;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * Person5Test.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class Person3Test {
 
   @Test

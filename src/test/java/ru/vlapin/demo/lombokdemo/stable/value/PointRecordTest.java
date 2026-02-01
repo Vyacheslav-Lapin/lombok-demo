@@ -1,16 +1,18 @@
 package ru.vlapin.demo.lombokdemo.stable.value;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.*;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.RecordComponent;
-
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * PointRecordTest.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class PointRecordTest {
 
   @Test

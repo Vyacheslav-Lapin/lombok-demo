@@ -9,14 +9,15 @@ import java.lang.reflect.Method;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 
 @ExtensionMethod({
     TestProcessor.class,
 })
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class TestProcessorTests {
 
   @SneakyThrows
-//  @Disabled
   @org.junit.jupiter.api.Test
   @DisplayName("Test framework works in right order")
   void testFrameworkWorksInRightOrderTest() {

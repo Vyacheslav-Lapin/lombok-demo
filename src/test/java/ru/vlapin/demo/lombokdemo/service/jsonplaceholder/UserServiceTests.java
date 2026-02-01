@@ -4,36 +4,27 @@ import static org.assertj.core.api.Assertions.*;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpEntity;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.api.UserApiClient;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Address;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.Geo;
 import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 
 @SpringBootTest(properties = {
-    "spring.docker.compose.enabled=false",
     "spring.jackson.visibility.field=any",
     "spring.jackson.visibility.getter=any",
     "spring.jackson.visibility.setter=any",
     "spring.jackson.visibility.creator=any"
 })
-@Testcontainers(disabledWithoutDocker = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class UserServiceTests {
-
-  @Container
-  @ServiceConnection
-  @SuppressWarnings("unused")
-  static PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest");
 
   UserApiClient client;
 

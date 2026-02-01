@@ -1,13 +1,16 @@
 package ru.vlapin.demo.lombokdemo.stable.sneakythrows;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static java.nio.charset.StandardCharsets.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
+
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class SneakyThrowsExampleWithLombokTests {
 
   @Test

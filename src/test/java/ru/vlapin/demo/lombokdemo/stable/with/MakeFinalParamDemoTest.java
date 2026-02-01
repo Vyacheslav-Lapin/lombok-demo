@@ -6,14 +6,16 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import lombok.SneakyThrows;
 import lombok.val;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class MakeFinalParamDemoTest {
 
   @Test
   @SneakyThrows
-  @DisplayName("With annotation makeFinal param works correctly")
+  //@DisplayName("With annotation makeFinal param works correctly")
   void withAnnotationMakeFinalParamWorksCorrectlyTest() {
     // given
     val withX = MakeFinalParamDemo.class

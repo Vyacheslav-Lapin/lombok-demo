@@ -1,15 +1,18 @@
 package ru.vlapin.demo.lombokdemo.stable.setter;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * Установленная над классом аннотация считается по умолчанию установленной
  * над всеми его полями.
  */
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class MarkedClassExampleTest {
 
   @Test

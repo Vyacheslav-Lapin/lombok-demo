@@ -1,22 +1,22 @@
 package ru.vlapin.demo.lombokdemo.stable.data.extraprivate;
 
-import lombok.SneakyThrows;
-import lombok.experimental.ExtensionMethod;
-import lombok.val;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import ru.vlapin.demo.lombokdemo.common.ReflectionUtils;
+import static org.assertj.core.api.Assertions.*;
 
 import java.lang.reflect.Constructor;
-
-import static org.assertj.core.api.Assertions.*;
+import lombok.SneakyThrows;
+import lombok.val;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
  * ExtraPrivateDemoTest.
  */
-@ExtensionMethod({
-    ReflectionUtils.class,
-})
+//@ExtensionMethod({
+//    ReflectionUtils.class,
+//})
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class ExtraPrivateDemoTest {
 
   @SneakyThrows
@@ -26,7 +26,6 @@ class ExtraPrivateDemoTest {
 
   @Test
   @SneakyThrows
-  @SuppressWarnings("DataFlowIssue")
   @DisplayName("ExtraPrivate settings param works correctly")
   void extraPrivateSettingsParamWorksCorrectlyTest() {
     // given

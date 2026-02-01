@@ -6,8 +6,11 @@ import static ru.vlapin.demo.lombokdemo.stable.builder.BuilderBeforeStaticMethod
 import java.time.LocalDate;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
+import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class BuilderBeforeStaticMethodRequiredDemoTest {
 
   @Test

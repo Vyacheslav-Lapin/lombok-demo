@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.*;
 import static ru.vlapin.demo.lombokdemo.common.TestUtils.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class ScopedValueTest {
 
   private static final ScopedValue<String> currentFruit = ScopedValue.newInstance();
