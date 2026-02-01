@@ -15,6 +15,7 @@ class NonNullSetterDemoTest {
   @DisplayName("NonNull before field on Setter works correctly")
   void nonNullBeforeFieldOnSetterWorksCorrectlyTest() {
     // given
+    @SuppressWarnings("WriteOnlyObject")
     val demo = new NonNullSetterDemo();
 
     //noinspection DataFlowIssue

@@ -16,7 +16,6 @@ import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 @SpringBootTest(properties = {
     "management.metrics.export.defaults.enabled=false",
-    "management.observations.enabled=false",
     // Отключаем проблемную часть springdoc, которая тянет Data REST/HATEOAS(HAL) и валит контекст на Spring Boot 4.x
     "spring.autoconfigure.exclude=" +
         "org.springdoc.core.configuration.SpringDocDataRestConfiguration," +

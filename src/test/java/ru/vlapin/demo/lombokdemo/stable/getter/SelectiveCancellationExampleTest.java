@@ -1,7 +1,8 @@
 package ru.vlapin.demo.lombokdemo.stable.getter;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.val;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ class SelectiveCancellationExampleTest {
 
   @Test
   @DisplayName("selective cancellation works correctly")
+  @SuppressWarnings({"SpellCheckingInspection", "JavaReflectionMemberAccess"})
   void selectiveCancellationWorksCorrectlyTest() {
     // given
     val sce = new SelectiveCancellationExample();
@@ -25,19 +27,19 @@ class SelectiveCancellationExampleTest {
 //    sce.setZ(3);
 
     // then
-    Assertions.assertThat(sce).isNotNull()
+    assertThat(sce).isNotNull()
         .extracting(
             SelectiveCancellationExample::getX,
             SelectiveCancellationExample::getY)
         .contains(1, 2);
 
-    Assertions.assertThatThrownBy(() ->
+    assertThatThrownBy(() ->
         SelectiveCancellationExample.class
             .getDeclaredMethod("getZ"))
         .isInstanceOf(NoSuchMethodException.class)
         .hasMessage("ru.vlapin.demo.lombokdemo.stable.getter.SelectiveCancellationExample.getZ()");
 
-    Assertions.assertThatThrownBy(() ->
+    assertThatThrownBy(() ->
         SelectiveCancellationExample.class
             .getDeclaredMethod("setZ", int.class))
         .isInstanceOf(NoSuchMethodException.class)

@@ -34,7 +34,7 @@ class UserServiceTests {
   void userServiceWorksCorrectlyTest() {
 
     assertThat(client.users()).isNotNull()
-            .extracting(HttpEntity::getBody).asList()
+            .extracting(HttpEntity::getBody).asInstanceOf(LIST)
             .isNotEmpty()
             .hasSize(10);
 

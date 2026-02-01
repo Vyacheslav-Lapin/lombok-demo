@@ -20,7 +20,7 @@ class Person2Test {
                          .fio("Василий Петрович Пупкин")
                          .age(25)
                          .address(Address.of()//innerBuilder -> innerBuilder
-                                         .city("Moscow")
+                                         .city("Москва")
                                          .street("Lenina")
                                          .houseNumber(2)
                                          .apartment(111).build())
@@ -42,31 +42,35 @@ class Person2Test {
                                    it -> it.contacts().get("telephone1"),
                                    it -> it.contacts().get("telephone2"),
                                    it -> it.contacts().containsKey("telephone3"))
-                               .contains(25, "Василий Петрович Пупкин", true, "Moscow", "Lenina", 2, 111, "222-33-22", "333-22-33", false);
+                               .contains(25, "Василий Петрович Пупкин", true, "Москва", "Lenina", 2, 111, "222-33-22", "333-22-33", false);
 
     val actual = initial
         .address(Address.of()//innerBuilder -> innerBuilder
                         .apartment(2)
                         .street("Ветеранов")
-                        .city("Moscow")
-                        .houseNumber(2)
+                        .city("Санкт-Петербург")
+                        .houseNumber(3)
                         .build())
-        .contact("telephone2", "777-77-77")//.indexed("isMarried")
+        .contact("telephone2", "777-77-77")
+        .contact("telephone3", "888-88-88")
         .build();
 
-//    // when
-//    assertThat(actual.build())
-//        // then
-//        .isNotNull()
-//        .extracting(
-//            Person0::age,
-//            Person0::fio,
-//            Person0::isMarried,
-//            it -> it.inner().y(),
-//            it -> it.inner().z(),
-//            it -> it.inner().props().get("prop1"),
-//            it -> it.inner().props().get("prop2"),
-//            it -> it.inner().props().containsKey("prop3"))
-//        .contains(1, "lorem", true, 2, "dolor", "a", "isMarried", false);
+    // when
+    assertThat(actual)
+        // then
+        .isNotNull()
+        .extracting(
+            Person3::age,
+            Person3::fio,
+            Person3::isMarried,
+            it -> it.address().city(),
+            it -> it.address().street(),
+            it -> it.address().houseNumber(),
+            it -> it.address().apartment(),
+            it -> it.contacts().get("telephone1"),
+            it -> it.contacts().get("telephone2"),
+            it -> it.contacts().get("telephone3"))
+        .contains(25, "Василий Петрович Пупкин", true,
+            "Санкт-Петербург", "Ветеранов", 3, 2, "222-33-22", "777-77-77", "888-88-88");
   }
 }

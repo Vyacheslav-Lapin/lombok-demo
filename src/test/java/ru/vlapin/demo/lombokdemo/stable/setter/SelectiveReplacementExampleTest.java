@@ -14,6 +14,7 @@ import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 @DisplayNameGeneration(ReplaceCamelCase.class)
 class SelectiveReplacementExampleTest {
 
+  @SuppressWarnings("JavaReflectionMemberAccess")
   @Test
   @SneakyThrows
   //@DisplayName("Principle of unobtrusiveness works correctly")

@@ -18,8 +18,9 @@ class SmellPointTests {
 
   @Test
   @SneakyThrows
-  @DisplayName("Equals works unsimmetry")
-  void equalsWorksUnsimmetryTest() {
+  @DisplayName("Equals works unsymmetrical")
+  @SuppressWarnings("AssertBetweenInconvertibleTypes")
+  void equalsWorksUnsymmetricalTest() {
     assertThat(smellPoint).isEqualTo(coloredPoint);
     assertThat(coloredPoint).isEqualTo(smellPoint); // симметрично
   }
@@ -27,7 +28,8 @@ class SmellPointTests {
   @Test
   @SneakyThrows
   @DisplayName("Equals works intransitively")
-  void equalsWorksUntransitivelyTest() {
+  @SuppressWarnings("AssertBetweenInconvertibleTypes")
+  void equalsWorksIntransitivelyTest() {
     assertThat(point)
         .isEqualTo(coloredPoint)
         .isEqualTo(smellPoint);

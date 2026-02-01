@@ -14,6 +14,7 @@ import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 class PersonIgnoreNullTest {
 
   @Test
+  @SuppressWarnings("DataFlowIssue")
   @DisplayName("Singular annotation throws NPE exception when get null as plural-method parameter")
   void singularAnnotationThrowsNPEExceptionWhenGetNullAsPluralMethodParameterTest() {
     // given

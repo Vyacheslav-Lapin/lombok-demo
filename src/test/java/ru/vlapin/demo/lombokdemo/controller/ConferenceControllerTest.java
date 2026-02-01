@@ -29,7 +29,6 @@ import ru.vlapin.demo.lombokdemo.service.ConferenceUserService.ConferenceUserDet
  */
 @SpringBootTest(properties = {
     "management.metrics.export.defaults.enabled=false",
-    "management.observations.enabled=false",
     "spring.autoconfigure.exclude="
         + "org.springdoc.core.configuration.SpringDocDataRestConfiguration"
         + ",org.springdoc.core.configuration.SpringDocHateoasConfiguration",

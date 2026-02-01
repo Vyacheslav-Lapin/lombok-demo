@@ -46,8 +46,8 @@ class CpDemoTests {
   }
 
   @Test
-  @DisplayName("ConstructorProperties setted correctly")
-  void constructorPropertiesSettedCorrectlyTest() {
+  @DisplayName("ConstructorProperties set correctly")
+  void constructorPropertiesSetCorrectlyTest() {
     val paramNames = CpDemo.class
         .getConstructors()[0]
         .getDeclaredAnnotation(

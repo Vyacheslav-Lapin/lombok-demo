@@ -30,10 +30,10 @@ class EahSimpleDemoTests {
 
         // 3. Симметричность - эквивалентность работает в обе стороны
         .isEqualTo(obj2)
-        .matches(__ -> obj2.equals(obj1))
+        .matches(_ -> obj2.equals(obj1))
 
         // 4. Транзитивность – эквивалентность x`а и y`а, а также y`а и z`а означает эквивалентность x и z`а для любых x, y, z
-        .matches(__ -> obj2.equals(obj3))
+        .matches(_ -> obj2.equals(obj3))
         .isEqualTo(obj3)
 
         // HashCode

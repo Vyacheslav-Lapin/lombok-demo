@@ -14,12 +14,9 @@ import ru.vlapin.demo.lombokdemo.model.AnnotationBasedSetterPropertiesPlaceholde
 import ru.vlapin.demo.lombokdemo.model.JavaConfigBasedSetterPropertiesPlaceholderExample;
 import ru.vlapin.demo.lombokdemo.service.AnnotationBasedImmutablePropertiesPlaceholderExample;
 
-@SpringBootTest(properties = {
-    "management.metrics.export.defaults.enabled=false",
-    "management.observations.enabled=false"
-})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayNameGeneration(ReplaceCamelCase.class)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@SpringBootTest(properties = "management.metrics.export.defaults.enabled=false")
 class PropertiesPlaceholderExamplesTest {
 
   AnnotationBasedSetterPropertiesPlaceholderExample absppe;

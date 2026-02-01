@@ -52,7 +52,7 @@ class TestProcessorTests {
         .hasSize(3)
         .containsOnlyKeys(tests)
         .extractingByKeys(tests)
-        .matches(tries -> tries.get(0).isSuccess())
+        .matches(tries -> tries.getFirst().isSuccess())
         .matches(tries -> tries.get(1).isSuccess())
         .element(2)
         .matches(Try::isFailure)

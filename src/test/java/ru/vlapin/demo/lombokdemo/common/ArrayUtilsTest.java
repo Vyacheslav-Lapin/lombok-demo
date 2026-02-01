@@ -18,6 +18,7 @@ class ArrayUtilsTest {
   @DisplayName("add method works correctly")
   void addMethodWorksCorrectlyTest() {
     // given
+    @SuppressWarnings("MismatchedReadAndWriteOfArray")
     Integer[] integers = {1, 2, 3};
     // when
     assertThat(integers.add(4)).isNotNull()

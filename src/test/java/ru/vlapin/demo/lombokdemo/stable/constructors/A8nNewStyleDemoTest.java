@@ -29,7 +29,7 @@ class A8nNewStyleDemoTest {
     assertThat(annotations)
         // then
         .hasSize(2)
-        .matches(__ -> annotations[0] instanceof FirstAnnotation);
+        .matches(_ -> annotations[0] instanceof FirstAnnotation);
 
     // when
     assertThat(annotations[1]).isNotNull()

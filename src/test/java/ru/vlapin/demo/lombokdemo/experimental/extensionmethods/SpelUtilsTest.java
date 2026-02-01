@@ -49,6 +49,7 @@ class SpelUtilsTest {
   @DisplayName("array element access works correctly")
   void arrayElementAccessWorksCorrectlyTest() {
     // given
+    @SuppressWarnings("SpringElInspection")
     @Language("SpEL") val expression = "inventions[0].toUpperCase";
 
     // when
@@ -74,6 +75,7 @@ class SpelUtilsTest {
   @DisplayName("array literals works correctly")
   void arrayLiteralsWorksCorrectlyTest() {
     // given
+    @SuppressWarnings("SpringElInspection")
     @Language("SpEL") val intArrayExpression = "new int[]{ 1, 2, 3, 4}";
 
     // when
