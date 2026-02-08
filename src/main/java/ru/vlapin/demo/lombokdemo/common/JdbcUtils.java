@@ -15,6 +15,17 @@ import lombok.experimental.UtilityClass;
 public class JdbcUtils {
 
   /**
+   * Converts a {@link ResultSet} into a sequential {@link Stream} of type {@code T}, using the provided
+   * mapping function to transform each row in the {@code ResultSet}.
+   *
+   * @param resultSet The {@link ResultSet} to be converted into a {@link Stream}.
+   *                  Each row of the {@code ResultSet} will be processed to generate the stream elements.
+   * @param mapper    The mapping function that converts a row from the {@code ResultSet}
+   *                  into an element of type {@code T}.
+   * @param <T>       The type of the elements returned by the {@link Stream}.
+   * @return A sequential {@link Stream} of {@code T}, where each element corresponds to a row
+   *         in the {@code ResultSet} transformed by the {@code mapper}.
+   *
    * @see <a href="https://www.baeldung.com/stream-api-jdbc-resultset">Processing JDBC ResultSet With Stream API (by baeldung)</a>
    */
   public <T> Stream<T> toStream(ResultSet resultSet,
@@ -32,7 +43,21 @@ public class JdbcUtils {
         false);
   }
 
-  public <T> Iterator<T> toIterator(ResultSet resultSet, CheckedFunction1<? super ResultSet, ? extends T> mapper) {
+  /**
+   * Converts a {@link ResultSet} into an {@link Iterator} of type {@code T}, using the provided
+   * mapping function to transform each row in the {@code ResultSet}.
+   *
+   * @param resultSet The {@link ResultSet} to be transformed into an {@link Iterator}.
+   *                  Each row of the {@code ResultSet} will be processed to generate the iterator elements.
+   * @param mapper    The mapping function that converts a row from the {@code ResultSet}
+   *                  into an element of type {@code T}.
+   * @param <T>       The type of the elements returned by the {@link Iterator}.
+   * @return An {@link Iterator} of type {@code T}, where each element corresponds to a row
+   *         in the {@code ResultSet} transformed by the {@code mapper}.
+   */
+  public <T> Iterator<T> toIterator(ResultSet resultSet,
+                                    CheckedFunction1<? super ResultSet, ? extends T> mapper) {
+    // Returns an iterator that maps and advances a result set
     return new Iterator<>() {
       @Override
       @SneakyThrows

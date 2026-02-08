@@ -30,4 +30,25 @@ class ArrayUtilsTest {
         // then
         .containsExactly(1, 2, 3, 4, 5);
   }
+
+  @SuppressWarnings("MismatchedReadAndWriteOfArray")
+  @Test
+  @DisplayName("clazz method works correctly")
+  void clazzMethodWorksCorrectlyTest() {
+    // given
+    Integer[] integers = {1, 2, 3};
+    String[] strings = {"a", "b", "c"};
+
+    // when
+    assertThat(integers.clazz())
+        // then
+        .isNotNull()
+        .isEqualTo(Integer[].class);
+
+    // when
+    assertThat(strings.clazz())
+        // then
+        .isNotNull()
+        .isEqualTo(String[].class);
+  }
 }

@@ -10,6 +10,11 @@ import lombok.experimental.UtilityClass;
 import lombok.val;
 
 /**
+ * A utility class providing a set of methods for array manipulation and utility functions
+ * extending the native capabilities of Java arrays. The methods in this class are designed
+ * to enhance developer productivity by offering features such as generified type handling,
+ * type-safe array construction, and element addition.
+ *
  * @see <a href="https://www.javaguides.net/2018/07/java-reflection-for-arrays.html">"Java Reflection for Arrays" by Ramesh Fadatare</a>
  */
 @UtilityClass
@@ -22,12 +27,12 @@ import lombok.val;
 public class ArrayUtils {
 
   /**
-   * Method for adding possibility to get generified class of an array object.
+   * Method for adding the possibility to get generified class of an array object.
    * Unlike the native method {@link Object#getClass()}, this method has a convenient contract from a generics
    * perspective — it returns an object of class "Class" with the correct generic type.
    * @param $this array
-   * @return
-   * @param <T>
+   * @return object of class "Class" with the correct generic type
+   * @param <T> type of the array elements
    */
   public <T> Class<T[]> clazz(T[] $this) {
     return $this.clazz();
@@ -37,9 +42,9 @@ public class ArrayUtils {
    * Method for suppressing {@link Object#getClass()} method of array objects.
    * Unlike the native method, this method has a convenient contract from a generics perspective - it returns an object of
    * class "Class" with the correct generic type.
-   * @param $this
-   * @return
-   * @param <T>
+   * @param $this array
+   * @return object of class "Class" with the correct generic type
+   * @param <T> type of the array elements
    */
   public <T> Class<T[]> getClass(T[] $this) {
     return clazz($this);
@@ -108,7 +113,7 @@ public class ArrayUtils {
    * @param $this the element to be converted into a single-element array
    * @return an array containing the specified element as its sole component
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public <T> T[] toSingleElementArray(T $this) {
     val result = constructor($this).apply(1);
     result[0] = $this;

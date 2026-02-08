@@ -1,5 +1,7 @@
 package ru.vlapin.demo.lombokdemo.common.meta.aliasfor;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.junit.jupiter.api.DisplayName;
@@ -8,14 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
-import static org.assertj.core.api.Assertions.*;
-
 //todo 19.07.2023: Написать отдельный класс для теста
 @ChildAnnotation(7)
-@ExtensionMethod({
-    AnnotatedElementUtils.class,
-})
 @DisplayNameGeneration(ReplaceCamelCase.class)
+@ExtensionMethod(value = AnnotatedElementUtils.class, suppressBaseMethods =false)
 class ExtensionClassTest {
 
   @Test

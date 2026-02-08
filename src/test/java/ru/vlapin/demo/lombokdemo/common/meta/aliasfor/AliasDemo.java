@@ -1,5 +1,9 @@
 package ru.vlapin.demo.lombokdemo.common.meta.aliasfor;
 
+import static java.lang.annotation.RetentionPolicy.*;
+import static org.assertj.core.api.Assertions.*;
+
+import java.lang.annotation.Retention;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayName;
@@ -8,11 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import ru.vlapin.demo.lombokdemo.common.TestUtils;
-
-import java.lang.annotation.Retention;
-
-import static java.lang.annotation.RetentionPolicy.*;
-import static org.assertj.core.api.Assertions.*;
 
 @Retention(RUNTIME)
 @interface DeepAnnotation {
@@ -36,10 +35,8 @@ public class AliasDemo {
   }
 }
 
-@ExtensionMethod({
-    AnnotatedElementUtils.class,
-})
 @DisplayNameGeneration(TestUtils.ReplaceCamelCase.class)
+@ExtensionMethod(value = AnnotatedElementUtils.class, suppressBaseMethods =false)
 class AliasDemoTest {
 
   @Test

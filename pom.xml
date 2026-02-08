@@ -23,10 +23,10 @@
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository><!--jitpack.io-->
-<!--    <repository>-->
-<!--      <id>projectlombok.org</id>-->
-<!--      <url>https://projectlombok.org/edge-releases</url>-->
-<!--    </repository>&lt;!&ndash;projectlombok.org&ndash;&gt;-->
+    <repository>
+      <id>projectlombok.org</id>
+      <url>https://projectlombok.org/edge-releases</url>
+    </repository><!--projectlombok.org-->
     <repository>
       <id>atlassian-public</id>
       <url>https://packages.atlassian.com/maven/repository/public</url>
@@ -60,7 +60,7 @@
     <!--endregion-->
 
     <!--region Libs-->
-    <lombok.version>1.18.42</lombok.version>
+    <lombok.version>edge-SNAPSHOT</lombok.version>
     <org-mapstruct.version>1.6.3</org-mapstruct.version>
     <vavr.version>0.11.0</vavr.version>
     <guava.version>33.5.0-jre</guava.version>

@@ -10,7 +10,6 @@ import static java.lang.annotation.RetentionPolicy.*;
 @Retention(RUNTIME)
 public @interface ChildAnnotation {
 
-  @AliasFor(
-      annotation = InnerAlias.class)
+  @AliasFor(annotation = InnerAlias.class)
   int value() default 0;
 }

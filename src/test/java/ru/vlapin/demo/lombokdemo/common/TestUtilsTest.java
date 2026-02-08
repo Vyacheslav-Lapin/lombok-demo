@@ -1,20 +1,18 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import static org.assertj.core.api.Assertions.*;
+
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
-import static org.assertj.core.api.Assertions.*;
-
 /**
  * TestUtilsTest.
  */
 @DisplayNameGeneration(ReplaceCamelCase.class)
-@ExtensionMethod({
-    CharSequenceUtil.class,
-})
+@ExtensionMethod(value = CharSequenceUtil.class, suppressBaseMethods = false)
 class TestUtilsTest {
 
   @Test
