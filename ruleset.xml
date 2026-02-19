@@ -19,6 +19,7 @@
         artifactId="lombok" comparisonMethod="maven">
       <ignoreVersions>
         <ignoreVersion type="regex">[01]\.[4891][864210]?\.(\d|[12]\d|3[024])</ignoreVersion>
+        <!--<ignoreVersion type="regex">\d\.\d\d?\.\d\d?</ignoreVersion>-->
       </ignoreVersions>
     </rule>
 

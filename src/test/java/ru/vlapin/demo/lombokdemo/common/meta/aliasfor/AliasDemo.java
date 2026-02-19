@@ -15,9 +15,11 @@ import ru.vlapin.demo.lombokdemo.common.TestUtils;
 
 @Retention(RUNTIME)
 @interface DeepAnnotation {
+
   @AliasFor("value") String param1() default "";
 
   @AliasFor("param1") String value() default "";
+
   String param2() default "";
 }
 

@@ -11,6 +11,16 @@ import java.util.stream.StreamSupport;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Utility class providing methods to enable conversion of JDBC {@link ResultSet} into
+ * {@link Stream} or {@link Iterator} for more functional-style processing of query results.
+ *
+ * <p>It makes use of lombok annotations for utility functionality and manages
+ * the transformation of database query results using a user-defined mapping function.
+ *
+ * <p>The methods in this class operate on a {@link ResultSet} and utilize functional
+ * programming concepts to process database rows as either a stream or iterator.
+ */
 @UtilityClass
 public class JdbcUtils {
 
