@@ -18,8 +18,9 @@
     <rule groupId="org.projectlombok"
         artifactId="lombok" comparisonMethod="maven">
       <ignoreVersions>
-        <ignoreVersion type="regex">[01]\.[4891][864210]?\.(\d|[12]\d|3[024])</ignoreVersion>
-        <!--<ignoreVersion type="regex">\d\.\d\d?\.\d\d?</ignoreVersion>-->
+        <!-- ignoring all the versions lower than 1.18.44 . List of versions: https://central.sonatype.com/artifact/org.projectlombok/lombok/versions -->
+        <ignoreVersion type="regex">[01]\.1[864210]\.(\d|[123]\d|4[02])(-RC\d)?</ignoreVersion>
+        <ignoreVersion>0.9.3</ignoreVersion>
       </ignoreVersions>
     </rule>
 

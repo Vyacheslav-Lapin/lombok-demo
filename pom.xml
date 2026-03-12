@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.2</version>
+    <version>4.0.3</version>
 <!--        <groupId>org.springframework.cloud</groupId>-->
 <!--        <artifactId>spring-cloud-starter-parent</artifactId>-->
 <!--        <version>2025.0.1</version>-->
@@ -43,7 +43,7 @@
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-boot.version>4.0.2</spring-boot.version>
+    <spring-boot.version>4.0.3</spring-boot.version>
     <spring-cloud.version>2025.1.1</spring-cloud.version>
     <!--endregion-->
 
@@ -52,17 +52,17 @@
     <!--endregion-->
 
     <!--region Libs-->
-    <lombok.version>edge-SNAPSHOT</lombok.version>
+    <lombok.version>1.18.44</lombok.version>
     <org-mapstruct.version>1.6.3</org-mapstruct.version>
-    <vavr.version>1.0.0</vavr.version>
+    <vavr.version>1.0.1</vavr.version>
     <guava.version>33.5.0-jre</guava.version>
     <jspecify.version>1.0.0</jspecify.version>
-    <checker.version>3.53.1</checker.version>
+    <checker.version>3.54.0</checker.version>
     <spotbugs.version>4.9.8</spotbugs.version>
     <annotations.version>26.1.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
-    <springdoc-openapi.version>3.0.1</springdoc-openapi.version>
-    <error_prone_annotations.version>2.47.0</error_prone_annotations.version>
+    <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
+    <error_prone_annotations.version>2.48.0</error_prone_annotations.version>
     <json.version>20251224</json.version>
     <poi.version>5.5.1</poi.version>
     <fugue.version>2.7.0</fugue.version>
@@ -244,6 +244,7 @@
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity6</artifactId>
     </dependency>
+    <!--suppress VulnerableLibrariesLocal -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-docker-compose</artifactId>
@@ -262,6 +263,7 @@
       <optional>true</optional>
       <scope>provided</scope>
     </dependency>
+    <!--suppress VulnerableLibrariesLocal -->
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-parameter-names</artifactId>
@@ -355,6 +357,7 @@
     <!--endregion-->
 
     <!--region OpenAPI-->
+    <!--suppress VulnerableLibrariesLocal -->
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

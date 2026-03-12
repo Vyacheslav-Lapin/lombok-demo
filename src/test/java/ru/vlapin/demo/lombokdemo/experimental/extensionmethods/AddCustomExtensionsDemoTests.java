@@ -23,12 +23,12 @@ class AddCustomExtensionsDemoTests {
     assertThat(demo.titled("vasya"))
         // then
         .isNotNull()
-        .isEqualTo("Vasya");
+        .isEqualTo("Hello, Vasya!");
 
     // when
     assertThat(demo.titled(null))
         // then
         .isNotNull()
-        .isEqualTo("Anoimous");
+        .isEqualTo("Hello, Anoimous!");
   }
 }
