@@ -19,7 +19,7 @@ public record Person0 (
 //import lombok.experimental.Accessors;
 //import lombok.experimental.FieldDefaults;
 //
-////@Builder
+//@Builder
 //public record Person0(String firstName,
 //                      String lastName,
 //                      int age,

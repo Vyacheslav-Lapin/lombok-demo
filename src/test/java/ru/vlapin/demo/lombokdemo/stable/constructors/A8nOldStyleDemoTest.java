@@ -19,19 +19,14 @@ class A8nOldStyleDemoTest {
   //@DisplayName("Constructor marked by annotations correctly old style")
   void constructorMarkedByAnnotationsCorrectlyOldStyleTest() {
     // given
-    val annotations =
-        A8nOldStyleDemo.class
-            .getDeclaredConstructors()[0]
-            .getDeclaredAnnotations();
+    val constructor = A8nOldStyleDemo.class.getDeclaredConstructors()[0];
+    val annotations = constructor.getDeclaredAnnotations();
 
-    assertThat(annotations).hasSize(2);
+    assertThat(annotations).hasSize(3);
 
-    assertThat(annotations[0]).isNotNull()
-        .isInstanceOf(FirstAnnotation.class);
+    assertThat(constructor.getAnnotation(FirstAnnotation.class)).isNotNull();
 
-    assertThat(annotations[1]).isNotNull()
-        .isInstanceOf(SecondAnnotation.class)
-        .extracting(SecondAnnotation.class::cast)
+    assertThat(constructor.getAnnotation(SecondAnnotation.class)).isNotNull()
         .extracting(SecondAnnotation::value)
         .isEqualTo("value");
   }

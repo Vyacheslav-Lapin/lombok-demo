@@ -21,9 +21,8 @@ import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.jetbrains.annotations.Contract;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.DisplayNameGenerator;
-
-@SuppressWarnings("unused")
 
 @UtilityClass
 @ExtensionMethod(value = PredicateUtils.class, suppressBaseMethods =false)
@@ -116,17 +115,17 @@ public class TestUtils {
         .compose(declaredMethodGet(methodName));
   }
 
-  @ExtensionMethod(value = CharSequenceUtil.class, suppressBaseMethods = false)
+  @ExtensionMethod(value = CharSequenceUtils.class, suppressBaseMethods = false)
   public class ReplaceCamelCase extends DisplayNameGenerator.Standard {
     @Override
-    public String generateDisplayNameForClass(Class<?> testClass) {
+    public String generateDisplayNameForClass(@NonNull Class<?> testClass) {
       val result = super.generateDisplayNameForClass(testClass)
           .camelCaseToSpacedString().toString();
       return (result.endsWith("test") ? result.substring(0, result.length() - 4) : result);
     }
 
     @Override
-    public String generateDisplayNameForNestedClass(Class<?> nestedClass) {
+    public String generateDisplayNameForNestedClass(@NonNull Class<?> nestedClass) {
       val result = super.generateDisplayNameForNestedClass(nestedClass)
           .camelCaseToSpacedString()
           .capitalize();
@@ -134,7 +133,7 @@ public class TestUtils {
     }
 
     @Override
-    public String generateDisplayNameForMethod(Class<?> testClass, Method testMethod) {
+    public String generateDisplayNameForMethod(@NonNull Class<?> testClass, Method testMethod) {
       return testMethod.getName().camelCaseToSpacedString().capitalize() +
              parameterTypesAsString(testMethod);
     }

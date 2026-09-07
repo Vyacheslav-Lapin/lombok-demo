@@ -15,8 +15,9 @@ import org.jetbrains.annotations.Contract;
  * This class contains methods to transform, analyze, and manipulate character sequences.
  * Each method is designed to handle specific tasks related to character sequences.
  */
+
 @UtilityClass
-public class CharSequenceUtil {
+public class CharSequenceUtils {
 
   /**
    * Capitalizes the first character of the given {@code CharSequence}.

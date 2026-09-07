@@ -8,13 +8,12 @@ public class ToBuilderWithObtainViaDemo {
   @Builder.ObtainVia(method = "newS")
   String s;
 
-  @SuppressWarnings("unused")
   private String newS() {
     return "%s copy".formatted(s);
   }
 
 //  public ToBuilderWithObtainViaDemoBuilder toBuilder() {
 //    return new ToBuilderWithObtainViaDemoBuilder()
-//               .s(s());
+//               .s(newS());
 //  }
 }

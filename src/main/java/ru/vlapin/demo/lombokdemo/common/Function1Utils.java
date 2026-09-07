@@ -1,11 +1,10 @@
 package ru.vlapin.demo.lombokdemo.common;
 
 import io.vavr.Function0;
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-
 import java.util.Arrays;
 import java.util.function.Function;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 @ExtensionMethod(value = Arrays.class, suppressBaseMethods = false)
@@ -31,4 +30,8 @@ public class Function1Utils {
         .map($this)
         .toArray(length -> (R[]) new Object[length]);
   }
+
+//  public <T> Function1<T, Void> toVoid(Consumer<? super T> $this) {
+//    return () -> consumer.accept($this.get());
+//  }
 }

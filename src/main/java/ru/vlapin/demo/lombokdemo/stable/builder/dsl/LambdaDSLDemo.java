@@ -35,15 +35,15 @@ record Address(String city,
 
 public class LambdaDSLDemo {
 
-  public static void main() {
+  static void main() {
     Person person = null;
-//        Person(personBuilder -> personBuilder
+//    Person(personBuilder -> personBuilder
 //            .fio("Vasya Pupkin")
 //            .address(addressBuilder -> addressBuilder
 //                .street("Bolshevikov prospect")
 //                .apartment(2))
 //            .age(16));
-
-    System.out.println("person = " + person); // Person(...)
+//
+//    println("person = " + person); // Person(...)
   }
 }

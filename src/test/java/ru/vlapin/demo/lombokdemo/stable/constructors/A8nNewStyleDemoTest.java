@@ -20,22 +20,20 @@ class A8nNewStyleDemoTest {
   @DisplayName("Constructor marked by annotations correctly new style")
   void constructorMarkedByAnnotationsCorrectlyNewStyleTest() {
     // given
-    val annotations =
-        A8nNewStyleDemo.class
-            .getDeclaredConstructors()[0]
-            .getDeclaredAnnotations();
+    val constructor = A8nNewStyleDemo.class.getDeclaredConstructors()[0];
+    val annotations = constructor.getDeclaredAnnotations();
 
     // when
     assertThat(annotations)
         // then
-        .hasSize(2)
-        .matches(_ -> annotations[0] instanceof FirstAnnotation);
+        .hasSize(3);
+
+    assertThat(constructor.getAnnotation(FirstAnnotation.class)).isNotNull();
 
     // when
-    assertThat(annotations[1]).isNotNull()
+    assertThat(constructor.getAnnotation(SecondAnnotation.class))
         // then
-        .isInstanceOf(SecondAnnotation.class)
-        .extracting(SecondAnnotation.class::cast)
+        .isNotNull()
         .extracting(SecondAnnotation::value)
         .isEqualTo("value");
   }

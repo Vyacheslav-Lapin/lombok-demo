@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * blah-blah-blah...
+ */
+
 @ExtensionMethod(suppressBaseMethods = false, value = {
+    ru.vlapin.demo.lombokdemo.common.ScopeFunctions.class,
     StringExtensions.class,
-    ObjectExtensions.class,
     AddExtensionsDemo.class,
 })
 
@@ -15,15 +19,11 @@ public class AddCustomExtensionsDemo {
 
   String defaultName;
 
-  @SuppressWarnings({"java:S2259", "java:S125", "SameParameterValue", "DataFlowIssue"})
-  String titled(@Nullable String name) {
+  @SuppressWarnings({"java:S2259", "java:S125", "SameParameterValue"})
+  public String titled(@Nullable String name) {
     return name.orIfNull(defaultName)
                .toTitleCase()
-               .greetings();
-//    return AddExtensionsDemo.greetings(
-//        StringExtensions.toTitleCase(
-//            ObjectExtensions.orIfNull(
-//                name,
-//                defaultName)));
+               .greetings()
+        ;
   }
 }

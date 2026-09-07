@@ -16,6 +16,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.net.URL;
@@ -90,8 +91,7 @@ public class ReflectionUtils {
    *         or if the instantiation fails for any other reason.
    */
   public <T> CheckedFunction1<? super Class<? extends T>, T> noArgsConstructor() {
-    return CheckedFunction1.<Class<? extends T>, Constructor<? extends T>>of(Class::getDeclaredConstructor)
-                           .andThen(Constructor::newInstance);
+    return clazz -> clazz.getDeclaredConstructor().newInstance();
   }
 
   /**
@@ -284,5 +284,13 @@ public class ReflectionUtils {
                             .filter(clazz -> clazz.getName().equals("%s$%s".formatted($this.getName(), className)))
                             .headOption()
                             .getOrElseThrow(IllegalArgumentException::new);
+  }
+
+  public boolean isAbstract(Class<?> clazz) {
+    return Modifier.isAbstract(clazz.getModifiers());
+  }
+
+  public boolean isAbstract(Method method) {
+    return Modifier.isAbstract(method.getModifiers());
   }
 }

@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
 
 /**
- * Unit tests for {@link CharSequenceUtil} class.
+ * Unit tests for {@link CharSequenceUtils} class.
  */
-@ExtensionMethod(value = CharSequenceUtil.class, suppressBaseMethods = false)
+@ExtensionMethod(value = CharSequenceUtils.class, suppressBaseMethods = false)
 @DisplayNameGeneration(ReplaceCamelCase.class)
-class CharSequenceUtilTest {
+class CharSequenceUtilsTest {
 
   @Test
   @DisplayName("capitalize method converts first character to uppercase")

@@ -7,11 +7,16 @@ import java.util.List;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import ru.vlapin.demo.lombokdemo.common.JdbcUtils;
 import ru.vlapin.demo.lombokdemo.dao.DBConnectionProvider;
 import ru.vlapin.demo.lombokdemo.model.Customer;
+
+@ExtensionMethod(suppressBaseMethods = false, value = {
+    JdbcUtils.class,
+})
 
 //@Service
 @RequiredArgsConstructor
@@ -34,8 +39,7 @@ public class CustomerService {
     @Cleanup val pstmt = conn.prepareStatement("SELECT ID, NAME FROM CUSTOMERS");
     @Cleanup val resultSet = pstmt.executeQuery();
 
-    return JdbcUtils.toStream(resultSet,
-                              rs -> new Customer(rs.getLong(ID), rs.getString(NAME)))
+    return resultSet.stream(rs -> new Customer(rs.getLong(ID), rs.getString(NAME)))
                     .toList();
   }
 
@@ -44,8 +48,7 @@ public class CustomerService {
   void createCustomersTableIfNotExists() {
     @Cleanup val conn = connectionProvider.getConnection();
     @Cleanup val pstmt =
-        conn.prepareStatement(
-            """
+        conn.prepareStatement("""
           CREATE TABLE IF NOT EXISTS CUSTOMERS (
               ID BIGINT NOT NULL,
               NAME VARCHAR NOT NULL,

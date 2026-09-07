@@ -1,11 +1,10 @@
 package ru.vlapin.demo.lombokdemo.common;
 
-import lombok.experimental.ExtensionMethod;
-import lombok.experimental.UtilityClass;
-
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 @ExtensionMethod({

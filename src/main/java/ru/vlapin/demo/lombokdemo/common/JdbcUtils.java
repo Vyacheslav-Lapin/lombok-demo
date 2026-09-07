@@ -9,11 +9,13 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.SneakyThrows;
+import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
+import lombok.val;
 
 /**
- * Utility class providing methods to enable conversion of JDBC {@link ResultSet} into
- * {@link Stream} or {@link Iterator} for more functional-style processing of query results.
+ * Utility class providing methods to enable conversion of JDBC {@link ResultSet} into {@link Stream} or {@link Iterator} for more
+ * functional-style processing of query results.
  *
  * <p>It makes use of lombok annotations for utility functionality and manages
  * the transformation of database query results using a user-defined mapping function.
@@ -21,63 +23,63 @@ import lombok.experimental.UtilityClass;
  * <p>The methods in this class operate on a {@link ResultSet} and utilize functional
  * programming concepts to process database rows as either a stream or iterator.
  */
+
+@ExtensionMethod(suppressBaseMethods = false, value = {
+    StreamSupport.class,
+})
+
 @UtilityClass
 public class JdbcUtils {
 
   /**
-   * Converts a {@link ResultSet} into a sequential {@link Stream} of type {@code T}, using the provided
-   * mapping function to transform each row in the {@code ResultSet}.
+   * Converts a {@link ResultSet} into a sequential {@link Stream} of type {@code T}, using the provided mapping function to transform each
+   * row in the {@code ResultSet}.
    *
-   * @param resultSet The {@link ResultSet} to be converted into a {@link Stream}.
-   *                  Each row of the {@code ResultSet} will be processed to generate the stream elements.
-   * @param mapper    The mapping function that converts a row from the {@code ResultSet}
-   *                  into an element of type {@code T}.
+   * @param resultSet The {@link ResultSet} to be converted into a {@link Stream}. Each row of the {@code ResultSet} will be processed to
+   *                  generate the stream elements.
+   * @param mapper    The mapping function that converts a row from the {@code ResultSet} into an element of type {@code T}.
    * @param <T>       The type of the elements returned by the {@link Stream}.
-   * @return A sequential {@link Stream} of {@code T}, where each element corresponds to a row
-   *         in the {@code ResultSet} transformed by the {@code mapper}.
-   *
+   * @return A sequential {@link Stream} of {@code T}, where each element corresponds to a row in the {@code ResultSet} transformed by the
+   * {@code mapper}.
    * @see <a href="https://www.baeldung.com/stream-api-jdbc-resultset">Processing JDBC ResultSet With Stream API (by baeldung)</a>
    */
-  public <T> Stream<T> toStream(ResultSet resultSet,
-                                CheckedFunction1<? super ResultSet, ? extends T> mapper) {
-    return StreamSupport.stream(
-        new AbstractSpliterator<>(Long.MAX_VALUE, Spliterator.ORDERED) {
-          @SneakyThrows
-          public @Override boolean tryAdvance(Consumer<? super T> action) {
-            if (!resultSet.next())
-              return false;
-            action.accept(mapper.apply(resultSet));
-            return true;
-          }
-        },
-        false);
+  public <T> Stream<T> stream(ResultSet resultSet,
+                              CheckedFunction1<? super ResultSet, ? extends T> mapper) {
+
+    return new AbstractSpliterator<T>(Long.MAX_VALUE, Spliterator.ORDERED) {
+      @SneakyThrows
+      @Override
+      public boolean tryAdvance(Consumer<? super T> action) {
+        val isNext = resultSet.next();
+        if (isNext)
+          action.accept(mapper.apply(resultSet));
+        return isNext;
+      }
+    }.stream(false);
   }
 
   /**
-   * Converts a {@link ResultSet} into an {@link Iterator} of type {@code T}, using the provided
-   * mapping function to transform each row in the {@code ResultSet}.
+   * Converts a {@link ResultSet} into an {@link Iterator} of type {@code T}, using the provided mapping function to transform each row in
+   * the {@code ResultSet}.
    *
-   * @param resultSet The {@link ResultSet} to be transformed into an {@link Iterator}.
-   *                  Each row of the {@code ResultSet} will be processed to generate the iterator elements.
-   * @param mapper    The mapping function that converts a row from the {@code ResultSet}
-   *                  into an element of type {@code T}.
+   * @param resultSet The {@link ResultSet} to be transformed into an {@link Iterator}. Each row of the {@code ResultSet} will be processed
+   *                  to generate the iterator elements.
+   * @param mapper    The mapping function that converts a row from the {@code ResultSet} into an element of type {@code T}.
    * @param <T>       The type of the elements returned by the {@link Iterator}.
-   * @return An {@link Iterator} of type {@code T}, where each element corresponds to a row
-   *         in the {@code ResultSet} transformed by the {@code mapper}.
+   * @return An {@link Iterator} of type {@code T}, where each element corresponds to a row in the {@code ResultSet} transformed by the
+   * {@code mapper}.
    */
   public <T> Iterator<T> toIterator(ResultSet resultSet,
                                     CheckedFunction1<? super ResultSet, ? extends T> mapper) {
     // Returns an iterator that maps and advances a result set
     return new Iterator<>() {
-      @Override
       @SneakyThrows
-      public boolean hasNext() {
+      @Override public boolean hasNext() {
         return !resultSet.isLast();
       }
 
-      @Override
       @SneakyThrows
-      public T next() {
+      @Override public T next() {
         if (!resultSet.next())
           throw new RuntimeException();
         return mapper.apply(resultSet);

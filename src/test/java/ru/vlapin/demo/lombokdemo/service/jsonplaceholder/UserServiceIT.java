@@ -24,7 +24,7 @@ import ru.vlapin.demo.lombokdemo.jsonplaceholder.client.model.User;
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayNameGeneration(ReplaceCamelCase.class)
-class UserServiceTests {
+class UserServiceIT {
 
   UserApiClient client;
 

@@ -1,7 +1,9 @@
 package ru.vlapin.demo.lombokdemo.common;
 
+import io.vavr.Function2;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.jetbrains.annotations.Contract;
 
 /**
  * Represents a function with two arguments without return value.
@@ -11,13 +13,19 @@ import java.util.function.Consumer;
  * @author Vyacheslav Lapin
  */
 @FunctionalInterface
-public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
+public interface Consumer2<T1, T2> extends BiConsumer<T1, T2>, Function2<T1, T2, Void> {
+
+  @Override
+  default Void apply(T1 t1, T2 t2) {
+    accept(t1, t2);
+    return null;
+  }
 
   /**
    * Creates a {@code Consumer2} based on
    * <ul>
-   * <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">method reference</a></li>
-   * <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">lambda expression</a></li>
+   *   <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">method reference</a></li>
+   *   <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">lambda expression</a></li>
    * </ul>
    * <p>
    * Examples:
@@ -51,6 +59,8 @@ public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
     return methodReference;
   }
 
+  /** @noinspection MethodNameSameAsClassName, unused */
+  @Contract(value = "_ -> param1", pure = true)
   static <T1, T2> Consumer2<T1, T2> Consumer2(Consumer2<T1, T2> methodReference) {
     return methodReference;
   }
@@ -65,6 +75,7 @@ public interface Consumer2<T1, T2> extends BiConsumer<T1, T2> {
    * @return the given {@code $this} instance as narrowed type {@code Function2<T1, T2>}
    */
   @SuppressWarnings("unchecked")
+  @Contract(value = "_ -> param1", pure = true)
   static <T1, T2> Consumer2<T1, T2> narrow(Consumer2<? extends T1, ? extends T2> $this) {
     return (Consumer2<T1, T2>) $this;
   }

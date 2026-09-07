@@ -2,7 +2,6 @@ package ru.vlapin.demo.lombokdemo.common;
 
 import static java.lang.reflect.Array.*;
 
-import java.util.Arrays;
 import java.util.function.IntFunction;
 import lombok.SneakyThrows;
 import lombok.experimental.ExtensionMethod;
@@ -18,12 +17,11 @@ import lombok.val;
  * @see <a href="https://www.javaguides.net/2018/07/java-reflection-for-arrays.html">"Java Reflection for Arrays" by Ramesh Fadatare</a>
  */
 @UtilityClass
-@ExtensionMethod(suppressBaseMethods = false,
-                 value = {
-                     Arrays.class,
-                     System.class,
-                     ReflectionUtils.class,
-                 })
+@ExtensionMethod(suppressBaseMethods = false, value = {
+    System.class,
+    ReflectionUtils.class,
+})
+
 public class ArrayUtils {
 
   /**

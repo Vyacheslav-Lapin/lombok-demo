@@ -18,6 +18,11 @@ public interface SimpleJdbcDemo {
 //    SPI — no need to do this:
 //    Class.forName("org.postgresql.Driver");
 
+//    try (val connection = DriverManager.getConnection(
+//        "jdbc:postgresql://localhost:5432/postgres",
+//        "postgres",
+//        "postgres")) {
+
     @Cleanup val connection = DriverManager.getConnection(
         "jdbc:postgresql://localhost:5432/postgres",
         "postgres",
@@ -29,20 +34,26 @@ public interface SimpleJdbcDemo {
 
     //noinspection SqlResolve
     statement.executeUpdate("""
-        insert into student (name, group_id)
-        values ('Вася Пупкин', 123456),
-               ('Федя Прокопов', 654321)""");
+            insert into student (name, group_id)
+            values ('Вася Пупкин', 123456),
+                   ('Федя Прокопов', 654321)""");
 
-    @Cleanup val resultSet = statement.executeQuery("""
-        -- noinspection SqlResolve
-        select id, name, group_id as groupId from student""");
+    @Cleanup val resultSet = statement.executeQuery(
+        """
+              -- noinspection 
+              select id,
+                     name,
+                     group_id as groupId
+              from student""");
 
-    while (resultSet.next())
+    while (
+        resultSet.next()) {
       System.out.println(
           Student.builder()
-              .id(resultSet.getLong(ID))
-              .name(resultSet.getString(NAME))
-              .groupId(resultSet.getInt(GROUP_ID)).build());
+                 .id(resultSet.getLong(ID))
+                 .name(resultSet.getString(NAME))
+                 .groupId(resultSet.getInt(GROUP_ID)).build());
+    }
   }
 }
 

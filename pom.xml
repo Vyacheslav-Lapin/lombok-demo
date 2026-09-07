@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.3</version>
+    <version>4.1.1</version>
 <!--        <groupId>org.springframework.cloud</groupId>-->
 <!--        <artifactId>spring-cloud-starter-parent</artifactId>-->
 <!--        <version>2025.0.1</version>-->
@@ -36,15 +36,15 @@
   <properties>
 
     <!--region General-->
-    <java.version>25</java.version>
-    <minimal.maven.version>3.9.12</minimal.maven.version>
+    <java.version>26</java.version>
+    <minimal.maven.version>3.9.16</minimal.maven.version>
     <!--suppress XmlUnresolvedReference -->
     <revision>${git-versioner.version}</revision>
     <!--endregion-->
 
     <!--region Bills of material (BOM)-->
-    <spring-boot.version>4.0.3</spring-boot.version>
-    <spring-cloud.version>2025.1.1</spring-cloud.version>
+    <spring-boot.version>4.1.1</spring-boot.version>
+    <spring-cloud.version>2025.1.3</spring-cloud.version>
     <!--endregion-->
 
     <!--region infrastructure-->
@@ -52,34 +52,36 @@
     <!--endregion-->
 
     <!--region Libs-->
-    <lombok.version>1.18.44</lombok.version>
+    <lombok.version>1.18.48</lombok.version>
     <org-mapstruct.version>1.6.3</org-mapstruct.version>
     <vavr.version>1.0.1</vavr.version>
-    <guava.version>33.5.0-jre</guava.version>
-    <jspecify.version>1.0.0</jspecify.version>
-    <checker.version>3.54.0</checker.version>
-    <spotbugs.version>4.9.8</spotbugs.version>
+    <guava.version>33.7.1-jre</guava.version>
+    <jspecify.version>1.0.1</jspecify.version>
+    <checker.version>4.2.3</checker.version>
+    <spotbugs.version>4.10.4</spotbugs.version>
     <annotations.version>26.1.0</annotations.version>
     <jcip-annotations.version>1.0</jcip-annotations.version>
-    <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
-    <error_prone_annotations.version>2.48.0</error_prone_annotations.version>
-    <json.version>20251224</json.version>
+    <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
+    <error_prone_annotations.version>2.50.0</error_prone_annotations.version>
+    <json.version>20260814</json.version>
     <poi.version>5.5.1</poi.version>
     <fugue.version>2.7.0</fugue.version>
     <jira-rest-java-client-core.version>7.0.1</jira-rest-java-client-core.version>
-    <xmlunit-core.version>2.11.0</xmlunit-core.version>
+    <xmlunit-core.version>2.13.0</xmlunit-core.version>
     <!--endregion-->
 
     <!--region Plugins-->
+    <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.6.0</maven-failsafe-plugin.version>
     <maven.compiler.parameters>false</maven.compiler.parameters>
     <maven.sourceDirectory>${project.basedir}/src/main/java</maven.sourceDirectory>
 
-    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
-    <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.9.8.2</spotbugs-maven-plugin.version>
-    <yaml-properties-maven-plugin.version>1.1.3</yaml-properties-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.20.0</openapi-generator-maven-plugin.version>
-    <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+    <sonar-maven-plugin.version>5.7.0.6970</sonar-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.10.4.1</spotbugs-maven-plugin.version>
+    <yaml-properties-maven-plugin.version>1.1.4</yaml-properties-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.25.0</openapi-generator-maven-plugin.version>
+    <flatten-maven-plugin.version>1.8.0</flatten-maven-plugin.version>
 
     <assertj-assertions-generator-maven-plugin.version>2.2.0</assertj-assertions-generator-maven-plugin.version>
     <assertj.targetDir>${project.build.directory}/generated-test-sources/assertj-assertions</assertj.targetDir>
@@ -201,10 +203,10 @@
   </dependencyManagement>
 
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>com.github.Vyacheslav-Lapin</groupId>-->
-<!--      <artifactId>jsonplacaholder-client</artifactId>-->
-<!--    </dependency>-->
+    <!--<dependency>-->
+    <!--  <groupId>com.github.Vyacheslav-Lapin</groupId>-->
+    <!--  <artifactId>jsonplacaholder-client</artifactId>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -441,12 +443,11 @@
             </annotationProcessorPaths>
             <annotationProcessors>
               <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>
-              <annotationProcessor>lombok.launch.AnnotationProcessorHider$ClaimingProcessor</annotationProcessor>
 
+              <!--<annotationProcessor>org.checkerframework.checker.calledmethods.CalledMethodsChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.optional.OptionalChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.interning.InterningChecker</annotationProcessor>-->
-              <!--<annotationProcessor>org.checkerframework.checker.calledmethods.CalledMethodsChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.resourceleak.ResourceLeakChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.lock.LockChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.index.IndexChecker</annotationProcessor>-->
@@ -468,8 +469,7 @@
               <!--<annotationProcessor>org.checkerframework.common.subtyping.SubtypingChecker</annotationProcessor>-->
               <!--<annotationProcessor>org.checkerframework.checker.fenum.FenumChecker</annotationProcessor>-->
 
-              <annotationProcessor>org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor
-              </annotationProcessor>
+              <annotationProcessor>org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor</annotationProcessor>
             </annotationProcessors>
           </configuration>
         </plugin>
@@ -520,13 +520,13 @@
               </goals>
               <configuration>
                 <target name="cleanup-openapi-dir">
-                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
+                  <!--suppress MavenModelInspection -->
                   <delete dir="${openapi.generator.maven.plugin.output}/.openapi-generator"/>
-                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
+                  <!--suppress MavenModelInspection -->
                   <delete file="${openapi.generator.maven.plugin.output}/.openapi-generator-ignore"/>
-                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
+                  <!--suppress MavenModelInspection -->
                   <delete file="${openapi.generator.maven.plugin.output}/pom.xml"/>
-                  <!--suppress MavenModelInspection, MybatisXMapperXmlInspection -->
+                  <!--suppress MavenModelInspection -->
                   <delete file="${openapi.generator.maven.plugin.output}/README.md"/>
                 </target>
               </configuration>
@@ -666,6 +666,26 @@
           </executions>
         </plugin>
         <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven-failsafe-plugin.version}</version>
+          <configuration>
+            <argLine>
+              --enable-preview
+              --add-modules jdk.incubator.vector
+              -XX:+EnableDynamicAgentLoading
+            </argLine>
+          </configuration>
+          <executions>
+            <execution>
+              <id>integration-test</id>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
@@ -747,7 +767,7 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>it.ozimov</groupId>
+          <groupId>com.pro-crafting.maven</groupId>
           <artifactId>yaml-properties-maven-plugin</artifactId>
           <version>${yaml-properties-maven-plugin.version}</version>
           <executions>
@@ -854,7 +874,7 @@
           <executions>
             <execution>
               <id>generate-openapi-client-code:generate-sources:generate</id>
-              <phase>generate-sources</phase>
+              <!-- <phase>generate-sources</phase> &lt;!&ndash; default &ndash;&gt;-->
               <goals>
                 <goal>generate</goal>
               </goals>
@@ -949,7 +969,7 @@
 
     <plugins>
       <plugin>
-        <groupId>it.ozimov</groupId>
+        <groupId>com.pro-crafting.maven</groupId>
         <artifactId>yaml-properties-maven-plugin</artifactId>
       </plugin>
       <plugin>
@@ -998,6 +1018,9 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
 
       <plugin>

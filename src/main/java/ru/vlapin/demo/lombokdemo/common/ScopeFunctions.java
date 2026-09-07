@@ -28,9 +28,12 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * - {@code orIfNull}: Provides a default value or computes an alternative value if the object is null.
  * - {@code mapOrIfNull}: Maps an object if not null or provides an alternative value if null.
  */
+@ExtensionMethod(suppressBaseMethods = false, value = {
+    Objects.class,
+    Objects.class,
+})
+
 @UtilityClass
-@ExtensionMethod(value = Objects.class,
-                 suppressBaseMethods = false)
 public class ScopeFunctions {
 
   /**

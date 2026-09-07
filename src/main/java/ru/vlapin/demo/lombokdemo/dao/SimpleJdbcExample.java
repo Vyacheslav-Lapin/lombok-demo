@@ -45,7 +45,7 @@ public class SimpleJdbcExample {
     @Cleanup val statement = connection.createStatement();
     @Cleanup val resultSet = statement.executeQuery("select * from student");
 
-    resultSet.toStream(rs -> rs.getString("name"))
+    resultSet.stream(rs -> rs.getString("name"))
              .fromStream()
              .subscribe(IO::println);
   }

@@ -12,7 +12,7 @@ import ru.vlapin.demo.lombokdemo.common.TestUtils.ReplaceCamelCase;
  * TestUtilsTest.
  */
 @DisplayNameGeneration(ReplaceCamelCase.class)
-@ExtensionMethod(value = CharSequenceUtil.class, suppressBaseMethods = false)
+@ExtensionMethod(value = CharSequenceUtils.class, suppressBaseMethods = false)
 class TestUtilsTest {
 
   @Test
